@@ -5,6 +5,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using SharedLibrary;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Http;
+using Newtonsoft.Json;
+
 
 namespace PasswortmanagerWPF
 {
@@ -19,9 +24,12 @@ namespace PasswortmanagerWPF
 
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
+            HttpContent jsonUserDto = new StringContent(JsonConvert.SerializeObject(userDto), Encoding.UTF8, "application/json");
 
-            var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users", userDto);
+            var response = await getHttpClient().PostAsync("http://localhost:8080/users", jsonUserDto);
+
             response.EnsureSuccessStatusCode();
+
             return await response.Content.ReadAsAsync<UserModel>();
         }
 
