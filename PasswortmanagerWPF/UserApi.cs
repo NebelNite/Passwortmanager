@@ -24,11 +24,9 @@ namespace PasswortmanagerWPF
 
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
-
             var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users", userDto);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<UserModel>();
-
         }
 
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
@@ -37,7 +35,7 @@ namespace PasswortmanagerWPF
 
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<UserModel>();
+            return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
 
         /*

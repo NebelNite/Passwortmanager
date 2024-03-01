@@ -1,15 +1,15 @@
 package com.example.Passwortmanager.DTOs;
-
 import com.example.Passwortmanager.Model.PasswortModel;
 import com.example.Passwortmanager.Model.UserModel;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+//import com.example.SharedLibrary.*;
 
 @Data
 public class UserDTO {
+
 
         private String id;
         private String username;

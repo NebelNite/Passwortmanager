@@ -32,6 +32,11 @@ public class UserController {
         UserModel createdUser = userService.createUser(userModel);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
+
+    @PostMapping("/authenticate")
+    public UserModel authenticateUser(@RequestBody UserDTO userDto) {
+        return userService.authenticateUserAsync(userDto);
+    }
     
     
     @GetMapping("/{id}")

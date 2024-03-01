@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Debug">
+    <CLASSES />
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/../SharedLibrary/bin/Debug" />
+    </NATIVE>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../SharedLibrary" />
+    </SOURCES>
+  </library>
+</component>

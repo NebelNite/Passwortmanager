@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SharedLibrary;
 
 namespace PasswortmanagerWPF
 {
@@ -20,9 +22,25 @@ namespace PasswortmanagerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        UserModel user;
+
+        public MainWindow(UserModel user)
         {
             InitializeComponent();
+
+            this.user = user;
+            this.Closed += Window_Closed;
+
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            // logout User
+
+        }
+
+
+
+
     }
 }

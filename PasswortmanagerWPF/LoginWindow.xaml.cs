@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharedLibrary;
 
+
 namespace PasswortmanagerWPF
 {
     /// <summary>
@@ -39,10 +40,9 @@ namespace PasswortmanagerWPF
             userDTO.username = username;
 
             userApi.CreateUserAsync(userDTO);
-
         }
 
-        private void SignInButton_Click(object sender, RoutedEventArgs e)
+        private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
             string username = SignInUsername.Text;
             string masterkey = SignInMasterkey.Password;

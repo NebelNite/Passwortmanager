@@ -18,7 +18,7 @@
         private List<PasswortModel> passwords;
         @Field("masterKey")
         private String masterKey;
-
+        private String token;
 
         public UserModel(String id, String username, List<PasswortModel> passwords, String masterKey) {
             this.id = id;
@@ -27,6 +27,12 @@
             this.masterKey = masterKey;
         }
 
+
+
+
+        public void setToken(String token) {
+            this.token = token;
+        }
         public void setUsername(String username) {
             this.username = username;
         }
