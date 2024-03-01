@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Formatting;
-
+using System.Security.Cryptography;
+using System.Net.Http.Headers;
 
 namespace PasswortmanagerWPF
 {
@@ -24,10 +25,22 @@ namespace PasswortmanagerWPF
 
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
-            var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users", userDto);
+            //userDto.masterKey = EncodeMasterKey(userDto.masterKey);
+
+            var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users/create", userDto);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<UserModel>();
         }
+
+        public string EncodeMasterKey(string secret)
+        {
+            using (var sha512 = SHA512.Create())
+            {
+                byte[] hash = sha512.ComputeHash(Encoding.UTF8.GetBytes(secret));
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
 
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
@@ -58,7 +71,7 @@ namespace PasswortmanagerWPF
             passwortResponse.EnsureSuccessStatusCode();
             return await passwortResponse.Content.ReadAsAsync<PasswortModel>();
         }
-        
+
     }*/
 
     }

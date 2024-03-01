@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.crypto.spec.SecretKeySpec;
@@ -37,8 +36,8 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.KeySpec;
 import java.util.Optional;
-
 import static java.security.KeyRep.Type.SECRET;
+import com.example.Passwortmanager.Exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -78,14 +77,12 @@ public class UserService {
 
 
         if (user == null) {
-            // User not Found
-            return null;
+            throw new UserNotFoundException("User not found");
         }
-
+        
         // Check password
         if (!bCryptPasswordEncoder.matches(userDto.getMasterKey(), user.getMasterKey())) {
-            // Invalid credentials
-            return null;
+            throw new BadCredentialsException("Invalid credentials");
         }
 
 
@@ -93,7 +90,7 @@ public class UserService {
         String token = Jwts.builder()
                 .setSubject(user.getId())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1)) // Eventuell Zeit ändern
+                .setExpiration(new Date(System.currentTimeMillis() + 999999999)) // Eventuell Zeit ändern
                 .signWith(SignatureAlgorithm.HS512, getSecretKey())
                 .compact();
 
@@ -101,17 +98,13 @@ public class UserService {
         user.setToken(token);
         return user;
     }
-    
+
 
     private Key getSecretKey() {
         String secret = "myKey";
-        KeySpec keySpec = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
-        try {
-            return KeyFactory.getInstance("HmacSHA512").generateSecret(keySpec);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
+        return new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
     }
 
 
 }
+

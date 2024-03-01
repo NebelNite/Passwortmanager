@@ -25,20 +25,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 
         UserModel userModel = userDto.toUserModel();
         UserModel createdUser = userService.createUser(userModel);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
+    
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
     
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable("id") String id) {
         Optional<UserModel> userOptional = userService.getUserById(id);
