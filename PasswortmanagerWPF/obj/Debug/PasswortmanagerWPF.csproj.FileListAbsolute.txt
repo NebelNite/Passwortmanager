@@ -1,0 +1,17 @@
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\bin\Debug\PasswortmanagerWPF.exe.config
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\bin\Debug\PasswortmanagerWPF.exe
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\bin\Debug\PasswortmanagerWPF.pdb
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.csproj.AssemblyReference.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\LoginWindow.g.cs
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\MainWindow.g.cs
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\App.g.cs
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF_MarkupCompile.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF_MarkupCompile.lref
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\LoginWindow.baml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\MainWindow.baml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.g.resources
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.Properties.Resources.resources
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.csproj.GenerateResource.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.csproj.CoreCompileInputs.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.exe
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\PasswortmanagerWPF\obj\Debug\PasswortmanagerWPF.pdb

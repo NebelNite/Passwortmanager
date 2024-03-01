@@ -1,0 +1,6 @@
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\bin\Debug\SharedLibrary.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\bin\Debug\SharedLibrary.pdb
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\obj\Debug\SharedLibrary.csproj.AssemblyReference.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\obj\Debug\SharedLibrary.csproj.CoreCompileInputs.cache
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\obj\Debug\SharedLibrary.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\SharedLibrary\obj\Debug\SharedLibrary.pdb

@@ -1,0 +1,7 @@
+Bei Änderung:
+SharedLibrary:
+ Projektmappe erstellen
+ dll-file in PasswortmanagerWPF kopieren
+PasswortmanagerWPF:
+ Projektmappe -> Verweis hinzufügen -> Durchsuchen -> dll-file auswählen
+ 
