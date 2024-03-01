@@ -7,10 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Net.Http;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SharedLibrary;
 
 namespace PasswortmanagerWPF
 {
@@ -30,9 +32,14 @@ namespace PasswortmanagerWPF
             string username = SignUpUsername.Text;
             string masterkey = SignUpMasterkey.Password;
 
-            // Hier können Sie den Code für die Registrierung (SignUp) implementieren
-            // Zum Beispiel: Eine Methode aufrufen, um den Benutzer in der Datenbank zu registrieren
-            // oder die Daten in einer Datei zu speichern.
+            UserApi userApi = new UserApi(new HttpClient());
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.masterKey = masterkey;
+            userDTO.username = username;
+
+            userApi.CreateUserAsync(userDTO);
+
         }
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
@@ -40,9 +47,27 @@ namespace PasswortmanagerWPF
             string username = SignInUsername.Text;
             string masterkey = SignInMasterkey.Password;
 
-            // Hier können Sie den Code für die Anmeldung (SignIn) implementieren
-            // Zum Beispiel: Überprüfen, ob die Benutzerdaten in der Datenbank vorhanden sind
-            // oder ob die eingegebenen Daten korrekt sind.
+            UserApi userApi = new UserApi(new HttpClient());
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.masterKey = masterkey;
+            userDTO.username = username;
+
+
+            try
+            {
+                UserModel user = await userApi.AuthenticateUserAsync(userDTO);
+                // If authentication is successful, you can navigate to the next window or perform other actions as needed
+                MainWindow mainWindow = new MainWindow(user);
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                // Handle authentication errors or other exceptions as needed
+                MessageBox.Show("Authentication failed. Please check your credentials and try again.");
+            }
+
         }
 
 

@@ -32,10 +32,14 @@ public class UserDTO {
     public UserModel toUserModel() {
         List<PasswortModel> passwords = new ArrayList<>();
 
-        for (PasswortDTO passwortDTO : this.passwords) {
-            PasswortModel passwortModel = passwortDTO.toPasswortModel();
-            passwords.add(passwortModel);
+        if(this.passwords != null)
+        {
+            for (PasswortDTO passwortDTO : this.passwords) {
+                PasswortModel passwortModel = passwortDTO.toPasswortModel();
+                passwords.add(passwortModel);
+            }
         }
+
         return new UserModel(this.id, this.username, passwords, this.masterKey);
     }
 

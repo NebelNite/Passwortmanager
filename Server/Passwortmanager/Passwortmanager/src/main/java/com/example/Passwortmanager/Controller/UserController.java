@@ -29,15 +29,10 @@ public class UserController {
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 
         UserModel userModel = userDto.toUserModel();
-
-        // Create a PasswortModel and add it to the userModel
-        PasswortModel passwortModel = new PasswortModel("samplePassword");
-        userModel.addPassword(passwortModel);
-
         UserModel createdUser = userService.createUser(userModel);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
+    
     
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable("id") String id) {
