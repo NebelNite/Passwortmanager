@@ -1,7 +1,9 @@
 package com.example.Passwortmanager.Controller;
 
 import com.example.Passwortmanager.DTOs.PasswortDTO;
+import com.example.Passwortmanager.DTOs.UserDTO;
 import com.example.Passwortmanager.Model.PasswortModel;
+import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Service.PasswortService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,14 +16,13 @@ import java.util.Optional;
 @RequestMapping("/passwords")
 public class PasswortController {
 
-
+    @Autowired
     private final PasswortService passwortService;
 
     @Autowired
     public PasswortController(PasswortService passwortService) {
         this.passwortService = passwortService;
     }
-
 
 
 

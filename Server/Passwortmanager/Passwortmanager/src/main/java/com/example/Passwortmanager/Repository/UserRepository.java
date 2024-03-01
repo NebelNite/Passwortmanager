@@ -19,4 +19,12 @@ public interface UserRepository extends MongoRepository<UserModel, String> {
 
     UserModel save(UserModel user);
 
+
+
+    /*
+    @Override
+    default <S extends UserModel> S save(S entity) {
+        return super.save(entity);
+    }*/
+
 }

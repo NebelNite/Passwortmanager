@@ -53,7 +53,7 @@ namespace PasswortmanagerWPF
             userDTO.masterKey = masterkey;
             userDTO.username = username;
 
-
+            
             try
             {
                 UserModel user = await userApi.AuthenticateUserAsync(userDTO);

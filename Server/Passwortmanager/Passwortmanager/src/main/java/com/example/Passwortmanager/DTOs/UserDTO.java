@@ -28,7 +28,25 @@ public class UserDTO {
                 .collect(Collectors.toList());
         this.masterKey = userModel.getMasterKey();
     }
-    
+
+    public UserDTO(String id, String username, List<PasswortDTO> passwords, String masterKey) {
+        this.id = id;
+        this.username = username;
+        this.passwords = passwords;
+        this.masterKey = masterKey;
+    }
+
+    public UserDTO(String username, String masterKey) {
+        this.username = username;
+        this.masterKey = masterKey;
+    }
+    public UserDTO(String username, List<PasswortDTO> passwords, String masterKey) {
+        this.username = username;
+        this.passwords = passwords;
+        this.masterKey = masterKey;
+    }
+
+
     public UserModel toUserModel() {
         List<PasswortModel> passwords = new ArrayList<>();
 
