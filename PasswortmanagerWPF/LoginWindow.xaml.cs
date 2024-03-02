@@ -27,6 +27,7 @@ namespace PasswortmanagerWPF
         {
             InitializeComponent();
             this.Icon = new BitmapImage(new Uri("LoginIcon.ico", UriKind.Relative));
+
         }
 
 
@@ -45,7 +46,16 @@ namespace PasswortmanagerWPF
                 userDTO.masterKey = masterkey;
                 userDTO.username = username;
 
-                userApi.CreateUserAsync(userDTO);
+                try
+                {
+                    userApi.CreateUserAsync(userDTO);
+                    MessageBox.Show("User created succesfully! " + Char.ConvertFromUtf32(0x1F480));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("SignUp failed!" + Char.ConvertFromUtf32(0x1F480));
+                }
+
 
             }
             else

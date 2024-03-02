@@ -1,49 +1,26 @@
 package com.example.Passwortmanager.Service;
 
 import com.example.Passwortmanager.DTOs.UserDTO;
-import com.example.Passwortmanager.Model.PasswortModel;
 import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 //import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Optional;
-import io.jsonwebtoken.Claims;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.KeySpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.KeySpec;
-import java.util.Optional;
-import static java.security.KeyRep.Type.SECRET;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import com.example.Passwortmanager.Exception.UserNotFoundException;
 
 @Service
@@ -98,7 +75,7 @@ public class UserService {
         String token = Jwts.builder()
                 .setSubject(user.getId())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 999999999)) // Eventuell Zeit ändern
+                .setExpiration(new Date(System.currentTimeMillis() + 999999999))
                 .signWith(SignatureAlgorithm.HS512, getSecretKey())
                 .compact();
 

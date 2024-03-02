@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PasswortDTO.cs" />
-    <Compile Include="PasswortModel.cs" />
+    <Compile Include="EntryDTO.cs" />
+    <Compile Include="EntryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDTO.cs" />
     <Compile Include="UserModel.cs" />

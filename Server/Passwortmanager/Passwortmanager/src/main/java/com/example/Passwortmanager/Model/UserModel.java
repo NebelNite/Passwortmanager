@@ -1,6 +1,5 @@
     package com.example.Passwortmanager.Model;
 
-    import com.example.Passwortmanager.DTOs.PasswortDTO;
     import org.springframework.data.mongodb.core.mapping.Document;
     import org.springframework.data.annotation.Id;
     import org.springframework.data.mongodb.core.mapping.Field;
@@ -14,17 +13,17 @@
         private String id;
         @Field("username")
         private String username;
-        @Field("passwords")
-        private List<PasswortModel> passwords;
+        @Field("entries")
+        private List<EntryModel> entries;
         @Field("masterKey")
         private String masterKey;
 
         private String token;
 
-        public UserModel(String id, String username, List<PasswortModel> passwords, String masterKey) {
+        public UserModel(String id, String username, List<EntryModel> entries, String masterKey) {
             this.id = id;
             this.username = username;
-            this.passwords = passwords;
+            this.entries = entries;
             this.masterKey = masterKey;
         }
 
@@ -39,13 +38,13 @@
             this.username = username;
         }
 
-        public List<PasswortModel> getPasswords() {
-            return passwords;
+        public List<EntryModel> getEntries() {
+            return entries;
         }
 
-        public void setPasswords(List<PasswortModel> passwords) {
+        /*public void setPasswords(List<EntryModel> passwords) {
             this.passwords = passwords;
-        }
+        }*/
 
         public String getId() {
             return id;
@@ -66,15 +65,16 @@
         public String getMasterKey() {
             return masterKey;
         }
+        
 
-        public void addPassword(PasswortModel passwort) {
-            if (passwords == null) {
-                passwords = new ArrayList<>();
+
+        public void addEntry(EntryModel entry) {
+            if (entries == null) {
+                entries = new ArrayList<>();
             }
 
-            this.passwords.add(passwort);
+            this.entries.add(entry);
         }
-
 
     }
 

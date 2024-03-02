@@ -7,9 +7,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
+        <!-- Spaltendefinitionen hinzufügen -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <!-- 25% des verfügbaren Platzes -->
+            <ColumnDefinition Width="75*"/>
+            <!-- 75% des verfügbaren Platzes -->
+        </Grid.ColumnDefinitions>
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <!-- Grid.ColumnSpan auf 2 setzen, um über beide Spalten zu erstrecken -->
             <MenuItem Header="_File">
                 <MenuItem Header="_Export"/>
                 <MenuItem Header="_Import"/>
@@ -18,17 +28,39 @@
                 <MenuItem Header="_Exit" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Header="_Entry">
-                <MenuItem Header="_Add Entry"/>
-                <MenuItem Header="_Edit Entry"/>
+                <MenuItem Header="_Add Entry" Click="AddEntry_Click"/>
+                <MenuItem Header="_Edit Entry" Click="EditEntry_Click"/>
                 <MenuItem Header="_Delete Entry"/>
             </MenuItem>
         </Menu>
 
         <!-- Suchleiste -->
-        <DockPanel Grid.Row="1" Background="LightGray" Height="28">
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2" Background="LightGray" Height="28">
+            <!-- Grid.ColumnSpan auf 2 setzen, um über beide Spalten zu erstrecken -->
             <TextBox DockPanel.Dock="Left" Width="200" Margin="5" Text="Search..."/>
-
         </DockPanel>
+
+        <!-- TreeView im linken mittleren Bereich -->
+        <TreeView Grid.Row="2" Grid.Column="0" Background="White">
+            <TreeViewItem x:Name="categoryRoot" Header="DB: " IsExpanded="True">
+                <TreeViewItem Header="General"/>
+            </TreeViewItem>
+        </TreeView>
+
+        <!-- Tabelle im rechten Hauptbereich -->
+        <DataGrid IsReadOnly="True" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="Password" Binding="{Binding Password}" Width="*"/>
+                <DataGridTextColumn Header="Url" Binding="{Binding Url}" Width="*"/>
+                <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Footer -->
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="LightGray" Height="30" x:Name="footer" >
+        </TextBlock>
 
     </Grid>
 </Window>

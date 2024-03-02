@@ -10,7 +10,7 @@ namespace SharedLibrary
     {
         public string id { get; set; }
         public string username { get; set; }
-        public List<PasswortModel> passwords { get; set; }
+        public List<EntryModel> entries { get; set; }
         public string masterKey { get; set; }
 
 

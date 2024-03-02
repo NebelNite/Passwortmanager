@@ -1,0 +1,45 @@
+﻿<Window x:Class="PasswortmanagerWPF.EntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Entry Editor" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Title:" VerticalAlignment="Center" Margin="0,5,5,0"/>
+            <TextBlock Grid.Row="1" Text="Username:" VerticalAlignment="Center" Margin="0,10,5,0"/>
+            <TextBlock Grid.Row="2" Text="Password:" VerticalAlignment="Center" Margin="0,14,5,0"/>
+            <TextBlock Grid.Row="3" Text="URL:" VerticalAlignment="Center" Margin="0,12,5,0"/>
+            <TextBlock Grid.Row="4" Text="Notes:" VerticalAlignment="Center" Margin="0,12,5,0"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" x:Name="titleTextBox" Margin="5"/>
+            <TextBox Grid.Row="1" x:Name="usernameTextBox" Margin="5"/>
+            <TextBox Grid.Row="2" x:Name="passwordTextBox" Margin="5"/>
+            <TextBox Grid.Row="3" x:Name="urlTextBox" Margin="5"/>
+            <TextBox Grid.Row="4" x:Name="notesTextBox" Margin="5,5,5,-101"/>
+        </Grid>
+
+        <Button Grid.Column="1" Content="Confirm" Click="ConfirmButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
+    </Grid>
+</Window>
