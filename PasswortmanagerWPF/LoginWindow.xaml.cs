@@ -79,8 +79,6 @@ namespace PasswortmanagerWPF
 
 
 
-
-
         private string IsValidPassword(string masterkey)
         {
             string output = string.Empty;

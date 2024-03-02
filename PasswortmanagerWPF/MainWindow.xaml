@@ -14,7 +14,7 @@
                 <MenuItem Header="_Export"/>
                 <MenuItem Header="_Import"/>
                 <Separator/>
-                <MenuItem Header="_Lock" InputGestureText="Alt+F4"/>
+                <MenuItem Header="_Lock" Click="LockManager_Click" InputGestureText="Alt+F4"/>
                 <MenuItem Header="_Exit" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Header="_Entry">
