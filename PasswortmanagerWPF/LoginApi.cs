@@ -9,16 +9,24 @@ namespace PasswortmanagerWPF
 {
     internal abstract class LoginApi
     {
-        private HttpClient _httpClient { get; set; }
+        private HttpClient _httpClient;
+        private string _connectionString;
 
-        public LoginApi(HttpClient httpClient)
+        public LoginApi(HttpClient httpClient, string connectionString)
         {
             _httpClient = httpClient;
+            _connectionString = connectionString;
         }
 
-        public HttpClient getHttpClient()
+        public HttpClient GetHttpClient()
         {
             return _httpClient;
+        }
+
+
+        public string GetConnectionString()
+        {
+            return _connectionString;
         }
 
     }

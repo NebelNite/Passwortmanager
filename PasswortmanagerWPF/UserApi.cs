@@ -17,17 +17,35 @@ namespace PasswortmanagerWPF
 {
     internal class UserApi : LoginApi
     {
-        public UserApi(HttpClient httpClient)
-            : base(httpClient)
+        private static UserApi instance;
+        private static readonly object padlock = new object();
+
+        private UserApi(HttpClient httpClient, string connectionString)
+            : base(httpClient, connectionString)
         {
 
+        }
+        public static UserApi GetInstance()
+        {
+            if (instance == null)
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new UserApi(new HttpClient(), "http://localhost:8080");
+                    }
+                }
+            }
+
+            return instance;
         }
 
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
-            var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users/create", userDto);
+            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<UserModel>();
         }
@@ -41,17 +59,16 @@ namespace PasswortmanagerWPF
             }
         }
 
-
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
-            var response = await getHttpClient().PostAsJsonAsync("http://localhost:8080/users/authenticate", userDto);
+            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
 
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
-
     }
+
 }

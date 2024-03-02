@@ -40,6 +40,30 @@ namespace PasswortmanagerWPF
         }
 
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            // Erstelle das Dropdown-Menü
+            ContextMenu menu = new ContextMenu();
+
+            // Füge MenuItem-Elemente zum Dropdown-Menü hinzu
+            MenuItem placeholder1MenuItem = new MenuItem();
+            placeholder1MenuItem.Header = "Placeholder1";
+            menu.Items.Add(placeholder1MenuItem);
+
+            MenuItem placeholder2MenuItem = new MenuItem();
+            placeholder2MenuItem.Header = "Placeholder2";
+            menu.Items.Add(placeholder2MenuItem);
+
+            // Setze das Dropdown-Menü als Kontextmenü des Buttons
+            button.ContextMenu = menu;
+
+            // Öffne das Kontextmenü
+            menu.IsOpen = true;
+        }
+
+
 
 
     }

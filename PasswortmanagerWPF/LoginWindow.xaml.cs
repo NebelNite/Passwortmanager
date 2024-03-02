@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SharedLibrary;
-
+using System.Text.RegularExpressions;
+using System.Net.PeerToPeer;
 
 namespace PasswortmanagerWPF
 {
@@ -25,48 +26,79 @@ namespace PasswortmanagerWPF
         public LoginWindow()
         {
             InitializeComponent();
+            this.Icon = new BitmapImage(new Uri("LoginIcon.ico", UriKind.Relative));
         }
 
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
+
             string username = SignUpUsername.Text;
             string masterkey = SignUpMasterkey.Password;
 
-            UserApi userApi = new UserApi(new HttpClient());
+            string msg = IsValidPassword(masterkey);
 
-            UserDTO userDTO = new UserDTO();
-            userDTO.masterKey = masterkey;
-            userDTO.username = username;
+            if (string.IsNullOrEmpty(msg))
+            {
+                UserApi userApi = UserApi.GetInstance();
+                UserDTO userDTO = new UserDTO();
+                userDTO.masterKey = masterkey;
+                userDTO.username = username;
 
-            userApi.CreateUserAsync(userDTO);
+                userApi.CreateUserAsync(userDTO);
+
+            }
+            else
+            {
+                MessageBox.Show(msg);
+            }
         }
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = SignInUsername.Text;
-            string masterkey = SignInMasterkey.Password;
 
-            UserApi userApi = new UserApi(new HttpClient());
 
             UserDTO userDTO = new UserDTO();
-            userDTO.masterKey = masterkey;
-            userDTO.username = username;
+            userDTO.masterKey = SignInMasterkey.Password;
+            userDTO.username = SignInUsername.Text;
 
-            
             try
             {
-                UserModel user = await userApi.AuthenticateUserAsync(userDTO);
-                // If authentication is successful, you can navigate to the next window or perform other actions as needed
+                UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
+
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
                 this.Close();
             }
             catch (Exception ex)
             {
-                // Handle authentication errors or other exceptions as needed
                 MessageBox.Show("Authentication failed. Please check your credentials and try again.");
             }
+
+        }
+
+
+
+
+
+        private string IsValidPassword(string masterkey)
+        {
+            string output = string.Empty;
+            string nonSpecialCharacters = @"[^A-Za-z0-9]";
+            Regex regex = new Regex(nonSpecialCharacters);
+
+
+            if (masterkey.Length < 10)
+            {
+                output += "At least: 10 characters" + Environment.NewLine;
+            }
+
+            if (!regex.IsMatch(masterkey))
+            {
+                output += "At least: 1 special character" + Environment.NewLine;
+            }
+
+            return output;
 
         }
 

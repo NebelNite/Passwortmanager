@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="200" Width="360">
     <Grid>
+
         <TabControl HorizontalAlignment="Center" VerticalAlignment="Top" Width="300">
             <!-- SignUp Tab -->
             <TabItem Header="SignUp">
