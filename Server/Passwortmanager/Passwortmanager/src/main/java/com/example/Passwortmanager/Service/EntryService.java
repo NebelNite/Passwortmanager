@@ -1,16 +1,39 @@
 package com.example.Passwortmanager.Service;
 
 import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.Passwortmanager.Service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EntryService {
 
-    private List<EntryModel> entryModels = new ArrayList<>();
-    
+
+    private List<EntryModel> entryModels = new ArrayList<>(); // alt
+
+
+   /*private final UserService userService;
+
+
+    @Autowired
+    public EntryService(UserService userService) {
+        this.userService = userService;
+
+
+    }
+    */
+
+
+    public UserModel createEntry(EntryModel entryModel, UserModel userModel) {
+        userModel.addEntry(entryModel);
+        return userModel;
+    }
+
+
     public List<EntryModel> getAllEntries() {
         return entryModels;
     }
@@ -24,10 +47,7 @@ public class EntryService {
         return null;
     }
 
-    public EntryModel createEntry(EntryModel entryModel) {
-        entryModels.add(entryModel);
-        return entryModel;
-    }
+
 
     public EntryModel updateEntry(String id, EntryModel entryModel) {
         for (int i = 0; i < entryModels.size(); i++) {

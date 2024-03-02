@@ -1,6 +1,8 @@
 package com.example.Passwortmanager.Controller;
 
+import com.example.Passwortmanager.DTOs.EntryDTO;
 import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Service.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,10 +39,11 @@ public class EntryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<EntryModel> createEntry(@RequestBody EntryModel entryModel) {
-        EntryModel createdEntry = entryService.createEntry(entryModel);
-        return new ResponseEntity<>(createdEntry, HttpStatus.CREATED);
+    public ResponseEntity<UserModel> createEntry(@RequestBody EntryModel entryModel, UserModel userModel) {
+        UserModel createdEntry = entryService.createEntry(entryModel, userModel);
+        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<EntryModel> updateEntry(@PathVariable("id") String id, @RequestBody EntryModel entryModel) {

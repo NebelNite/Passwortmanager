@@ -40,11 +40,13 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable("id") String id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
+
         Optional<UserModel> userOptional = userService.getUserById(id);
         if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         UserModel user = userOptional.get();
         UserDTO userDto = new UserDTO(user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);

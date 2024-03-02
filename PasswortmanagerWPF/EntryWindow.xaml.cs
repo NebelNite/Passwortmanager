@@ -20,6 +20,9 @@ namespace PasswortmanagerWPF
     /// </summary>
     public partial class EntryWindow : Window
     {
+
+        //private UserModel user;
+
         public EntryWindow()
         {
             InitializeComponent();

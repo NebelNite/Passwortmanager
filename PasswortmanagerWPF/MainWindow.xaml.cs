@@ -55,10 +55,15 @@ namespace PasswortmanagerWPF
 
 
 
-        private void EntryWindow_EntryCreated(object sender, EntryModel entryModel)
+        private async void EntryWindow_EntryCreated(object sender, UserModel userModel)
         {
-            entries.Add(entryModel);
-            dataGrid.ItemsSource = entries;
+
+            // ID sind noch null
+
+            user = await UserApi.GetInstance().GetUserByIdAsync(user.id);
+
+            entries = new ObservableCollection<EntryModel>(user.entries);
+
         }
 
 
@@ -68,7 +73,6 @@ namespace PasswortmanagerWPF
             EntryWindow entryWindow = new EntryWindow();
             EntryApi.GetInstance().EntryCreated += EntryWindow_EntryCreated;
             entryWindow.Show();
-
         }
 
 

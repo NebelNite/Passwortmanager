@@ -69,6 +69,24 @@ namespace PasswortmanagerWPF
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<UserModel> GetUserByIdAsync(string userId)
+        {
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync(GetConnectionString() + $"/users/{userId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<UserModel>(responseContent);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
     }
 
 }

@@ -15,6 +15,8 @@ namespace PasswortmanagerWPF
         private static EntryApi instance;
         private static readonly object lockObject = new object();
 
+        public event EventHandler<UserModel> EntryCreated;
+
         private EntryApi(HttpClient httpClient, string connectionString)
             : base(httpClient, connectionString)
         {
@@ -38,7 +40,6 @@ namespace PasswortmanagerWPF
             return instance;
         }
 
-        public event EventHandler<EntryModel> EntryCreated;
 
         public async void createEntry(EntryDTO entryDto)
         {
@@ -47,10 +48,10 @@ namespace PasswortmanagerWPF
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/create", entryDto);
                 response.EnsureSuccessStatusCode();
 
-                EntryModel entryModel = await response.Content.ReadAsAsync<EntryModel>();
+                //EntryModel entryModel = await response.Content.ReadAsAsync<EntryModel>();
+                UserModel entryModel = await response.Content.ReadAsAsync<UserModel>();
                 // Hier können Sie mit entryModel arbeiten oder das Ergebnis anderweitig verwenden
                 EntryCreated?.Invoke(this, entryModel);
-
 
             }
             catch (Exception ex)
