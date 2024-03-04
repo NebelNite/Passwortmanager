@@ -12,5 +12,8 @@ namespace SharedLibrary
         public string username { get; set; }
         public List<EntryModel> entries { get; set; }
         public string masterKey { get; set; }
+
+
+
     }
 }

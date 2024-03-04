@@ -39,6 +39,7 @@ namespace PasswortmanagerWPF
 
             string msg = IsValidPassword(masterkey);
 
+
             if (string.IsNullOrEmpty(msg))
             {
                 UserApi userApi = UserApi.GetInstance();

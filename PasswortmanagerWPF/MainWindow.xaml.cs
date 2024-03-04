@@ -23,7 +23,7 @@ namespace PasswortmanagerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserModel user;
+
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
 
 
@@ -32,9 +32,20 @@ namespace PasswortmanagerWPF
             InitializeComponent();
 
             this.Icon = new BitmapImage(new Uri("MainIcon.ico", UriKind.Relative));
-            this.user = user;
+            UserApi.user = user;
             categoryRoot.Header = "DB: " + user.username;
             //this.Closed += Window_Closed
+
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.username = UserApi.user.username;
+            userDTO.masterKey = UserApi.user.masterKey;
+            userDTO.id = UserApi.user.id;
+            userDTO.entries = UserApi.user.entries;
+
+
+            UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+
             dataGrid.ItemsSource = entries;
         }
 
@@ -48,7 +59,6 @@ namespace PasswortmanagerWPF
         {
             LoginWindow loginWindow = new LoginWindow();
             this.Closed += (s, args) => loginWindow.ShowDialog();
-            this.user = null;
             this.Close();
 
         }
@@ -58,11 +68,18 @@ namespace PasswortmanagerWPF
         private async void EntryWindow_EntryCreated(object sender, UserModel userModel)
         {
 
-            // ID sind noch null
+            UserDTO userDTO = new UserDTO();
 
-            user = await UserApi.GetInstance().GetUserByIdAsync(user.id);
+            userDTO.username = UserApi.user.username;
+            userDTO.masterKey = UserApi.user.masterKey;
+            userDTO.id = UserApi.user.id;
+            userDTO.entries = UserApi.user.entries;
+
+            UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+            UserApi.user = user;
 
             entries = new ObservableCollection<EntryModel>(user.entries);
+            dataGrid.ItemsSource = entries;
 
         }
 

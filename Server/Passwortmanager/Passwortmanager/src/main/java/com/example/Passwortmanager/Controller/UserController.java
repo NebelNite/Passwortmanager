@@ -22,7 +22,23 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+
+
+    @PostMapping("/getUserByUsernameAndMasterKey")
+    public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
+        Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
+
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserModel user = userOptional.get();
+        userDto = new UserDTO(user);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+
+
     @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 
@@ -37,6 +53,7 @@ public class UserController {
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
+
 
 
     @GetMapping("/{id}")
@@ -66,11 +83,10 @@ public class UserController {
         EntryModel entryModel = entryDTO.toEntryModel();
         user.addEntry(entryModel);
 
-        user = userService.updateUser(user);
+        user = userService.updateUser(user, entryDTO);
 
         return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
     }
-
 
     
 }

@@ -30,6 +30,7 @@ public class EntryService {
 
     public UserModel createEntry(EntryModel entryModel, UserModel userModel) {
         userModel.addEntry(entryModel);
+
         return userModel;
     }
 
@@ -61,6 +62,7 @@ public class EntryService {
     }
 
     public boolean deleteEntry(String id) {
+
         for (int i = 0; i < entryModels.size(); i++) {
             EntryModel entry = entryModels.get(i);
             if (entry.getId().equals(id)) {

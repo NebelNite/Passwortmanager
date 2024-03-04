@@ -15,6 +15,10 @@ public class EntryDTO {
     private String notes;
 
 
+    public EntryDTO()
+    {
+
+    }
     public EntryDTO(EntryModel entryModel) {
         this.id = entryModel.getId();
         this.title = entryModel.getTitle();

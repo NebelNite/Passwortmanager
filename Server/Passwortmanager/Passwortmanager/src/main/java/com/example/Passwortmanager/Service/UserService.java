@@ -1,5 +1,6 @@
 package com.example.Passwortmanager.Service;
 
+import com.example.Passwortmanager.DTOs.EntryDTO;
 import com.example.Passwortmanager.DTOs.UserDTO;
 import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Repository.UserRepository;
@@ -39,6 +40,28 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
+    public UserModel updateUser(UserModel updatedUser, EntryDTO entryDTO) {
+
+        Optional<UserModel> existingUserOptional = userRepository.findById(updatedUser.getId());
+
+        if (existingUserOptional.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + updatedUser.getId() + " not found");
+        }
+
+        // Benutzer aus der Optional-Instanz abrufen
+        UserModel existingUser = existingUserOptional.get();
+
+        // Die Felder des vorhandenen Benutzers mit den aktualisierten Werten aktualisieren
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setMasterKey(updatedUser.getMasterKey());
+        existingUser.addEntry(entryDTO.toEntryModel());
+
+        return userRepository.save(existingUser);
+    }
+
+
+
     public UserModel createUser(UserModel user) {
         return userRepository.save(user);
 
@@ -48,16 +71,18 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public UserModel updateUser(UserModel user) {
-        return userRepository.save(user);
+    public Optional<UserModel> getUserByUsernameAndMasterKey(String username, String masterKey) {
+        return userRepository.findByUsernameAndMasterKey(username, masterKey);
     }
+
+
+
 
 
     public UserModel authenticateUserAsync(UserDTO userDto) {
         // Find user by username
         Query query = new Query(Criteria.where("username").is(userDto.getUsername()));
         UserModel user = mongoTemplate.findOne(query, UserModel.class);
-
 
         if (user == null) {
             throw new UserNotFoundException("User not found");

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharedLibrary;
 using System.Windows;
+using Newtonsoft.Json.Bson;
 
 namespace PasswortmanagerWPF
 {
@@ -45,13 +46,29 @@ namespace PasswortmanagerWPF
         {
             try
             {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
+
+                userDTO.username = user.username;
+                userDTO.id = user.id;
+                userDTO.masterKey = user.masterKey;
+                userDTO.entries = user.entries;
+
+                UserApi userApi = UserApi.GetInstance();
+
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
+                response.EnsureSuccessStatusCode();
+
+                /*
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/create", entryDto);
                 response.EnsureSuccessStatusCode();
 
-                //EntryModel entryModel = await response.Content.ReadAsAsync<EntryModel>();
+
                 UserModel entryModel = await response.Content.ReadAsAsync<UserModel>();
-                // Hier können Sie mit entryModel arbeiten oder das Ergebnis anderweitig verwenden
-                EntryCreated?.Invoke(this, entryModel);
+                */
+
+                EntryCreated?.Invoke(this, user);
 
             }
             catch (Exception ex)

@@ -133,3 +133,9 @@ D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\bin\Debug\BCrypt.Net-Next.xml
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\bin\Debug\System.Security.Cryptography.Cng.xml
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\EntryWindow.baml
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\EntryWindow.g.cs
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\BCrypt.Net-Next.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\System.Security.Cryptography.Cng.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\BCrypt.Net-Next.xml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\System.Security.Cryptography.Cng.xml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\EntryWindow.baml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\EntryWindow.g.cs

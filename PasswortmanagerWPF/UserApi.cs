@@ -12,12 +12,15 @@ using Newtonsoft.Json;
 using System.Net.Http.Formatting;
 using System.Security.Cryptography;
 using System.Net.Http.Headers;
+using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace PasswortmanagerWPF
 {
     internal class UserApi : LoginApi
     {
         private static UserApi instance;
+        public static UserModel user;
         private static readonly object padlock = new object();
 
         private UserApi(HttpClient httpClient, string connectionString)
@@ -25,6 +28,9 @@ namespace PasswortmanagerWPF
         {
 
         }
+
+
+
         public static UserApi GetInstance()
         {
             if (instance == null)
@@ -70,22 +76,19 @@ namespace PasswortmanagerWPF
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<UserModel> GetUserByIdAsync(string userId)
+        public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
         {
-            using (var client = new HttpClient())
-            {
-                var response = await client.GetAsync(GetConnectionString() + $"/users/{userId}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<UserModel>(responseContent);
-                }
-                else
-                {
-                    return null;
-                }
-            }
+
+            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/getUserByUsernameAndMasterKey", userDto);
+            response.EnsureSuccessStatusCode();
+
+            // Antwort des Servers lesen und in ein UserModel-Objekt deserialisieren
+            return await response.Content.ReadAsAsync<UserModel>();
         }
+
+
+
+
 
     }
 
