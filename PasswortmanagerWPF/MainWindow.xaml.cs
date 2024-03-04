@@ -32,22 +32,36 @@ namespace PasswortmanagerWPF
             InitializeComponent();
 
             this.Icon = new BitmapImage(new Uri("MainIcon.ico", UriKind.Relative));
+
+
             UserApi.user = user;
-            categoryRoot.Header = "DB: " + user.username;
+
+            this.Loaded += MainWindow_Loaded;
+
             //this.Closed += Window_Closed
 
+        }
+
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            dataGrid.Foreground = Brushes.Black;
+            categoryRoot.Header = "DB: " + UserApi.user.username;
 
             UserDTO userDTO = new UserDTO();
+
             userDTO.username = UserApi.user.username;
             userDTO.masterKey = UserApi.user.masterKey;
             userDTO.id = UserApi.user.id;
             userDTO.entries = UserApi.user.entries;
 
-
             UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+
+            entries = new ObservableCollection<EntryModel>(user.entries);
 
             dataGrid.ItemsSource = entries;
         }
+
 
         private void Window_Closed(object sender, EventArgs e)
         {

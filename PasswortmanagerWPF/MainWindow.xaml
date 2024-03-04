@@ -50,11 +50,11 @@
         <!-- Tabelle im rechten Hauptbereich -->
         <DataGrid IsReadOnly="True" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
-                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
-                <DataGridTextColumn Header="Password" Binding="{Binding Password}" Width="*"/>
-                <DataGridTextColumn Header="Url" Binding="{Binding Url}" Width="*"/>
-                <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="*"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding title}" Width="*"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding username}" Width="*"/>
+                <DataGridTextColumn Header="Password" Binding="{Binding password}" Width="*"/>
+                <DataGridTextColumn Header="Url" Binding="{Binding url}" Width="*"/>
+                <DataGridTextColumn Header="Notes" Binding="{Binding notes}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
