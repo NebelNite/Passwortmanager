@@ -20,6 +20,7 @@ public interface UserRepository extends MongoRepository<UserModel, String> {
     UserModel save(UserModel user);
 
     Optional<UserModel> findByUsernameAndMasterKey(String username, String masterKey);
+    Optional<UserModel> findByUsername(String username);
 
     /*
     @Override

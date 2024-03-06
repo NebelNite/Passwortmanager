@@ -42,6 +42,26 @@ namespace PasswortmanagerWPF
         }
 
 
+        public async void deleteEntry(EntryModel selectedEntry)
+        {
+
+            UserModel user = UserApi.user;
+            UserDTO userDTO = new UserDTO();
+
+            userDTO.username = user.username;
+            userDTO.id = user.id;
+            userDTO.masterKey = user.masterKey;
+            userDTO.entries = user.entries;
+
+        }
+
+
+        public async void editEntry(EntryDTO entryDto)
+        {
+
+        }
+
+
         public async void createEntry(EntryDTO entryDto)
         {
             try

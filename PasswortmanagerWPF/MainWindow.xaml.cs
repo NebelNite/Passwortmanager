@@ -25,14 +25,14 @@ namespace PasswortmanagerWPF
     {
 
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
-
+        private EntryModel selectedEntry;
 
         public MainWindow(UserModel user)
         {
             InitializeComponent();
 
             this.Icon = new BitmapImage(new Uri("MainIcon.ico", UriKind.Relative));
-
+            leftBack.ImageSource = new BitmapImage(new Uri("leftBack2.png", UriKind.Relative));
 
             UserApi.user = user;
 
@@ -45,7 +45,7 @@ namespace PasswortmanagerWPF
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGrid.Foreground = Brushes.Black;
+
             categoryRoot.Header = "DB: " + UserApi.user.username;
 
             UserDTO userDTO = new UserDTO();
@@ -68,6 +68,20 @@ namespace PasswortmanagerWPF
 
         }
 
+
+        private void EditMenuItem_Click(object sender, EventArgs e)
+        {
+
+            EntryWindow entryWindow = new EntryWindow(selectedEntry);
+
+            //EntryApi.GetInstance().EntryCreated += EntryWindow_EntryCreated;
+            entryWindow.Show();
+
+        }
+        private void DeleteMenuItem_Click(object sender, EventArgs e)
+        {
+            EntryApi.GetInstance().deleteEntry(selectedEntry);
+        }
 
         private void LockManager_Click(object sender, EventArgs e)
         {
@@ -116,7 +130,7 @@ namespace PasswortmanagerWPF
         {
             if (dataGrid.SelectedItem != null)
             {
-                EntryModel selectedEntry = (EntryModel)dataGrid.SelectedItem;
+                selectedEntry = (EntryModel)dataGrid.SelectedItem;
                 footer.Text = selectedEntry.ToString();
 
             }

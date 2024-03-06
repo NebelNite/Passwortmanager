@@ -40,15 +40,36 @@
             <TextBox DockPanel.Dock="Left" Width="200" Margin="5" Text="Search..."/>
         </DockPanel>
 
-        <!-- TreeView im linken mittleren Bereich -->
-        <TreeView Grid.Row="2" Grid.Column="0" Background="White">
-            <TreeViewItem x:Name="categoryRoot" Header="DB: " IsExpanded="True">
-                <TreeViewItem Header="General"/>
-            </TreeViewItem>
-        </TreeView>
+        <!-- Transparentes Hintergrundbild im mittleren linken Teil -->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.Background>
+                <ImageBrush x:Name="leftBack" Opacity="0.5"/>
+                <!-- Dein Bildpfad und die gewünschte Transparenz -->
+            </Grid.Background>
+            <!-- Hier können weitere Inhalte platziert werden -->
+            <TreeView Background="Transparent">
+                <TreeViewItem x:Name="categoryRoot" Header="DB: " IsExpanded="True">
+                    <TreeViewItem Header="General"/>
+                </TreeViewItem>
+            </TreeView>
+        </Grid>
+
 
         <!-- Tabelle im rechten Hauptbereich -->
-        <DataGrid IsReadOnly="True" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
+        <DataGrid IsReadOnly="True" AlternationCount="2" AlternatingRowBackground="#E0F2FE" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
+
+            <DataGrid.Resources>
+                <!-- Definiere ein ContextMenu -->
+                <ContextMenu x:Key="DataGridContextMenu">
+                    <MenuItem Header="Edit Entry" Click="EditMenuItem_Click"/>
+                    <MenuItem Header="Delete Entry" Click="DeleteMenuItem_Click"/>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <!-- Setze das definierte ContextMenu als ContextMenu für das DataGrid -->
+            <DataGrid.ContextMenu>
+                <StaticResource ResourceKey="DataGridContextMenu"/>
+            </DataGrid.ContextMenu>
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title" Binding="{Binding title}" Width="*"/>
                 <DataGridTextColumn Header="Username" Binding="{Binding username}" Width="*"/>

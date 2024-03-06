@@ -50,7 +50,6 @@ namespace PasswortmanagerWPF
                 try
                 {
                     userApi.CreateUserAsync(userDTO);
-                    MessageBox.Show("User created succesfully! " + Char.ConvertFromUtf32(0x1F480));
                 }
                 catch (Exception ex)
                 {

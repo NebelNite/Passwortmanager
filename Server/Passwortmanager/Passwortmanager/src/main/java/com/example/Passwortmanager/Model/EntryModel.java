@@ -1,19 +1,20 @@
 package com.example.Passwortmanager.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "entries")
 public class EntryModel {
 
 
-
+    @Id
     private String id;
     private String title;
     private String username;
     private String password;
     private String url;
     private String notes;
-
+    
     public EntryModel(String id, String title, String username, String password, String url, String notes) {
         this.id = id;
         this.title = title;

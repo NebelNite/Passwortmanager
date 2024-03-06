@@ -51,9 +51,25 @@ namespace PasswortmanagerWPF
         {
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
-            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<UserModel>();
+            HttpResponseMessage response = null;
+
+            try
+            {
+                response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
+                response.EnsureSuccessStatusCode();
+                var createdUser = await response.Content.ReadAsAsync<UserModel>();
+
+                MessageBox.Show("Benutzer erfolgreich erstellt! " + Char.ConvertFromUtf32(0x1F480));
+                return createdUser;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Username ist bereits vergeben!");
+
+            }
+
+
+            return null;
         }
 
         public string EncodeMasterKey(string secret)

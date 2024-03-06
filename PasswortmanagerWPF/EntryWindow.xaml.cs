@@ -28,6 +28,27 @@ namespace PasswortmanagerWPF
             InitializeComponent();
         }
 
+        private bool edit = false;
+
+        public EntryWindow(EntryModel entry)
+        {
+            InitializeComponent();
+
+            titleTextBox.Text = entry.title;
+            usernameTextBox.Text = entry.username;
+            urlTextBox.Text = entry.url;
+            notesTextBox.Text = entry.notes;
+            passwordTextBox.Text = entry.password;
+
+            edit = true;
+
+        }
+
+        private async void EntryWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -40,8 +61,14 @@ namespace PasswortmanagerWPF
             entryDTO.url = urlTextBox.Text;
             entryDTO.notes = notesTextBox.Text;
 
-
-            EntryApi.GetInstance().createEntry(entryDTO);
+            if (edit)
+            {
+                EntryApi.GetInstance().editEntry(entryDTO);
+            }
+            else
+            {
+                EntryApi.GetInstance().createEntry(entryDTO);
+            }
 
             this.Close();
 
