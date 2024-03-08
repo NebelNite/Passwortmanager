@@ -74,9 +74,17 @@ namespace PasswortmanagerWPF
 
         }
 
+        private void GeneratePassword_Click(object sender, RoutedEventArgs e)
+        {
+            PasswordGeneratorWindow passwordGeneratorWindow = new PasswordGeneratorWindow();
+            passwordGeneratorWindow.Show();
+        }
 
 
+        private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
     }
 }

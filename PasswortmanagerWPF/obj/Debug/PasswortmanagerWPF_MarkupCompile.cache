@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\App.xaml
-3-802019288
+4608337468
 
-101524370580
-144-861887462
-EntryWindow.xaml;LoginWindow.xaml;MainWindow.xaml;
+11611481844
+145-1981104758
+EntryWindow.xaml;LoginWindow.xaml;MainWindow.xaml;PasswordGeneratorWindow.xaml;
 
-True
+False
 

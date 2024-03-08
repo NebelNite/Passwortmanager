@@ -80,16 +80,9 @@ namespace PasswortmanagerWPF
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
                 response.EnsureSuccessStatusCode();
 
-                /*
-                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/create", entryDto);
-                response.EnsureSuccessStatusCode();
 
-
-                UserModel entryModel = await response.Content.ReadAsAsync<UserModel>();
-                */
 
                 EntryCreated?.Invoke(this, user);
-
             }
             catch (Exception ex)
             {

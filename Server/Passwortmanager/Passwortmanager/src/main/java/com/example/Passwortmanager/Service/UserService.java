@@ -68,7 +68,7 @@ public class UserService {
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Benutzername bereits vergeben");
         }
-
+        
         return userRepository.save(user);
     }
 

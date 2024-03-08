@@ -35,9 +35,16 @@
 
             <TextBox Grid.Row="0" x:Name="titleTextBox" Margin="5"/>
             <TextBox Grid.Row="1" x:Name="usernameTextBox" Margin="5"/>
-            <TextBox Grid.Row="2" x:Name="passwordTextBox" Margin="5"/>
+            <TextBox Grid.Row="2" x:Name="passwordTextBox" Margin="5">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Generate Password" Click="GeneratePassword_Click"/>
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
             <TextBox Grid.Row="3" x:Name="urlTextBox" Margin="5"/>
             <TextBox Grid.Row="4" x:Name="notesTextBox" Margin="5,5,5,-101"/>
+            <Button Grid.Row="2" Content="..." HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" Click="TogglePasswordVisibility_Click"/>
         </Grid>
 
         <Button Grid.Column="1" Content="Confirm" Click="ConfirmButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
