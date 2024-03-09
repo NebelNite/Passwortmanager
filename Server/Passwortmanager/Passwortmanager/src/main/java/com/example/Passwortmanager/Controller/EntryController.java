@@ -52,9 +52,8 @@ public class EntryController {
     }*/
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDto) {
+    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, UserModel userModel) {
 
-        UserModel userModel = userDto.toUserModel();
 
         Optional<EntryModel> entry = userModel.getEntries().stream().filter(e -> e.getId().equals(id)).findFirst();
         if (entry.isPresent()) {
