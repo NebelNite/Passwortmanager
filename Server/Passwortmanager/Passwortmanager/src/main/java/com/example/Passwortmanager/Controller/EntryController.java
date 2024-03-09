@@ -1,6 +1,7 @@
 package com.example.Passwortmanager.Controller;
 
 import com.example.Passwortmanager.DTOs.EntryDTO;
+import com.example.Passwortmanager.DTOs.UserDTO;
 import com.example.Passwortmanager.Model.EntryModel;
 import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Service.EntryService;
@@ -43,14 +44,18 @@ public class EntryController {
         }
     }
 */
+    /*
     @PostMapping("/create")
     public ResponseEntity<UserModel> createEntry(@RequestBody EntryModel entryModel, UserModel userModel) {
         UserModel createdEntry = entryService.createEntry(entryModel, userModel);
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);
-    }
+    }*/
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, UserModel userModel) {
+    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDto) {
+
+        UserModel userModel = userDto.toUserModel();
+
         Optional<EntryModel> entry = userModel.getEntries().stream().filter(e -> e.getId().equals(id)).findFirst();
         if (entry.isPresent()) {
 

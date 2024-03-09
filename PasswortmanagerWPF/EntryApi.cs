@@ -41,7 +41,7 @@ namespace PasswortmanagerWPF
             return instance;
         }
 
-        
+
         public async void deleteEntry(EntryModel selectedEntry)
         {
 
@@ -55,13 +55,14 @@ namespace PasswortmanagerWPF
                 userDTO.masterKey = user.masterKey;
                 userDTO.entries = user.entries;
 
-                var response = await GetHttpClient().DeleteAsync(GetConnectionString() + "/entries/delete" + selectedEntry.id);
+                var response = await GetHttpClient().DeleteAsync(GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
+
                 response.EnsureSuccessStatusCode();
 
                 // Remove the deleted entry from the user's list of entries
 
                 userDTO.entries.Remove(userDTO.entries.Find(entry => entry.id == selectedEntry.id));
-                
+
                 // Call the server's updateUser method to update the user's list of entries
 
 
@@ -81,6 +82,32 @@ namespace PasswortmanagerWPF
 
         public async void editEntry(EntryDTO entryDto)
         {
+            /*
+            try
+            {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
+
+                userDTO.username = user.username;
+                userDTO.id = user.id;
+                userDTO.masterKey = user.masterKey;
+                userDTO.entries = user.entries;
+
+                UserApi userApi = UserApi.GetInstance();
+
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
+                response.EnsureSuccessStatusCode();
+
+
+
+                EntryCreated?.Invoke(this, user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Creating/Editing Entry failed!");
+            }
+            */
 
         }
 
@@ -109,7 +136,7 @@ namespace PasswortmanagerWPF
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Editing Entry failed!");
+                MessageBox.Show("Creating/Editing Entry failed!");
             }
         }
 

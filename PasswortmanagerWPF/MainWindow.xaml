@@ -61,6 +61,7 @@
             <DataGrid.Resources>
                 <!-- Definiere ein ContextMenu -->
                 <ContextMenu x:Key="DataGridContextMenu">
+                    <MenuItem Header="Add Entry" Click="AddEntry_Click"/>
                     <MenuItem Header="Edit Entry" Click="EditMenuItem_Click"/>
                     <MenuItem Header="Delete Entry" Click="DeleteMenuItem_Click"/>
                 </ContextMenu>

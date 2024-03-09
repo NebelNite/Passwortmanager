@@ -1,9 +1,9 @@
 package com.example.Passwortmanager.Service;
 
-import com.example.Passwortmanager.DTOs.EntryDTO;
 import com.example.Passwortmanager.DTOs.UserDTO;
 import com.example.Passwortmanager.Model.EntryModel;
 import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Repository.EntryRepository;
 import com.example.Passwortmanager.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final EntryRepository entryRepository;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -38,8 +40,9 @@ public class UserService {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, EntryRepository entryRepository) {
         this.userRepository = userRepository;
+        this.entryRepository = entryRepository;
     }
 
 /*
@@ -70,7 +73,9 @@ public class UserService {
         if (existingUser.isPresent()) {
             List<EntryModel> entries = userModel.getEntries();
             existingUser.get().setEntries(entries);
-            
+
+            //entryRepository.save(entries);
+
             return userRepository.save(existingUser.get());
         } else {
             return null;

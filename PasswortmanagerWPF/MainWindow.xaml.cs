@@ -83,7 +83,7 @@ namespace PasswortmanagerWPF
         }
         private void DeleteMenuItem_Click(object sender, EventArgs e)
         {
-            //EntryApi.GetInstance().deleteEntry(selectedEntry);
+            EntryApi.GetInstance().deleteEntry(selectedEntry);
         }
 
         private void LockManager_Click(object sender, EventArgs e)

@@ -6,6 +6,8 @@
 
     import java.util.ArrayList;
     import java.util.List;
+    import java.util.UUID;
+
     @Document(collection = "users")
     public class UserModel {
 
@@ -17,7 +19,7 @@
         private List<EntryModel> entries;
         @Field("masterKey")
         private String masterKey;
-
+        
         private String token;
 
         public UserModel(String id, String username, List<EntryModel> entries, String masterKey) {
@@ -72,6 +74,9 @@
             if (entries == null) {
                 entries = new ArrayList<>();
             }
+            String newId = UUID.randomUUID().toString();
+            entry.setId(newId);
+
 
             this.entries.add(entry);
         }

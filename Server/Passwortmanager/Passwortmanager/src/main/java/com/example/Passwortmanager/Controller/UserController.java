@@ -53,8 +53,7 @@ public class UserController {
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
-
-
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
