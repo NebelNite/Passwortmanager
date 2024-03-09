@@ -60,5 +60,24 @@ public class EntryModel {
     }
 
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
 }

@@ -53,7 +53,6 @@ namespace PasswortmanagerWPF
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
 
-
             EntryDTO entryDTO = new EntryDTO();
 
             entryDTO.title = titleTextBox.Text;
@@ -61,6 +60,8 @@ namespace PasswortmanagerWPF
             entryDTO.password = passwordTextBox.Text;
             entryDTO.url = urlTextBox.Text;
             entryDTO.notes = notesTextBox.Text;
+
+
 
             if (edit)
             {
@@ -70,6 +71,8 @@ namespace PasswortmanagerWPF
             {
                 EntryApi.GetInstance().createEntry(entryDTO);
             }
+
+            edit = false;
 
             this.Close();
 

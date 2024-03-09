@@ -26,6 +26,7 @@ namespace PasswortmanagerWPF
 
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
         private EntryModel selectedEntry;
+        private int selectedEntryIndex;
 
         public MainWindow(UserModel user)
         {
@@ -134,6 +135,7 @@ namespace PasswortmanagerWPF
             if (dataGrid.SelectedItem != null)
             {
                 selectedEntry = (EntryModel)dataGrid.SelectedItem;
+                selectedEntryIndex = dataGrid.SelectedIndex;
                 footer.Text = selectedEntry.ToString();
 
             }

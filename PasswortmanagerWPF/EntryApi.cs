@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SharedLibrary;
 using System.Windows;
 using Newtonsoft.Json.Bson;
+using Newtonsoft.Json;
 
 namespace PasswortmanagerWPF
 {
@@ -55,15 +56,26 @@ namespace PasswortmanagerWPF
                 userDTO.masterKey = user.masterKey;
                 userDTO.entries = user.entries;
 
-                var response = await GetHttpClient().DeleteAsync(GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
 
                 response.EnsureSuccessStatusCode();
 
-                // Remove the deleted entry from the user's list of entries
 
-                userDTO.entries.Remove(userDTO.entries.Find(entry => entry.id == selectedEntry.id));
+                int entryCount = user.entries.Count;
 
-                // Call the server's updateUser method to update the user's list of entries
+                for (int i = 0; entryCount == user.entries.Count; i++)
+                {
+                    if (user.entries[i].id == selectedEntry.id)
+                    {
+                        user.entries.RemoveAt(i);
+                    }
+                }
+                UserApi.user = user;
+
+
+                //user.entries.Remove(user.entries.Find(entry => entry.id == selectedEntry.id));
+
 
 
                 //UserApi.GetInstance().updateUser(userDTO);
@@ -82,7 +94,7 @@ namespace PasswortmanagerWPF
 
         public async void editEntry(EntryDTO entryDto)
         {
-            /*
+
             try
             {
                 UserModel user = UserApi.user;
@@ -93,10 +105,16 @@ namespace PasswortmanagerWPF
                 userDTO.masterKey = user.masterKey;
                 userDTO.entries = user.entries;
 
+
+
+
                 UserApi userApi = UserApi.GetInstance();
 
 
-                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
+
+                // (entry) id = null | 
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
                 response.EnsureSuccessStatusCode();
 
 
@@ -107,7 +125,7 @@ namespace PasswortmanagerWPF
             {
                 MessageBox.Show("Creating/Editing Entry failed!");
             }
-            */
+
 
         }
 
