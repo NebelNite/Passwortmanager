@@ -13,7 +13,6 @@ import java.util.List;
 public class EntryService {
 
 
-    private List<EntryModel> entryModels = new ArrayList<>(); // alt
 
 
    /*private final UserService userService;
@@ -35,6 +34,11 @@ public class EntryService {
     }
 
 
+
+
+
+
+/*
     public List<EntryModel> getAllEntries() {
         return entryModels;
     }
@@ -59,8 +63,9 @@ public class EntryService {
             }
         }
         return null;
-    }
+    }*/
 
+    /*
     public boolean deleteEntry(String id) {
 
         for (int i = 0; i < entryModels.size(); i++) {
@@ -71,7 +76,7 @@ public class EntryService {
             }
         }
         return false;
-    }
+    }*/
 
 
 }

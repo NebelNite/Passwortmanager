@@ -41,17 +41,40 @@ namespace PasswortmanagerWPF
             return instance;
         }
 
-
+        
         public async void deleteEntry(EntryModel selectedEntry)
         {
 
-            UserModel user = UserApi.user;
-            UserDTO userDTO = new UserDTO();
+            try
+            {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
 
-            userDTO.username = user.username;
-            userDTO.id = user.id;
-            userDTO.masterKey = user.masterKey;
-            userDTO.entries = user.entries;
+                userDTO.username = user.username;
+                userDTO.id = user.id;
+                userDTO.masterKey = user.masterKey;
+                userDTO.entries = user.entries;
+
+                var response = await GetHttpClient().DeleteAsync(GetConnectionString() + "/entries/delete" + selectedEntry.id);
+                response.EnsureSuccessStatusCode();
+
+                // Remove the deleted entry from the user's list of entries
+
+                userDTO.entries.Remove(userDTO.entries.Find(entry => entry.id == selectedEntry.id));
+                
+                // Call the server's updateUser method to update the user's list of entries
+
+
+                //UserApi.GetInstance().updateUser(userDTO);
+
+                EntryCreated?.Invoke(this, user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Deleting Entry failed!");
+            }
+
+
 
         }
 

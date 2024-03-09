@@ -83,7 +83,7 @@ public class UserController {
         EntryModel entryModel = entryDTO.toEntryModel();
         user.addEntry(entryModel);
 
-        user = userService.updateUser(user, entryDTO);
+        user = userService.updateUser(user);
 
         return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
     }

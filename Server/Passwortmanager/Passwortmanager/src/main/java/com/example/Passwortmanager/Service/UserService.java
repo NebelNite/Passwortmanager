@@ -2,6 +2,7 @@ package com.example.Passwortmanager.Service;
 
 import com.example.Passwortmanager.DTOs.EntryDTO;
 import com.example.Passwortmanager.DTOs.UserDTO;
+import com.example.Passwortmanager.Model.EntryModel;
 import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import io.jsonwebtoken.Jwts;
@@ -40,7 +42,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-
+/*
     public UserModel updateUser(UserModel updatedUser, EntryDTO entryDTO) {
 
         Optional<UserModel> existingUserOptional = userRepository.findById(updatedUser.getId());
@@ -59,7 +61,22 @@ public class UserService {
 
         return userRepository.save(existingUser);
     }
+*/
 
+    public UserModel updateUser(UserModel userModel) {
+
+        Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
+
+        if (existingUser.isPresent()) {
+            List<EntryModel> entries = userModel.getEntries();
+            existingUser.get().setEntries(entries);
+            
+            return userRepository.save(existingUser.get());
+        } else {
+            return null;
+        }
+
+    }
 
 
     public UserModel createUser(UserModel user) {

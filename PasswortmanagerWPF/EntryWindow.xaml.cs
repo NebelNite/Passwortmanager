@@ -1,4 +1,5 @@
-﻿using SharedLibrary;
+﻿using PasswordGenerator;
+using SharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,9 +78,15 @@ namespace PasswortmanagerWPF
         private void GeneratePassword_Click(object sender, RoutedEventArgs e)
         {
             PasswordGeneratorWindow passwordGeneratorWindow = new PasswordGeneratorWindow();
+
+            passwordGeneratorWindow.PasswordGenerated += PasswordGeneratorWindow_PasswordGenerated;
             passwordGeneratorWindow.Show();
         }
 
+        private void PasswordGeneratorWindow_PasswordGenerated(object sender, string password)
+        {
+            passwordTextBox.Text = password;
+        }
 
         private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
         {

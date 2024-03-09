@@ -21,7 +21,7 @@ public interface UserRepository extends MongoRepository<UserModel, String> {
 
     Optional<UserModel> findByUsernameAndMasterKey(String username, String masterKey);
     Optional<UserModel> findByUsername(String username);
-
+    
     /*
     @Override
     default <S extends UserModel> S save(S entity) {

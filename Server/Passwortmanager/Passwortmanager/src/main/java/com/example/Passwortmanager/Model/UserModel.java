@@ -76,6 +76,12 @@
             this.entries.add(entry);
         }
 
+        public void setEntries(List<EntryModel> entries)
+        {
+            this.entries = entries;
+        }
+
+
     }
 
 
