@@ -31,6 +31,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBox Grid.Row="0" x:Name="titleTextBox" Margin="5"/>
@@ -44,6 +45,7 @@
             </TextBox>
             <TextBox Grid.Row="3" x:Name="urlTextBox" Margin="5"/>
             <TextBox Grid.Row="4" x:Name="notesTextBox" Margin="5,5,5,-101"/>
+            <TextBox Grid.Row="5" x:Name="idTextBox" Margin="5" Visibility="Collapsed"/>
             <Button Grid.Row="2" Content="..." HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" Click="TogglePasswordVisibility_Click"/>
         </Grid>
 

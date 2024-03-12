@@ -3,6 +3,7 @@ using SharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -40,6 +41,7 @@ namespace PasswortmanagerWPF
             urlTextBox.Text = entry.url;
             notesTextBox.Text = entry.notes;
             passwordTextBox.Text = entry.password;
+            idTextBox.Text = entry.id;
 
             edit = true;
 
@@ -60,6 +62,7 @@ namespace PasswortmanagerWPF
             entryDTO.password = passwordTextBox.Text;
             entryDTO.url = urlTextBox.Text;
             entryDTO.notes = notesTextBox.Text;
+            entryDTO.id = idTextBox.Text;
 
 
 
@@ -69,6 +72,11 @@ namespace PasswortmanagerWPF
             }
             else
             {
+                Guid newId = Guid.NewGuid();
+                string idAsString = newId.ToString();
+
+                entryDTO.id = idAsString;
+
                 EntryApi.GetInstance().createEntry(entryDTO);
             }
 

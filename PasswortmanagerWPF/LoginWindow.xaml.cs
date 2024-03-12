@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 using SharedLibrary;
 using System.Text.RegularExpressions;
 using System.Net.PeerToPeer;
+using System.Security.Cryptography;
+using System.IO.Packaging;
+using System.Net;
+using CredentialManagement;
 
 namespace PasswortmanagerWPF
 {
@@ -50,12 +54,12 @@ namespace PasswortmanagerWPF
                 try
                 {
                     userApi.CreateUserAsync(userDTO);
+                    SetAesKeyForUser(username);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("SignUp failed!" + Char.ConvertFromUtf32(0x1F480));
                 }
-
 
             }
             else
@@ -63,6 +67,35 @@ namespace PasswortmanagerWPF
                 MessageBox.Show(msg);
             }
         }
+
+
+        private void SetAesKeyForUser(string username)
+        {
+            // Generate a new AES key
+            Aes aes = Aes.Create();
+            aes.GenerateKey();
+
+            byte[] aesKey = aes.Key;
+
+            // Convert the AES key to a base64 string
+            string aesKeyBase64 = Convert.ToBase64String(aesKey);
+
+
+
+            Credential credentialSet = new Credential
+            {
+                Target = "AESKey",
+                Username = username,
+                Password = aesKeyBase64,
+                PersistanceType = PersistanceType.LocalComputer
+            };
+
+            credentialSet.Save();
+        }
+
+
+
+
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
@@ -95,7 +128,7 @@ namespace PasswortmanagerWPF
             string nonSpecialCharacters = @"[^A-Za-z0-9]";
             Regex regex = new Regex(nonSpecialCharacters);
 
-
+            /*
             if (masterkey.Length < 10)
             {
                 output += "At least: 10 characters" + Environment.NewLine;
@@ -105,7 +138,7 @@ namespace PasswortmanagerWPF
             {
                 output += "At least: 1 special character" + Environment.NewLine;
             }
-
+            */
             return output;
 
         }

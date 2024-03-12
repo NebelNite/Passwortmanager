@@ -71,7 +71,7 @@ namespace PasswortmanagerWPF
 
             return null;
         }
-
+        
         public string EncodeMasterKey(string secret)
         {
             using (var sha512 = SHA512.Create())
@@ -86,7 +86,7 @@ namespace PasswortmanagerWPF
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
             var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
-
+            
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());

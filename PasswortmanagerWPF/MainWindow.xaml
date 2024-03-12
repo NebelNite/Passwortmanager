@@ -30,7 +30,7 @@
             <MenuItem Header="_Entry">
                 <MenuItem Header="_Add Entry" Click="AddEntry_Click"/>
                 <MenuItem Header="_Edit Entry" Click="EditEntry_Click"/>
-                <MenuItem Header="_Delete Entry"/>
+                <MenuItem Header="_Delete Entry" Click="DeleteEntry_Click"/>
             </MenuItem>
         </Menu>
 
@@ -56,16 +56,17 @@
 
 
         <!-- Tabelle im rechten Hauptbereich -->
-        <DataGrid IsReadOnly="True" AlternationCount="2" AlternatingRowBackground="#E0F2FE" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
+        <DataGrid IsReadOnly="True" AlternationCount="2" MouseDoubleClick="dataGrid_MouseDoubleClick" AlternatingRowBackground="#E0F2FE" x:Name="dataGrid" Grid.Row="2" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding YourDataItems}" CanUserSortColumns="True" SelectionChanged="dataGrid_SelectionChanged">
 
             <DataGrid.Resources>
                 <!-- Definiere ein ContextMenu -->
                 <ContextMenu x:Key="DataGridContextMenu">
                     <MenuItem Header="Add Entry" Click="AddEntry_Click"/>
-                    <MenuItem Header="Edit Entry" Click="EditMenuItem_Click"/>
-                    <MenuItem Header="Delete Entry" Click="DeleteMenuItem_Click"/>
+                    <MenuItem Header="Edit Entry" Click="EditEntry_Click"/>
+                    <MenuItem Header="Delete Entry" Click="DeleteEntry_Click"/>
                 </ContextMenu>
             </DataGrid.Resources>
+
             <!-- Setze das definierte ContextMenu als ContextMenu für das DataGrid -->
             <DataGrid.ContextMenu>
                 <StaticResource ResourceKey="DataGridContextMenu"/>
@@ -77,6 +78,7 @@
                 <DataGridTextColumn Header="Password" Binding="{Binding password}" Width="*"/>
                 <DataGridTextColumn Header="Url" Binding="{Binding url}" Width="*"/>
                 <DataGridTextColumn Header="Notes" Binding="{Binding notes}" Width="*"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding id}" Visibility="Collapsed"/>
             </DataGrid.Columns>
         </DataGrid>
 

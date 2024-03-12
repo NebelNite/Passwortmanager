@@ -9,6 +9,9 @@ using SharedLibrary;
 using System.Windows;
 using Newtonsoft.Json.Bson;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using CredentialManagement;
+using System.Net.PeerToPeer;
 
 namespace PasswortmanagerWPF
 {
@@ -43,6 +46,8 @@ namespace PasswortmanagerWPF
         }
 
 
+
+
         public async void deleteEntry(EntryModel selectedEntry)
         {
 
@@ -61,7 +66,6 @@ namespace PasswortmanagerWPF
 
                 response.EnsureSuccessStatusCode();
 
-
                 int entryCount = user.entries.Count;
 
                 for (int i = 0; entryCount == user.entries.Count; i++)
@@ -71,6 +75,7 @@ namespace PasswortmanagerWPF
                         user.entries.RemoveAt(i);
                     }
                 }
+
                 UserApi.user = user;
 
 
@@ -86,9 +91,6 @@ namespace PasswortmanagerWPF
             {
                 MessageBox.Show("Deleting Entry failed!");
             }
-
-
-
         }
 
 
@@ -98,26 +100,19 @@ namespace PasswortmanagerWPF
             try
             {
                 UserModel user = UserApi.user;
+
                 UserDTO userDTO = new UserDTO();
 
-                userDTO.username = user.username;
                 userDTO.id = user.id;
-                userDTO.masterKey = user.masterKey;
-                userDTO.entries = user.entries;
-
-
 
 
                 UserApi userApi = UserApi.GetInstance();
-
 
 
                 // (entry) id = null | 
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
                 response.EnsureSuccessStatusCode();
-
-
 
                 EntryCreated?.Invoke(this, user);
             }
@@ -126,8 +121,8 @@ namespace PasswortmanagerWPF
                 MessageBox.Show("Creating/Editing Entry failed!");
             }
 
-
         }
+
 
 
         public async void createEntry(EntryDTO entryDto)
@@ -143,7 +138,6 @@ namespace PasswortmanagerWPF
                 userDTO.entries = user.entries;
 
                 UserApi userApi = UserApi.GetInstance();
-
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
                 response.EnsureSuccessStatusCode();

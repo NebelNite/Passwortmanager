@@ -74,9 +74,10 @@
             if (entries == null) {
                 entries = new ArrayList<>();
             }
+            /*
             String newId = UUID.randomUUID().toString();
             entry.setId(newId);
-
+            */
 
             this.entries.add(entry);
         }

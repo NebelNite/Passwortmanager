@@ -67,7 +67,7 @@ public class UserController {
         UserDTO userDto = new UserDTO(user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
-
+    
 
     @PostMapping("/{userId}/addEntry")
     public ResponseEntity<EntryModel> addEntry(@PathVariable("userId") String userId, @RequestBody EntryDTO entryDTO) {

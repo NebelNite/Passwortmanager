@@ -145,3 +145,6 @@ C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\o
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\bin\Debug\PasswordGenerator.dll
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\PasswordGeneratorWindow.baml
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\PasswordGeneratorWindow.g.cs
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\CredentialManagement.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\System.Security.Cryptography.ProtectedData.dll
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\bin\Debug\System.Security.Cryptography.ProtectedData.xml
