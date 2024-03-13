@@ -109,6 +109,7 @@ public class UserService {
 
 
 
+
     public UserModel authenticateUserAsync(UserDTO userDto) {
         // Find user by username
         Query query = new Query(Criteria.where("username").is(userDto.getUsername()));
@@ -123,6 +124,7 @@ public class UserService {
         if (!compareHashedPasswords(userDto.getMasterKey(), user.getMasterKey())) {
             throw new BadCredentialsException("Invalid credentials");
         }
+
 
 
 

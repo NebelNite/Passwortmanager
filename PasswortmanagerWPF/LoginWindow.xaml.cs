@@ -48,13 +48,22 @@ namespace PasswortmanagerWPF
             {
                 UserApi userApi = UserApi.GetInstance();
                 UserDTO userDTO = new UserDTO();
-                userDTO.masterKey = masterkey;
-                userDTO.username = username;
+
+                SetAesKeyForUser(username);
+                UserApi.aesKey = GetAesKeyForUser(userDTO.username);
+
+                string mes = UserApi.EncryptMessage("message");
+                string dec = UserApi.DecryptMessage(mes);
+
+                userDTO.masterKey = UserApi.EncryptMessage(masterkey);
+                userDTO.username = UserApi.EncryptMessage(username);
 
                 try
                 {
+
                     userApi.CreateUserAsync(userDTO);
-                    SetAesKeyForUser(username);
+
+
                 }
                 catch (Exception ex)
                 {
@@ -95,11 +104,36 @@ namespace PasswortmanagerWPF
 
 
 
+        private byte[] GetAesKeyForUser(string username)
+        {
+            var credential = new Credential
+            {
+                Target = "AESKey",
+                Username = username
+            };
+
+            if (credential.Load())
+            {
+                string aesKeyBase64 = credential.Password;
+                byte[] aesKey = Convert.FromBase64String(aesKeyBase64);
+
+                // Verwende den AES-Schlüssel für weitere Operationen
+                // In diesem Beispiel geben wir den Schlüssel einfach aus
+
+                return aesKey;
+            }
+            else
+            {
+                Console.WriteLine("Der AES-Schlüssel wurde nicht gefunden.");
+            }
+
+            return null;
+        }
+
 
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-
 
             UserDTO userDTO = new UserDTO();
             userDTO.masterKey = SignInMasterkey.Password;
@@ -107,7 +141,14 @@ namespace PasswortmanagerWPF
 
             try
             {
+
+                UserApi.aesKey = GetAesKeyForUser(userDTO.username);
+
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
+
+                user.masterKey = UserApi.DecryptMessage(userDTO.masterKey);
+                user.username = UserApi.DecryptMessage(userDTO.username);
+
 
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
