@@ -65,9 +65,13 @@ namespace PasswortmanagerWPF
             userDTO.id = UserApi.user.id;
             userDTO.entries = UserApi.user.entries;
 
+
+            // masterkey soll nur gehashed werden 
+            userDTO = (UserDTO)UserApi.DecryptUser(userDTO);
+
             UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
 
-            entries = new ObservableCollection<EntryModel>(user.entries);
+            entries = new ObservableCollection<EntryModel>(EntryApi.DecryptEntries(user.entries));
 
             dataGrid.ItemsSource = entries;
         }
@@ -111,10 +115,16 @@ namespace PasswortmanagerWPF
             userDTO.username = UserApi.user.username;
             userDTO.masterKey = UserApi.user.masterKey;
             userDTO.id = UserApi.user.id;
-            userDTO.entries = UserApi.user.entries;
+
+
+
+
 
             UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
             UserApi.user = user;
+
+
+            userDTO.entries = EntryApi.DecryptEntries(user.entries);
 
             entries = new ObservableCollection<EntryModel>(user.entries);
             dataGrid.ItemsSource = entries;

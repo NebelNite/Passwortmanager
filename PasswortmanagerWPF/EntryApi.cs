@@ -94,22 +94,20 @@ namespace PasswortmanagerWPF
         }
 
 
+
         public async void editEntry(EntryDTO entryDto)
         {
 
             try
             {
                 UserModel user = UserApi.user;
-
                 UserDTO userDTO = new UserDTO();
-
                 userDTO.id = user.id;
-
 
                 UserApi userApi = UserApi.GetInstance();
 
 
-                // (entry) id = null | 
+                entryDto = EncryptEntry(entryDto);
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
                 response.EnsureSuccessStatusCode();
@@ -135,13 +133,15 @@ namespace PasswortmanagerWPF
                 userDTO.username = user.username;
                 userDTO.id = user.id;
                 userDTO.masterKey = user.masterKey;
+
                 userDTO.entries = user.entries;
+
+                entryDto = EncryptEntry(entryDto);
 
                 UserApi userApi = UserApi.GetInstance();
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
                 response.EnsureSuccessStatusCode();
-
 
 
                 EntryCreated?.Invoke(this, user);
@@ -151,6 +151,63 @@ namespace PasswortmanagerWPF
                 MessageBox.Show("Creating/Editing Entry failed!");
             }
         }
+
+        public EntryDTO EncryptEntry(EntryDTO entry)
+        {
+            entry.notes = UserApi.EncryptMessage(entry.notes);
+            entry.password = UserApi.EncryptMessage(entry.password);
+            entry.username = UserApi.EncryptMessage(entry.username);
+            entry.title = UserApi.EncryptMessage(entry.title);
+            entry.url = UserApi.EncryptMessage(entry.url);
+
+            return entry;
+
+        }
+
+
+        public static EntryDTO DecryptEntry(EntryDTO entry)
+        {
+            entry.notes = UserApi.DecryptMessage(entry.notes);
+            entry.password = UserApi.DecryptMessage(entry.password);
+            entry.username = UserApi.DecryptMessage(entry.username);
+            entry.title = UserApi.DecryptMessage(entry.title);
+            entry.url = UserApi.DecryptMessage(entry.url);
+
+            return entry;
+        }
+
+
+
+
+        public static List<EntryModel> EncryptEntries(List<EntryModel> entries)
+        {
+            foreach (EntryModel entry in entries)
+            {
+                entry.notes = UserApi.EncryptMessage(entry.notes);
+                entry.password = UserApi.EncryptMessage(entry.password);
+                entry.username = UserApi.EncryptMessage(entry.username);
+                entry.title = UserApi.EncryptMessage(entry.title);
+                entry.url = UserApi.EncryptMessage(entry.url);
+            }
+
+            return entries;
+        }
+
+
+        public static List<EntryModel> DecryptEntries(List<EntryModel> entries)
+        {
+            foreach (EntryModel entry in entries)
+            {
+                entry.notes = UserApi.DecryptMessage(entry.notes);
+                entry.password = UserApi.DecryptMessage(entry.password);
+                entry.username = UserApi.DecryptMessage(entry.username);
+                entry.title = UserApi.DecryptMessage(entry.title);
+                entry.url = UserApi.DecryptMessage(entry.url);
+            }
+
+            return entries;
+        }
+
 
 
 

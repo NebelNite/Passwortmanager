@@ -162,6 +162,7 @@ namespace PasswortmanagerWPF
                 userDTO.masterKey = UserApi.EncryptMessage(userDTO.masterKey);
                 userDTO.username = UserApi.EncryptMessage(userDTO.username);
 
+
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
 
 
