@@ -59,6 +59,8 @@ namespace PasswortmanagerWPF
             {
                 response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
                 response.EnsureSuccessStatusCode();
+
+
                 var createdUser = await response.Content.ReadAsAsync<UserModel>();
 
                 MessageBox.Show("Benutzer erfolgreich erstellt! " + Char.ConvertFromUtf32(0x1F480));
@@ -82,6 +84,7 @@ namespace PasswortmanagerWPF
                 return BitConverter.ToString(hash).Replace("-", "").ToLower();
             }
         }
+
 
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
@@ -114,6 +117,8 @@ namespace PasswortmanagerWPF
             {
                 aes.Key = aesKey;
 
+                aes.Mode = CipherMode.ECB;
+
                 // Verschlüssele die Nachricht
                 ICryptoTransform encryptor = aes.CreateEncryptor();
                 byte[] encryptedBytes = encryptor.TransformFinalBlock(
@@ -130,10 +135,13 @@ namespace PasswortmanagerWPF
             using (Aes aes = Aes.Create())
             {
                 aes.Key = aesKey;
+                aes.Mode = CipherMode.ECB;
 
                 // Decrypt the message
                 ICryptoTransform decryptor = aes.CreateDecryptor();
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
+
+
                 byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
                 string decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);
 
@@ -142,71 +150,91 @@ namespace PasswortmanagerWPF
         }
 
 
-
-
-
-        /*
-        public static string EncryptMessage(string message)
+        public static object EncryptUser(object user)
         {
-            using (Aes aes = Aes.Create())
+            if (user is UserModel)
             {
-                aes.Key = aesKey;
-                aes.GenerateIV();
+                UserModel userModel = (UserModel)user;
 
-                // Verschlüssele die Nachricht
-                ICryptoTransform encryptor = aes.CreateEncryptor();
-                byte[] encryptedBytes = encryptor.TransformFinalBlock(
-                    System.Text.Encoding.UTF8.GetBytes(message), 0, message.Length);
+                userModel.masterKey = EncryptMessage(userModel.masterKey);
 
 
-                // Speichere den IV vor den verschlüsselten Daten
-                byte[] iv = aes.IV;
-                byte[] encryptedBytesWithIV = new byte[iv.Length + encryptedBytes.Length];
-                Array.Copy(iv, 0, encryptedBytesWithIV, 0, iv.Length);
-                Array.Copy(encryptedBytes, 0, encryptedBytesWithIV, iv.Length, encryptedBytes.Length);
-
-
-                string encryptedString = Convert.ToBase64String(encryptedBytesWithIV);
-
-                return encryptedString;
+                return user;
             }
-        }
-
-
-        public static string DecryptMessage(string encryptedMessage)
-        {
-            using (Aes aes = Aes.Create())
+            else if (user is UserDTO)
             {
-                aes.Key = aesKey;
-
-                // Extrahiere den IV aus den verschlüsselten Daten
-
-                byte[] iv = new byte[aes.BlockSize / 8];
-                byte[] encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
-                Array.Copy(encryptedMessageBytes, 0, iv, 0, iv.Length);
-                aes.IV = iv;
-
-                // Entferne den IV aus den verschlüsselten Daten
-                byte[] encryptedMessageWithoutIV = new byte[encryptedMessageBytes.Length - iv.Length];
-                Array.Copy(encryptedMessageBytes, iv.Length, encryptedMessageWithoutIV, 0, encryptedMessageWithoutIV.Length);
 
 
-
-                // Entschlüssele die Nachricht
-                ICryptoTransform decryptor = aes.CreateDecryptor();
-                byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedMessageWithoutIV, 0, encryptedMessageWithoutIV.Length);
-                string decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);
-
-
-                return decryptedMessage;
             }
+
+
+
+
+
+
+
+            /*
+            public static string EncryptMessage(string message)
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = aesKey;
+                    aes.GenerateIV();
+
+                    // Verschlüssele die Nachricht
+                    ICryptoTransform encryptor = aes.CreateEncryptor();
+                    byte[] encryptedBytes = encryptor.TransformFinalBlock(
+                        System.Text.Encoding.UTF8.GetBytes(message), 0, message.Length);
+
+
+                    // Speichere den IV vor den verschlüsselten Daten
+                    byte[] iv = aes.IV;
+                    byte[] encryptedBytesWithIV = new byte[iv.Length + encryptedBytes.Length];
+                    Array.Copy(iv, 0, encryptedBytesWithIV, 0, iv.Length);
+                    Array.Copy(encryptedBytes, 0, encryptedBytesWithIV, iv.Length, encryptedBytes.Length);
+
+
+                    string encryptedString = Convert.ToBase64String(encryptedBytesWithIV);
+
+                    return encryptedString;
+                }
+            }
+
+
+            public static string DecryptMessage(string encryptedMessage)
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = aesKey;
+
+                    // Extrahiere den IV aus den verschlüsselten Daten
+
+                    byte[] iv = new byte[aes.BlockSize / 8];
+                    byte[] encryptedMessageBytes = Convert.FromBase64String(encryptedMessage);
+                    Array.Copy(encryptedMessageBytes, 0, iv, 0, iv.Length);
+                    aes.IV = iv;
+
+                    // Entferne den IV aus den verschlüsselten Daten
+                    byte[] encryptedMessageWithoutIV = new byte[encryptedMessageBytes.Length - iv.Length];
+                    Array.Copy(encryptedMessageBytes, iv.Length, encryptedMessageWithoutIV, 0, encryptedMessageWithoutIV.Length);
+
+
+
+                    // Entschlüssele die Nachricht
+                    ICryptoTransform decryptor = aes.CreateDecryptor();
+                    byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedMessageWithoutIV, 0, encryptedMessageWithoutIV.Length);
+                    string decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);
+
+
+                    return decryptedMessage;
+                }
+            }
+            */
+
+
+
+
+
         }
-        */
-
-
-
-
 
     }
-
-}

@@ -43,7 +43,6 @@ namespace PasswortmanagerWPF
 
 
 
-
             this.Loaded += MainWindow_Loaded;
 
             //this.Closed += Window_Closed
@@ -57,7 +56,7 @@ namespace PasswortmanagerWPF
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
-            categoryRoot.Header = "DB: " + UserApi.user.username;
+            categoryRoot.Header = "DB: " + UserApi.DecryptMessage(UserApi.user.username);
 
             UserDTO userDTO = new UserDTO();
 

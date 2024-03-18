@@ -35,6 +35,7 @@ namespace PasswortmanagerWPF
         }
 
 
+
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -49,11 +50,13 @@ namespace PasswortmanagerWPF
                 UserApi userApi = UserApi.GetInstance();
                 UserDTO userDTO = new UserDTO();
 
-                SetAesKeyForUser(username);
+                if (!AesKeyExistsForUser(username))
+                {
+                    SetAesKeyForUser(username);
+                }
+
                 UserApi.aesKey = GetAesKeyForUser(userDTO.username);
 
-                string mes = UserApi.EncryptMessage("message");
-                string dec = UserApi.DecryptMessage(mes);
 
                 userDTO.masterKey = UserApi.EncryptMessage(masterkey);
                 userDTO.username = UserApi.EncryptMessage(username);
@@ -130,6 +133,18 @@ namespace PasswortmanagerWPF
             return null;
         }
 
+        private bool AesKeyExistsForUser(string username)
+        {
+            var credential = new Credential
+            {
+                Target = "AESKey",
+                Username = username
+            };
+
+            return credential.Load();
+        }
+
+
 
 
         private async void SignInButton_Click(object sender, RoutedEventArgs e)
@@ -144,10 +159,12 @@ namespace PasswortmanagerWPF
 
                 UserApi.aesKey = GetAesKeyForUser(userDTO.username);
 
+                userDTO.masterKey = UserApi.EncryptMessage(userDTO.masterKey);
+                userDTO.username = UserApi.EncryptMessage(userDTO.username);
+
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
 
-                user.masterKey = UserApi.DecryptMessage(userDTO.masterKey);
-                user.username = UserApi.DecryptMessage(userDTO.username);
+
 
 
                 MainWindow mainWindow = new MainWindow(user);
