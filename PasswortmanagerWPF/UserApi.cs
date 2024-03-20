@@ -151,7 +151,6 @@ namespace PasswortmanagerWPF
                     aes.Key = aesKey;
                 }
 
-                aes.Key = aesKey;
 
                 aes.Mode = CipherMode.ECB;
 
@@ -187,7 +186,7 @@ namespace PasswortmanagerWPF
                 // Decrypt the message
                 ICryptoTransform decryptor = aes.CreateDecryptor();
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
-                
+
 
                 byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
                 string decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);

@@ -19,6 +19,7 @@ using CredentialManagement;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 using System.IO;
+using PasswordGenerator;
 
 namespace PasswortmanagerWPF
 {
@@ -106,60 +107,49 @@ namespace PasswortmanagerWPF
                 Directory.CreateDirectory("Exports");
             }
 
+
             string password = "password";
+
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            passwordBytes = fillKey(passwordBytes);
+            jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
 
 
+
+            /*
+            password = "password";
+            passwordBytes = Encoding.UTF8.GetBytes(password);
+            passwordBytes = fillKey(passwordBytes);
+            jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
+            */
+
+
+            File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
+        }
+
+
+
+        private byte[] fillKey(byte[] passwordBytes)
+        {
             if (passwordBytes.Length <= 32)
             {
                 byte[] paddedPassword = new byte[32];
                 Array.Copy(passwordBytes, paddedPassword, passwordBytes.Length);
                 passwordBytes = paddedPassword;
             }
-
-
-            jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
-
-            /*
-            if (passwordBytes.Length == 32)
-            {
-                passwordBytes = TrimLeadingZeros(passwordBytes);
-            }*/
-
-
-            jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
-
-
-
-            File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
+            return passwordBytes;
         }
-
-        private byte[] TrimLeadingZeros(byte[] input)
-        {
-            int index = 0;
-            // Finden des ersten nicht-Null-Bytes
-            while (index < input.Length && input[index] == 0)
-            {
-                index++;
-            }
-            // Wenn index größer als 0 ist, gibt es führende Nullen, daher wird das Array zugeschnitten
-            if (index > 0)
-            {
-                byte[] trimmedArray = new byte[input.Length - index];
-                Array.Copy(input, index, trimmedArray, 0, trimmedArray.Length);
-                return trimmedArray;
-            }
-            // Wenn index gleich 0 ist, gibt es keine führenden Nullen, daher wird das Eingabearray unverändert zurückgegeben
-            return input;
-        }
-
-
 
         private void ImportEntries_Click(object sender, EventArgs e)
         {
 
             List<EntryModel> currentEntries = entries.ToList();
             UserModel importedUser = null;
+
+            string password = "password";
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            passwordBytes = fillKey(passwordBytes);
+
 
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -170,6 +160,8 @@ namespace PasswortmanagerWPF
             if (openFileDialog.ShowDialog() == true)
             {
                 string jsonString = File.ReadAllText(openFileDialog.FileName);
+
+                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
 
                 importedUser = JsonConvert.DeserializeObject<UserModel>(jsonString);
 
