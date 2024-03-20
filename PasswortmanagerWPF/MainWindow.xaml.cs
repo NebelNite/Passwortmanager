@@ -17,6 +17,8 @@ using SharedLibrary;
 using System.Collections.ObjectModel;
 using CredentialManagement;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace PasswortmanagerWPF
 {
@@ -28,7 +30,6 @@ namespace PasswortmanagerWPF
 
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
         private EntryModel selectedEntry;
-        private byte[] messageToEn;
 
 
         public MainWindow(UserModel user)
@@ -66,10 +67,10 @@ namespace PasswortmanagerWPF
             userDTO.entries = UserApi.user.entries;
 
 
-            // masterkey soll nur gehashed werden 
             userDTO = (UserDTO)UserApi.DecryptUser(userDTO);
 
-            UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+            //UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+            UserModel user = await UserApi.GetInstance().GetUserById(userDTO.id);
 
             entries = new ObservableCollection<EntryModel>(EntryApi.DecryptEntries(user.entries));
 
@@ -83,7 +84,121 @@ namespace PasswortmanagerWPF
         }
 
 
+        private void ExportEntries_Click(object sender, EventArgs e)
+        {
 
+
+            // Passwortgeschützt
+
+
+            UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
+
+            string jsonString = JsonConvert.SerializeObject(decryptedUser, settings);
+
+
+            if (!Directory.Exists("Exports"))
+            {
+                Directory.CreateDirectory("Exports");
+            }
+
+            string password = "password";
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+
+
+            if (passwordBytes.Length <= 32)
+            {
+                byte[] paddedPassword = new byte[32];
+                Array.Copy(passwordBytes, paddedPassword, passwordBytes.Length);
+                passwordBytes = paddedPassword;
+            }
+
+
+            jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
+
+            /*
+            if (passwordBytes.Length == 32)
+            {
+                passwordBytes = TrimLeadingZeros(passwordBytes);
+            }*/
+
+
+            jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
+
+
+
+            File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
+        }
+
+        private byte[] TrimLeadingZeros(byte[] input)
+        {
+            int index = 0;
+            // Finden des ersten nicht-Null-Bytes
+            while (index < input.Length && input[index] == 0)
+            {
+                index++;
+            }
+            // Wenn index größer als 0 ist, gibt es führende Nullen, daher wird das Array zugeschnitten
+            if (index > 0)
+            {
+                byte[] trimmedArray = new byte[input.Length - index];
+                Array.Copy(input, index, trimmedArray, 0, trimmedArray.Length);
+                return trimmedArray;
+            }
+            // Wenn index gleich 0 ist, gibt es keine führenden Nullen, daher wird das Eingabearray unverändert zurückgegeben
+            return input;
+        }
+
+
+
+        private void ImportEntries_Click(object sender, EventArgs e)
+        {
+
+            List<EntryModel> currentEntries = entries.ToList();
+            UserModel importedUser = null;
+
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "JSON Files (*.json)|*.json",
+                Title = "Select the JSON file to import"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string jsonString = File.ReadAllText(openFileDialog.FileName);
+
+                importedUser = JsonConvert.DeserializeObject<UserModel>(jsonString);
+
+                currentEntries.AddRange(importedUser.entries);
+
+            }
+
+            EntryDTO entryDTO = new EntryDTO();
+
+
+            for (int i = 0; i < importedUser.entries.Count(); i++)
+            {
+
+                EntryModel entry = importedUser.entries[i];
+
+                entryDTO.notes = entry.notes;
+                entryDTO.password = entry.password;
+                entryDTO.username = entry.username;
+                entryDTO.title = entry.title;
+
+                EntryApi.GetInstance().createEntry(entryDTO);
+            }
+
+
+            entries = new ObservableCollection<EntryModel>(currentEntries);
+
+            dataGrid.ItemsSource = entries;
+
+        }
 
         private void DeleteEntry_Click(object sender, EventArgs e)
         {
@@ -120,7 +235,9 @@ namespace PasswortmanagerWPF
 
 
 
-            UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+            //UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
+            UserModel user = await UserApi.GetInstance().GetUserById(userDTO.id);
+
             UserApi.user = user;
 
 

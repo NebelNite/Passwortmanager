@@ -21,8 +21,8 @@
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <!-- Grid.ColumnSpan auf 2 setzen, um über beide Spalten zu erstrecken -->
             <MenuItem Header="_File">
-                <MenuItem Header="_Export"/>
-                <MenuItem Header="_Import"/>
+                <MenuItem Header="_Export" Click="ExportEntries_Click"/>
+                <MenuItem Header="_Import" Click="ImportEntries_Click"/>
                 <Separator/>
                 <MenuItem Header="_Lock" Click="LockManager_Click" InputGestureText="Alt+F4"/>
                 <MenuItem Header="_Exit" InputGestureText="Alt+F4"/>

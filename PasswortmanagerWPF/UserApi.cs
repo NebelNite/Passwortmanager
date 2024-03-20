@@ -15,6 +15,7 @@ using System.Net.Http.Headers;
 using System.Windows;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
+using System.Windows.Input;
 
 namespace PasswortmanagerWPF
 {
@@ -77,6 +78,7 @@ namespace PasswortmanagerWPF
             return null;
         }
 
+
         public string EncodeMasterKey(string secret)
         {
             using (var sha512 = SHA512.Create())
@@ -87,16 +89,30 @@ namespace PasswortmanagerWPF
         }
 
 
+
+        public bool VerifyPassword(string passwort, string storedHash)
+        {
+            using (var sha512 = SHA512.Create())
+            {
+                byte[] hash = sha512.ComputeHash(Encoding.UTF8.GetBytes(passwort));
+                string computedHash = BitConverter.ToString(hash).Replace("-", "").ToLower();
+                return computedHash == storedHash;
+            }
+        }
+
+
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
+
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
             var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
-
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
+
+
 
         public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
         {
@@ -110,12 +126,31 @@ namespace PasswortmanagerWPF
 
 
 
+        public async Task<UserModel> GetUserById(string id)
+        {
+
+            var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
+            response.EnsureSuccessStatusCode();
+
+            // Antwort des Servers lesen und in ein UserModel-Objekt deserialisieren
+            return await response.Content.ReadAsAsync<UserModel>();
+        }
 
 
-        public static string EncryptMessage(string message)
+        // optional
+        public static string EncryptMessage(string message, byte[] fileKey = null)
         {
             using (Aes aes = Aes.Create())
             {
+                if (fileKey != null)
+                {
+                    aes.Key = fileKey;
+                }
+                else
+                {
+                    aes.Key = aesKey;
+                }
+
                 aes.Key = aesKey;
 
                 aes.Mode = CipherMode.ECB;
@@ -131,17 +166,28 @@ namespace PasswortmanagerWPF
             }
         }
 
-        public static string DecryptMessage(string encryptedMessage)
+
+
+        public static string DecryptMessage(string encryptedMessage, byte[] fileKey = null)
         {
             using (Aes aes = Aes.Create())
             {
-                aes.Key = aesKey;
+
+                if (fileKey != null)
+                {
+                    aes.Key = fileKey;
+                }
+                else
+                {
+                    aes.Key = aesKey;
+                }
+
                 aes.Mode = CipherMode.ECB;
 
                 // Decrypt the message
                 ICryptoTransform decryptor = aes.CreateDecryptor();
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
-
+                
 
                 byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
                 string decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);
@@ -223,7 +269,7 @@ namespace PasswortmanagerWPF
             {
                 UserDTO userDTO = (UserDTO)user;
 
-                userDTO.masterKey = DecryptMessage(userDTO.masterKey);
+                //userDTO.masterKey = DecryptMessage(userDTO.masterKey);
                 userDTO.username = DecryptMessage(userDTO.username);
 
                 foreach (EntryModel entry in userDTO.entries)
