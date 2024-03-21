@@ -33,6 +33,7 @@ namespace PasswortmanagerWPF
         private EntryModel selectedEntry;
 
 
+
         public MainWindow(UserModel user)
         {
             InitializeComponent();
@@ -87,46 +88,97 @@ namespace PasswortmanagerWPF
 
         private void ExportEntries_Click(object sender, EventArgs e)
         {
+            PasswordInputWindow passwordInputWindow = new PasswordInputWindow();
+            passwordInputWindow.Show();
+
+            passwordInputWindow.FileInput += PasswordInputWindow_FileInput;
+        }
 
 
-            // Passwortgeschützt
+        private void PasswordInputWindow_FileInput(object sender, Tuple<string, string> data)
+        {
 
+            string password = data.Item1;
 
-            UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
-
-            JsonSerializerSettings settings = new JsonSerializerSettings
+            // import
+            if (data.Item2.Length >= 1)
             {
-                Formatting = Formatting.Indented
-            };
+                string jsonString = data.Item2;
 
-            string jsonString = JsonConvert.SerializeObject(decryptedUser, settings);
+                List<EntryModel> currentEntries = entries.ToList();
+                UserModel importedUser = null;
+
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                passwordBytes = fillKey(passwordBytes);
+
+                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
+
+                importedUser = JsonConvert.DeserializeObject<UserModel>(jsonString);
+
+                currentEntries.AddRange(importedUser.entries);
 
 
-            if (!Directory.Exists("Exports"))
+                EntryDTO entryDTO = new EntryDTO();
+
+
+                for (int i = 0; i < importedUser.entries.Count(); i++)
+                {
+
+                    EntryModel entry = importedUser.entries[i];
+
+                    entryDTO.notes = entry.notes;
+                    entryDTO.password = entry.password;
+                    entryDTO.username = entry.username;
+                    entryDTO.title = entry.title;
+
+                    EntryApi.GetInstance().createEntry(entryDTO);
+                }
+
+
+                entries = new ObservableCollection<EntryModel>(currentEntries);
+
+                dataGrid.ItemsSource = entries;
+
+            }
+            else
             {
-                Directory.CreateDirectory("Exports");
+
+                UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
+
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    Formatting = Formatting.Indented
+                };
+
+                string jsonString = JsonConvert.SerializeObject(decryptedUser, settings);
+
+                if (!Directory.Exists("Exports"))
+                {
+                    Directory.CreateDirectory("Exports");
+                }
+
+
+
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                passwordBytes = fillKey(passwordBytes);
+                jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
+
+
+                /*
+                password = "password";
+                passwordBytes = Encoding.UTF8.GetBytes(password);
+                passwordBytes = fillKey(passwordBytes);
+                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
+                */
+
+
+                File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
+
             }
 
 
-            string password = "password";
 
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = fillKey(passwordBytes);
-            jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
-
-
-
-            /*
-            password = "password";
-            passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = fillKey(passwordBytes);
-            jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
-            */
-
-
-            File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
         }
-
 
 
         private byte[] fillKey(byte[] passwordBytes)
@@ -142,14 +194,7 @@ namespace PasswortmanagerWPF
 
         private void ImportEntries_Click(object sender, EventArgs e)
         {
-
-            List<EntryModel> currentEntries = entries.ToList();
-            UserModel importedUser = null;
-
-            string password = "password";
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            passwordBytes = fillKey(passwordBytes);
-
+            string jsonString = "";
 
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -159,39 +204,16 @@ namespace PasswortmanagerWPF
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string jsonString = File.ReadAllText(openFileDialog.FileName);
-
-                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
-
-                importedUser = JsonConvert.DeserializeObject<UserModel>(jsonString);
-
-                currentEntries.AddRange(importedUser.entries);
-
-            }
-
-            EntryDTO entryDTO = new EntryDTO();
-
-
-            for (int i = 0; i < importedUser.entries.Count(); i++)
-            {
-
-                EntryModel entry = importedUser.entries[i];
-
-                entryDTO.notes = entry.notes;
-                entryDTO.password = entry.password;
-                entryDTO.username = entry.username;
-                entryDTO.title = entry.title;
-
-                EntryApi.GetInstance().createEntry(entryDTO);
+                jsonString = File.ReadAllText(openFileDialog.FileName);
             }
 
 
-            entries = new ObservableCollection<EntryModel>(currentEntries);
+            PasswordInputWindow passwordInputWindow = new PasswordInputWindow(jsonString);
+            passwordInputWindow.FileInput += PasswordInputWindow_FileInput;
 
-            dataGrid.ItemsSource = entries;
 
         }
-
+        
         private void DeleteEntry_Click(object sender, EventArgs e)
         {
             EntryApi.GetInstance().deleteEntry(selectedEntry);

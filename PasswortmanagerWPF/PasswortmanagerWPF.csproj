@@ -179,6 +179,9 @@
     <Compile Include="PasswordGeneratorWindow.xaml.cs">
       <DependentUpon>PasswordGeneratorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PasswordInputWindow.xaml.cs">
+      <DependentUpon>PasswordInputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserApi.cs" />
     <Page Include="EntryWindow.xaml">
       <SubType>Designer</SubType>
@@ -205,6 +208,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PasswordGeneratorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PasswordInputWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

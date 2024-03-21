@@ -144,6 +144,8 @@ namespace PasswortmanagerWPF
                 response.EnsureSuccessStatusCode();
 
 
+                UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
+
                 EntryCreated?.Invoke(this, user);
             }
             catch (Exception ex)

@@ -52,7 +52,7 @@ namespace PasswortmanagerWPF
 
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        private async void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
 
             EntryDTO entryDTO = new EntryDTO();
@@ -74,10 +74,11 @@ namespace PasswortmanagerWPF
             {
                 Guid newId = Guid.NewGuid();
                 string idAsString = newId.ToString();
-                
+
                 entryDTO.id = idAsString;
 
                 EntryApi.GetInstance().createEntry(entryDTO);
+
             }
 
             edit = false;
