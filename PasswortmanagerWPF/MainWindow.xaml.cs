@@ -95,11 +95,11 @@ namespace PasswortmanagerWPF
         }
 
 
-        private void PasswordInputWindow_FileInput(object sender, Tuple<string, string> data)
+        private async void PasswordInputWindow_FileInput(object sender, Tuple<string, string> data)
         {
 
             string password = data.Item1;
-
+            
             // import
             if (data.Item2.Length >= 1)
             {
@@ -126,32 +126,57 @@ namespace PasswortmanagerWPF
 
                     EntryModel entry = importedUser.entries[i];
 
+                    // id
+                    Guid newId = Guid.NewGuid();
+                    string idAsString = newId.ToString();
+                    entryDTO.id = idAsString;
+                    entryDTO.id = idAsString;
+
                     entryDTO.notes = entry.notes;
+                    entryDTO.url = entry.url;
                     entryDTO.password = entry.password;
                     entryDTO.username = entry.username;
                     entryDTO.title = entry.title;
+                    
+                    UserApi.user.entries.Add(entry);
+                    EntryApi.GetInstance().createEntry(entryDTO);
+                    
+                    //EntryApi.GetInstance().createEntry(entryDTO);
+                }
 
+                string id = UserApi.user.id;
+
+                UserApi.user = await UserApi.GetInstance().GetUserById(id);
+
+                currentEntries = EntryApi.DecryptEntries(UserApi.user.entries);
+
+                /*
+                foreach(EntryModel entry in importedUser.entries)
+                {
                     EntryApi.GetInstance().createEntry(entryDTO);
                 }
+                */
+
 
 
                 entries = new ObservableCollection<EntryModel>(currentEntries);
 
                 dataGrid.ItemsSource = entries;
+                await Console.Out.WriteLineAsync();
 
             }
             else
             {
 
                 //UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
-                UserModel decryptedUser = (UserModel)UserApi.user;
+                //UserModel decryptedUser = (UserModel)UserApi.user;
 
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
                     Formatting = Formatting.Indented
                 };
 
-                string jsonString = JsonConvert.SerializeObject(decryptedUser, settings);
+                string jsonString = JsonConvert.SerializeObject(UserApi.user, settings);
 
                 if (!Directory.Exists("Exports"))
                 {
@@ -159,7 +184,7 @@ namespace PasswortmanagerWPF
                 }
 
 
-
+                
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
                 passwordBytes = fillKey(passwordBytes);
                 jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
@@ -173,11 +198,9 @@ namespace PasswortmanagerWPF
                 */
 
 
-                File.WriteAllText("Exports/entries(" + decryptedUser.username + ").json", jsonString);
-
+                File.WriteAllText("Exports/entries(" + UserApi.user.id + ").json", jsonString);
+                
             }
-
-
 
         }
 
@@ -275,7 +298,7 @@ namespace PasswortmanagerWPF
 
         private void EditEntry_Click(object sender, EventArgs e)
         {
-
+            
             EntryWindow entryWindow = new EntryWindow(selectedEntry);
             EntryApi.GetInstance().EntryCreated += EntryWindow_EntryCreated;
             entryWindow.Show();

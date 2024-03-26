@@ -140,6 +140,11 @@ namespace PasswortmanagerWPF
         // optional
         public static string EncryptMessage(string message, byte[] fileKey = null)
         {
+            if(message == null)
+            {
+                return null;
+            }
+            
             using (Aes aes = Aes.Create())
             {
                 if (fileKey != null)
@@ -180,7 +185,7 @@ namespace PasswortmanagerWPF
                 {
                     aes.Key = aesKey;
                 }
-
+                
                 aes.Mode = CipherMode.ECB;
                 
                 // Decrypt the message
