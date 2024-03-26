@@ -1,11 +1,13 @@
 package com.example.Passwortmanager.Service;
 
+import com.example.Passwortmanager.DTOs.EntryDTO;
 import com.example.Passwortmanager.DTOs.UserDTO;
 import com.example.Passwortmanager.Model.EntryModel;
 import com.example.Passwortmanager.Model.UserModel;
 import com.example.Passwortmanager.Repository.EntryRepository;
 import com.example.Passwortmanager.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -69,9 +71,20 @@ public class UserService {
 
 
 
-    public UserModel updateUser(UserModel userModel) {
+    public UserModel updateUser(UserModel userModel, Optional<EntryModel> entryModel) {
 
         Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
+
+
+        if(entryModel != null)
+        {
+            Optional<EntryModel> entry = entryRepository.findById(entryModel.get().getId());
+            if (entry.isPresent()) {
+                entry.get().setId(ObjectId.get().toString());
+            }
+        }
+
+        
 
         if (existingUser.isPresent()) {
             List<EntryModel> entries = userModel.getEntries();

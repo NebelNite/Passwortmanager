@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -78,11 +79,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+
+
+
         UserModel user = userOptional.get();
         EntryModel entryModel = entryDTO.toEntryModel();
         user.addEntry(entryModel);
 
-        user = userService.updateUser(user);
+        EntryModel model = entryDTO.toEntryModel();
+
+        user = userService.updateUser(user, Optional.of(model));
 
         return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
     }

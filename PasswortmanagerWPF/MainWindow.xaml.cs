@@ -118,8 +118,8 @@ namespace PasswortmanagerWPF
                 currentEntries.AddRange(importedUser.entries);
 
 
-                EntryDTO entryDTO = new EntryDTO();
 
+                EntryDTO entryDTO = new EntryDTO();
 
                 for (int i = 0; i < importedUser.entries.Count(); i++)
                 {
@@ -143,7 +143,8 @@ namespace PasswortmanagerWPF
             else
             {
 
-                UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
+                //UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
+                UserModel decryptedUser = (UserModel)UserApi.user;
 
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -209,11 +210,12 @@ namespace PasswortmanagerWPF
 
 
             PasswordInputWindow passwordInputWindow = new PasswordInputWindow(jsonString);
+            passwordInputWindow.Show();
             passwordInputWindow.FileInput += PasswordInputWindow_FileInput;
 
 
         }
-        
+
         private void DeleteEntry_Click(object sender, EventArgs e)
         {
             EntryApi.GetInstance().deleteEntry(selectedEntry);

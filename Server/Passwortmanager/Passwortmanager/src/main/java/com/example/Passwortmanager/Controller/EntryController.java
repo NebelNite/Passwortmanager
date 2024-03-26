@@ -61,7 +61,7 @@ public class EntryController {
         if (entry.isPresent()) {
 
             userModel.getEntries().remove(entry.get());
-            userService.updateUser(userModel);
+            userService.updateUser(userModel, null);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
@@ -72,7 +72,6 @@ public class EntryController {
 
     @PostMapping("/editEntry/{id}")
     public ResponseEntity<Void> editEntry(@PathVariable("id") String id, @RequestBody EntryDTO entryDto) {
-
 
 
         Optional<UserModel> userOptional  = userService.getUserById(id);
@@ -99,7 +98,7 @@ public class EntryController {
         entry.setUrl(entryDto.getUrl());
         entry.setNotes(entryDto.getNotes());
 
-        userService.updateUser(user);
+        userService.updateUser(user, null);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

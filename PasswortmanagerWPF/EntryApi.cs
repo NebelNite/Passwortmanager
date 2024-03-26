@@ -63,7 +63,6 @@ namespace PasswortmanagerWPF
 
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
-
                 response.EnsureSuccessStatusCode();
 
                 int entryCount = user.entries.Count;
