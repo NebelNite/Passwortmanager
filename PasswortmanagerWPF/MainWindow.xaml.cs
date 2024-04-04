@@ -32,7 +32,7 @@ namespace PasswortmanagerWPF
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
         private EntryModel selectedEntry;
 
-
+        
 
         public MainWindow(UserModel user)
         {
@@ -40,6 +40,7 @@ namespace PasswortmanagerWPF
 
             this.Icon = new BitmapImage(new Uri("MainIcon.ico", UriKind.Relative));
             leftBack.ImageSource = new BitmapImage(new Uri("leftBack2.png", UriKind.Relative));
+            this.Title = "Passwortmanager";
 
             UserApi.user = user;
 

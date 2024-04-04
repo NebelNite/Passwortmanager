@@ -10,7 +10,7 @@
 
     @Document(collection = "users")
     public class UserModel {
-
+        
         @Id
         private String id;
         @Field("username")

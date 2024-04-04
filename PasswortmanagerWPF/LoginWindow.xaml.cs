@@ -34,7 +34,7 @@ namespace PasswortmanagerWPF
 
         }
 
-
+        
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
@@ -166,8 +166,6 @@ namespace PasswortmanagerWPF
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
 
 
-
-
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
                 this.Close();
@@ -201,7 +199,7 @@ namespace PasswortmanagerWPF
             return output;
 
         }
-
+        
 
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -223,7 +221,7 @@ namespace PasswortmanagerWPF
         }
 
 
-
+        
 
     }
 }
