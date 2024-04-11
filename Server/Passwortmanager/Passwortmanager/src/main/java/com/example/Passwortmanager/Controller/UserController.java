@@ -25,6 +25,8 @@ public class UserController {
     }
 
 
+    
+
     @PostMapping("/getUserByUsernameAndMasterKey")
     public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
         Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
@@ -54,7 +56,8 @@ public class UserController {
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
-    
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
