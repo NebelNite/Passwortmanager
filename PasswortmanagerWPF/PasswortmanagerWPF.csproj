@@ -172,8 +172,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="EntryDTO.cs" />
-    <Compile Include="EntryModel.cs" />
     <Compile Include="EntryWindow.xaml.cs">
       <DependentUpon>EntryWindow.xaml</DependentUpon>
     </Compile>
@@ -185,8 +183,6 @@
       <DependentUpon>PasswordInputWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserApi.cs" />
-    <Compile Include="UserDTO.cs" />
-    <Compile Include="UserModel.cs" />
     <Page Include="EntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

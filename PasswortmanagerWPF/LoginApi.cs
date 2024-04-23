@@ -19,7 +19,6 @@ namespace PasswortmanagerWPF
             _connectionString = connectionString;
         }
 
-
         public HttpClient GetHttpClient()
         {
             return _httpClient;

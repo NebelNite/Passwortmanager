@@ -25,7 +25,10 @@ public class UserController {
     }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of c042a07 (NodeJS + ReadMe)
     @PostMapping("/getUserByUsernameAndMasterKey")
     public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
         Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
@@ -54,8 +57,13 @@ public class UserController {
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
+<<<<<<< HEAD
 
     
+=======
+    
+
+>>>>>>> parent of c042a07 (NodeJS + ReadMe)
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
 

@@ -52,7 +52,6 @@ public class EntryController {
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);
     }*/
 
-    
     @PostMapping("/delete/{id}")
     public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
 

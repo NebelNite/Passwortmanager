@@ -13,5 +13,6 @@ namespace SharedLibrary
         public List<EntryModel> entries { get; set; }
         public string masterKey { get; set; }
 
+
     }
 }

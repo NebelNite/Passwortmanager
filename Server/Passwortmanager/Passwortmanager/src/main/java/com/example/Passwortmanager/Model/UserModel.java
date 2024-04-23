@@ -19,9 +19,8 @@
         private List<EntryModel> entries;
         @Field("masterKey")
         private String masterKey;
-
-        private String token;
         
+        private String token;
 
         public UserModel(String id, String username, List<EntryModel> entries, String masterKey) {
             this.id = id;
