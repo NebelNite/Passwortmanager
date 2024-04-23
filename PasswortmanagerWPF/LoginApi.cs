@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace PasswortmanagerWPF
 {
+
     internal abstract class LoginApi
     {
         private HttpClient _httpClient;
         private string _connectionString;
-        
+
         public LoginApi(HttpClient httpClient, string connectionString)
         {
             _httpClient = httpClient;

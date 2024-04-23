@@ -1,6 +1,15 @@
-
+import CryptoJS from '/crypto-js';
 
 /*
+import { UserApi } from "../Class/UserApi";
+import { EntryApi } from "../Class/EntryApi";
+import { EntryDTO } from "../Class/EntryDTO";
+import { EntryModel } from "../Class/EntryModel";
+import { LoginApi } from "../Class/LoginApi";
+import { UserDTO } from "../Class/UserDTO";
+import { UserModel } from "../Class/UserModel";
+*/
+
 
 class Entry {
   constructor(title, username, password, url, notes, id) {
@@ -11,6 +20,7 @@ class Entry {
     this.notes = notes;
     this.id = id;
   }
+
 
   
 get title() {
@@ -71,29 +81,62 @@ set id(value) {
 
 
 
-
-
-
 class LoginApi {
-constructor(httpClient, connectionString) {
-  this._httpClient = httpClient;
+  
+constructor(connectionString) {
   this._connectionString = connectionString;
 }
 
+/*
   getHttpClient() {
     return this._httpClient;
   }
+  */
 
+  //pathVar
+
+  
+  postRequest(obj,url)
+  {
+    axios.post(url, obj)
+    .then(response => {
+
+      console.log('Erfolgreich gepostet. Antwort:', response.data);
+
+    })
+    .catch(error => {
+      console.error('Fehler beim Posten:', error);
+    });
+    
+
+  }
+
+  getRequest(url)
+  {
+    axios.get(url)
+    .then(response => {
+      console.log('Erfolgreich erhalten. Antwort:', response.data);
+    })
+    .catch(error => {
+      console.error('Fehler beim Abrufen:', error);
+    });
+  }
+  
+
+  
   getConnectionString() {
     return this._connectionString;
   }
 
+
+
   
-  
+  /*
 
 
   
   static async sendRequest(url, method, data1, data2) {
+
     try {
         let requestData = {
             method: method, // Die Methode der Anfrage (GET oder POST)
@@ -101,22 +144,18 @@ constructor(httpClient, connectionString) {
                 'Content-Type': 'application/json' // Der Content-Type der Daten (JSON)
             }
         };
-
+        
         if (method === 'POST') {
             requestData.body = JSON.stringify({ data1, data2 }); // Die Daten, die gesendet werden sollen, als JSON formatieren
         }
-
-        // Die Anfrage senden
+        
         const response = await fetch(url, requestData);
 
-        // Die Antwort verarbeiten
         if (response.ok) {
-            // Die Anfrage war erfolgreich (Statuscode 200-299)
             const responseData = await response.json(); // Die Antwortdaten als JSON parsen
             console.log('Antwort des Servers:', responseData);
             return responseData;
         } else {
-            // Es gab einen Fehler bei der Anfrage (Statuscode außerhalb von 200-299)
             console.error('Fehler bei der Anfrage:', response.statusText);
             return null;
         }
@@ -135,7 +174,7 @@ static async postRequest(url, data1, data2) {
     return await this.sendRequest(url, 'POST', data1, data2);
 }
 
-
+*/
 
 
 
@@ -148,11 +187,11 @@ static async postRequest(url, data1, data2) {
 
 
 class UserApi extends LoginApi {
-
+  
 static instance;
 
-constructor(httpClient, connectionString) {
-  super(httpClient, connectionString);
+constructor(connectionString) {
+  super(connectionString);
   this.aesKey = null;
 }
 
@@ -161,15 +200,22 @@ constructor(httpClient, connectionString) {
 static getInstance() {
   if (UserApi.instance == null) {
     
-    UserApi.instance = new UserApi(new HttpClient(), 'http://localhost:8080');
+    UserApi.instance = new UserApi('http://localhost:8080');
   }
 
   return UserApi.instance;
 }
 
 async createUser(userDto) {
+  
+  console.log("Test");
   userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
+  
+  //JSON
+  this.postRequest(this.getConnectionString()+"/users/create", userDto);
 
+  
+  /*
   try {
     const response = await this.getHttpClient().post('/users/create', {
       body: JSON.stringify(userDto)
@@ -183,8 +229,9 @@ async createUser(userDto) {
   } catch (error) {
     //MessageBox.show('Username ist bereits vergeben!');
   }
-
+*/
   return null;
+
 }
 
 encodeMasterKey(secret) {
@@ -196,6 +243,7 @@ encodeMasterKey(secret) {
 async authenticateUser(userDto) {
   userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
+  /*
   const response = await this.getHttpClient().post('/users/authenticate', {
     body: JSON.stringify(userDto)
   });
@@ -206,13 +254,14 @@ async authenticateUser(userDto) {
     UserApi.user = user;
     return user;
   }
-
+*/
   return null;
 }
 
 async getUserByUsernameAndMasterKey(userDto) {
   userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
+  /*
   const response = await this.getHttpClient().post('/users/getUserByUsernameAndMasterKey', {
     body: JSON.stringify(userDto)
   });
@@ -220,16 +269,18 @@ async getUserByUsernameAndMasterKey(userDto) {
   if (response.statusCode == 200) {
     return await response.json();
   }
-
+*/
   return null;
 }
 
 async getUserById(id) {
+  /*
   const response = await this.getHttpClient().get(`/users/${id}`);
 
   if (response.statusCode == 200) {
     return await response.json();
   }
+  */
   
   return null;
 }
@@ -294,11 +345,10 @@ decryptMessage(encryptedMessage, fileKey = null) {
 //const { MessageBox } = require('electron'); // Annahme: Verwendung von Electron für MessageBox
 
 
-// Definieren der EntryApi-Klasse
 class EntryApi extends LoginApi {
 
-  constructor(httpClient, connectionString) {
-      super(httpClient, connectionString);
+  constructor(connectionString) {
+      super(connectionString);
       this.EntryCreated = null;
   }
 
@@ -321,10 +371,11 @@ class EntryApi extends LoginApi {
           userDTO.masterKey = user.masterKey;
           userDTO.entries = user.entries;
 
+          /*
           const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
           
           response.EnsureSuccessStatusCode();
-
+*/
           const entryCount = user.entries.length;
           for (let i = 0; entryCount == user.entries.length; i++) {
               if (user.entries[i].id == selectedEntry.id) {
@@ -350,10 +401,11 @@ class EntryApi extends LoginApi {
         const userApi = UserApi.GetInstance();
 
         entryDto = this.EncryptEntry(entryDto);
-
+        /*
         const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
         response.EnsureSuccessStatusCode();
-
+        */
+       
         this.EntryCreated?.(this, user);
     } catch (ex) {
         //MessageBox.show("Creating/Editing Entry failed!");
@@ -373,12 +425,13 @@ async createEntry(entryDto) {
         entryDto = this.EncryptEntry(entryDto);
         
         const userApi = UserApi.GetInstance();
-
+        /*
         const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
         response.EnsureSuccessStatusCode();
-
+        
         UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
-
+        */
+       
         this.EntryCreated?.(this, user);
     } catch (ex) {
         //MessageBox.show("Creating/Editing Entry failed!");
@@ -434,183 +487,299 @@ static DecryptEntries(entries) {
 }
 
 
+
+
+  
+
+
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+
+/*
+const axios = require('axios');
+const nodeWindows = require('node-windows');
 */
 
 
 
 
+/*
+const { UserCredential } = require('node-windows').Credentials;
+*/
+
+/*
+require(['node-windows'], function(nodeWindows) {
+
+
+});
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let userApi = UserApi.getInstance();
-
-function isValidPassword(masterkey) {
-  let output = "";
-  const nonSpecialCharacters = /[^A-Za-z0-9]/;
+require(['axios'], function(axios) {
   
-  /*
-  if (masterkey.length < 10) {
-    output += "At least: 10 characters\n";
-  }
+});
+*/
 
-  if (!nonSpecialCharacters.test(masterkey)) {
-    output += "At least: 1 special character\n";
-  }
-  */
 
-  return output;
-}
 
-function signUpButtonClick(event) {
+//const axios = require('axios');
 
-  const username = document.getElementById("usernameInput").value;
-  const masterkey = document.getElementById("masterKeyInput").value;
 
-  const msg = isValidPassword(masterkey);
+  console.log("Here");
 
-  if (msg.length == 0) {
-    if (!aesKeyExistsForUser(username)) {
-      setAesKeyForUser(username);
+  let userApi = UserApi.getInstance();
+
+  function isValidPassword(masterkey) {
+    let output = "";
+    const nonSpecialCharacters = /[^A-Za-z0-9]/;
+    
+    /*
+    if (masterkey.length < 10) {
+      output += "At least: 10 characters\n";
     }
 
+    if (!nonSpecialCharacters.test(masterkey)) {
+      output += "At least: 1 special character\n";
+    }
+    */
 
-    const userDTO = new UserDTO();
-    userDTO.masterKey = userApi.encryptMessage(masterkey);
-    userDTO.username = userApi.encryptMessage(username);
-
-    userApi.createUserAsync(userDTO)
-      .then(() => {
-        console.log("SignUp successful!");
-      })
-      .catch((error) => {
-        console.error("SignUp failed:", error);
-        alert("SignUp failed!");
-      });
-  } else {
-    alert(msg);
+    return output;
   }
-}
 
-function setAesKeyForUser(username) {
-  // Generate a new AES key
-  const aes = new Aes();
-  aes.generateKey();
 
-  const aesKey = Array.from(aes.key);
+  
 
-  // Convert the AES key to a base64 string
-  const aesKeyBase64 = btoa(String.fromCharCode.apply(null, aesKey));
+  function signUpButtonClick(event) {
+    
+    console.log("SignUp1");
+    
+    const username = document.getElementById("usernameInput").value;
+    const masterkey = document.getElementById("masterKeyInput").value;
 
-  // Save the AES key in the Credential Manager
-  const credentialSet = new Credential({
-    target: "AESKey",
-    username: username,
-    password: aesKeyBase64,
-    persistanceType: PersistanceType.LocalComputer
-  });
+    const msg = isValidPassword(masterkey);
+    
 
-  credentialSet.save();
-}
+    if (msg.length == 0) {
+      if (!aesKeyExistsForUser(username)) {
+        setAesKeyForUser(username);
+      }
+      
+    console.log("SignUp2");
+
+
+      const userDTO = new UserDTO();
+      userDTO.masterKey = userApi.encryptMessage(masterkey);
+      userDTO.username = userApi.encryptMessage(username);
+
+      userApi.createUserAsync(userDTO)
+        .then(() => {
+          console.log("SignUp successful!");
+        })
+        .catch((error) => {
+          console.error("SignUp failed:", error);
+          alert("SignUp failed!");
+        });
+    } else {
+      alert(msg);
+    }
+    
+    console.log("SignUp3");
+  }
+  
+  function setAesKeyForUser(username) {
+    
+    const aesKey = CryptoJS.enc.Hex.parse('000102030405060708090a0b0c0d0e0f');
+    console.log(aesKey);
+
+    localStorage.setItem(username, aesKey.toString(CryptoJS.enc.Base64));
+    
+    /*
+    const aes = new Aes();
+    aes.generateKey();
+    const aesKey = Array.from(aes.key);
+    const aesKeyBase64 = btoa(String.fromCharCode.apply(null, aesKey));
+    
+    const credentialSet = new Credential({
+      target: "AESKey",
+      username: username,
+      password: aesKeyBase64,
+      persistanceType: PersistanceType.LocalComputer
+    });
+
+    credentialSet.save();
+    */
+
+  }
 
 
 function getAesKeyForUser(username) {
-  const credential = new Credential({
-    target: "AESKey",
-    username: username
-  });
 
-  if (credential.load()) {
-    const aesKeyBase64 = credential.password;
-    const aesKey = Uint8Array.from(atob(aesKeyBase64), c => c.charCodeAt(0));
+  let aesKeyObj = null;
+  const retrievedAesKey = localStorage.getItem(username);
+  aesKeyObj = CryptoJS.enc.Base64.parse(retrievedAesKey);
+  
+  return aesKeyObj;
 
-    // Use the AES key for further operations
-    // In this example, we simply return the key
-    return aesKey;
-  } else {
-    console.log("The AES key was not found.");
+    /*
+    const credential = new Credential({
+      target: "AESKey",
+      username: username
+    });
+
+    if (credential.load()) {
+      const aesKeyBase64 = credential.password;
+      const aesKey = Uint8Array.from(atob(aesKeyBase64), c => c.charCodeAt(0));
+
+      return aesKey;
+    } else {
+      console.log("The AES key was not found.");
+    }
+
+    return null;
+    */
   }
 
-  return null;
-}
 
-
-function aesKeyExistsForUser(username) {
-
-  const credential = new Credential({
-    target: "AESKey",
-    username: username
-  });
   
+  function aesKeyExistsForUser(username) {
 
-  return credential.load();
-}
+    console.log(username);
 
-function signInButtonClick(event) {
 
-  const userDTO = new UserDTO();
-  userDTO.masterKey = document.getElementById("SignInMasterkey").value;
-  userDTO.username = document.getElementById("SignInUsername").value;
-  
-  userApi.aesKey = getAesKeyForUser(userDTO.username);
+    const retrievedAesKey = localStorage.getItem(username);
+    
+    if (retrievedAesKey == null) {
+      return false;
+    } else {
+      return true;
+    }
 
-  userDTO.masterKey = userApi.encryptMessage(userDTO.masterKey);
-  userDTO.username = userApi.encryptMessage(userDTO.username);
 
-  userApi.authenticateUserAsync(userDTO)
-    .then((user) => {
-
-        const userJson = encodeURIComponent(JSON.stringify(user));
-        const url = `../HTML/homepage.html?user=${userJson}`;
-        window.location.href = url;
+    /*
+    let credential= new Credential({
+      target: "AESKey",
+      username: username
     })
-    .catch((error) => {
-      console.error("Authentication failed:", error);
-      alert("Authentication failed. Please check your credentials and try again.");
+    
+    
+    console.log(credential.target);
+
+
+    let credential = new UserCredential({
+      target: "AESKey",
+      username: username
     });
-}
 
 
-// Initialize the UserApi instance
-//UserApi.initialize();
-//UserApi.getInstance();
+    credential.get((error, result) => {
+      if (error) {
+        console.error(`Error retrieving credential: ${error}`);
+      } else {
+        // The AES key is stored in the password property of the result object
+        const aesKey = Buffer.from(result.password, 'base64');
+        console.log('AES key:', aesKey.toString('hex'));
+      }
+    });
+    */
 
-// Add event listeners to the Sign Up and Sign In buttons
-document.getElementById("SignUpButton").addEventListener("click", signUpButtonClick);
-document.getElementById("SignInButton").addEventListener("click", signInButtonClick);
+   
+  }
+
+  function signInButtonClick(event) {
+
+    const userDTO = new UserDTO();
+    userDTO.masterKey = document.getElementById("SignInMasterkey").value;
+    userDTO.username = document.getElementById("SignInUsername").value;
+    
+    userApi.aesKey = getAesKeyForUser(userDTO.username);
+
+    userDTO.masterKey = userApi.encryptMessage(userDTO.masterKey);
+    userDTO.username = userApi.encryptMessage(userDTO.username);
+
+    userApi.authenticateUserAsync(userDTO)
+      .then((user) => {
+
+          const userJson = encodeURIComponent(JSON.stringify(user));
+          const url = `../HTML/homepage.html?user=${userJson}`;
+          window.location.href = url;
+      })
+      .catch((error) => {
+        console.error("Authentication failed:", error);
+        alert("Authentication failed. Please check your credentials and try again.");
+      });
+  }
+
+
+  // Initialize the UserApi instance
+  //UserApi.initialize();
+  //UserApi.getInstance();
+
+  // Add event listeners to the Sign Up and Sign In buttons
+  document.getElementById("SignUpButton").addEventListener("click", signUpButtonClick);
+  document.getElementById("SignInButton").addEventListener("click", signInButtonClick);
+  
+
+
+});
 
 
 

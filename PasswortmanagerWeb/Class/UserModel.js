@@ -1,13 +1,13 @@
 const EntryModel = require('./EntryModel');
 
-class UserModel {
+export class UserModel {
   constructor() {
     this.id = '';
     this.username = '';
     this.entries = [];
     this.masterKey = '';
   }
-
+  
   static fromDTO(userDTO) {
     const userModel = new UserModel();
     userModel.id = userDTO.id;

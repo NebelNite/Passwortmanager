@@ -72,11 +72,11 @@ namespace PasswortmanagerWPF
             }
             else
             {
+                
                 Guid newId = Guid.NewGuid();
                 string idAsString = newId.ToString();
-
                 entryDTO.id = idAsString;
-
+                
                 EntryApi.GetInstance().createEntry(entryDTO);
 
             }

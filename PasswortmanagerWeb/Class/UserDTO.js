@@ -1,6 +1,6 @@
 const EntryDTO = require('./EntryDTO');
 
-class UserDTO {
+export class UserDTO {
   constructor() {
     this.id = '';
     this.username = '';

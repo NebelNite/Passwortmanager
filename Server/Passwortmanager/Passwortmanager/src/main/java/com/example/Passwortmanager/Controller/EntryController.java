@@ -99,12 +99,12 @@ public class EntryController {
         entry.setUrl(entryDto.getUrl());
         entry.setNotes(entryDto.getNotes());
 
-        userService.updateUser(user, null);
+        userService.updateUser(user, Optional.of(entry));
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    
 
 /*
     @PutMapping("/{id}")

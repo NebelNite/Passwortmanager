@@ -1,4 +1,4 @@
-class EntryModel {
+export class EntryModel {
 
   constructor() {
     this.id = '';

@@ -1,0 +1,870 @@
+package com.example.Passwortmanager.Controller;
+
+import com.example.Passwortmanager.DTOs.EntryDTO;
+import com.example.Passwortmanager.DTOs.UserDTO;
+import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+
+    
+
+    @PostMapping("/getUserByUsernameAndMasterKey")
+    public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
+        Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
+
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserModel user = userOptional.get();
+        userDto = new UserDTO(user);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/create")
+    public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
+
+        UserModel userModel = userDto.toUserModel();
+        UserModel createdUser = userService.createUser(userModel);
+
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/authenticate")
+    public UserModel authenticateUser(@RequestBody UserDTO userDto) {
+        return userService.authenticateUserAsync(userDto);
+    }
+
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
+
+        Optional<UserModel> userOptional = userService.getUserById(id);
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserModel user = userOptional.get();
+        UserDTO userDto = new UserDTO(user);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+    
+
+    @PostMapping("/{userId}/addEntry")
+    public ResponseEntity<EntryModel> addEntry(@PathVariable("userId") String userId, @RequestBody EntryDTO entryDTO) {
+
+        Optional<UserModel> userOptional = userService.getUserById(userId);
+
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+
+
+        UserModel user = userOptional.get();
+        EntryModel entryModel = entryDTO.toEntryModel();
+        user.addEntry(entryModel);
+
+        EntryModel model = entryDTO.toEntryModel();
+
+        user = userService.updateUser(user, Optional.of(model));
+
+        return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
+    }
+
+    
+}
+
+
+package com.example.Passwortmanager.Controller;
+
+import com.example.Passwortmanager.DTOs.EntryDTO;
+import com.example.Passwortmanager.DTOs.UserDTO;
+import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Service.EntryService;
+import com.example.Passwortmanager.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/entries")
+public class EntryController {
+
+    private final EntryService entryService;
+
+    private final UserService userService;
+
+    public EntryController(EntryService entryService, UserService userService) {
+        this.entryService = entryService;
+        this.userService = userService;
+    }
+
+    /*
+    @GetMapping
+    public ResponseEntity<List<EntryModel>> getAllEntries() {
+        List<EntryModel> entries = entryService.getAllEntries();
+        return new ResponseEntity<>(entries, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EntryModel> getEntryById(@PathVariable("id") String id) {
+        EntryModel entry = entryService.getEntryById(id);
+        if (entry != null) {
+            return new ResponseEntity<>(entry, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+*/
+    /*
+    @PostMapping("/create")
+    public ResponseEntity<UserModel> createEntry(@RequestBody EntryModel entryModel, UserModel userModel) {
+        UserModel createdEntry = entryService.createEntry(entryModel, userModel);
+        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+    }*/
+
+    
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
+
+        UserModel userModel = userDTO.toUserModel();
+
+        Optional<EntryModel> entry = userModel.getEntries().stream().filter(e -> e.getId().equals(id)).findFirst();
+        if (entry.isPresent()) {
+
+            userModel.getEntries().remove(entry.get());
+            userService.updateUser(userModel, null);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PostMapping("/editEntry/{id}")
+    public ResponseEntity<Void> editEntry(@PathVariable("id") String id, @RequestBody EntryDTO entryDto) {
+
+
+        Optional<UserModel> userOptional  = userService.getUserById(id);
+
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserModel user = userOptional.get();
+
+        Optional<EntryModel> entryOptional = user.getEntries().stream()
+                .filter(entry -> entry.getId().equals(entryDto.getId()))
+                .findFirst();
+
+        if (entryOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        EntryModel entry = entryOptional.get();
+
+        entry.setTitle(entryDto.getTitle());
+        entry.setUsername(entryDto.getUsername());
+        entry.setPassword(entryDto.getPassword());
+        entry.setUrl(entryDto.getUrl());
+        entry.setNotes(entryDto.getNotes());
+
+        userService.updateUser(user, null);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+/*
+    @PutMapping("/{id}")
+    public ResponseEntity<EntryModel> updateEntry(@PathVariable("id") String id, @RequestBody EntryModel entryModel) {
+        EntryModel updatedEntry = entryService.updateEntry(id, entryModel);
+        if (updatedEntry != null) {
+            return new ResponseEntity<>(updatedEntry, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id) {
+        boolean deleted = entryService.deleteEntry(id);
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+*/
+    
+}
+
+package com.example.Passwortmanager.DTOs;
+
+import com.example.Passwortmanager.Model.EntryModel;
+import lombok.Data;
+
+@Data
+public class EntryDTO {
+
+    private String id;
+
+    private String title;
+    private String username;
+    private String password;
+    private String url;
+    private String notes;
+
+
+    public EntryDTO()
+    {
+
+    }
+    public EntryDTO(EntryModel entryModel) {
+        this.id = entryModel.getId();
+        this.title = entryModel.getTitle();
+        this.username = entryModel.getUsername();
+        this.password = entryModel.getPassword();
+        this.url = entryModel.getUrl();
+        this.notes = entryModel.getNotes();
+    }
+
+    public EntryModel toEntryModel() {
+        return new EntryModel(this.id, this.title, this.username, this.password, this.url, this.notes);
+    }
+
+
+}
+
+
+package com.example.Passwortmanager.DTOs;
+
+import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Model.EntryModel;
+import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
+public class UserDTO {
+
+    private String id;
+    private String username;
+    private List<EntryDTO> entries;
+    private String masterKey;
+
+    public UserDTO() {
+    }
+
+    public UserDTO(UserModel userModel) {
+        this.id = userModel.getId();
+        this.username = userModel.getUsername();
+        this.entries = userModel.getEntries().stream()
+                .map(entry -> new EntryDTO(entry))
+                .collect(Collectors.toList());
+        this.masterKey = userModel.getMasterKey();
+    }
+
+    public UserDTO(String id, String username, List<EntryDTO> entries, String masterKey) {
+        this.id = id;
+        this.username = username;
+        this.entries = entries;
+        this.masterKey = masterKey;
+    }
+
+    public UserDTO(String username, String masterKey) {
+        this.username = username;
+        this.masterKey = masterKey;
+    }
+
+    public UserDTO(String username, List<EntryDTO> entries, String masterKey) {
+        this.username = username;
+        this.entries = entries;
+        this.masterKey = masterKey;
+    }
+
+    public UserModel toUserModel() {
+        List<EntryModel> entries = new ArrayList<>();
+
+        if (this.entries != null) {
+            for (EntryDTO entryDTO : this.entries) {
+                EntryModel entryModel = entryDTO.toEntryModel();
+                entries.add(entryModel);
+            }
+        }
+
+        return new UserModel(this.id, this.username, entries, this.masterKey);
+    }
+}
+
+
+package com.example.Passwortmanager.Exception;
+
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+}
+
+
+package com.example.Passwortmanager.Model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection = "entries")
+public class EntryModel {
+
+
+    @Id
+    private String id;
+    @Field("title")
+    private String title;
+    @Field("username")
+    private String username;
+    @Field("password")
+    private String password;
+    @Field("url")
+    private String url;
+    @Field("notes")
+    private String notes;
+    
+    
+    public EntryModel(String id, String title, String username, String password, String url, String notes) {
+        this.id = id;
+        this.title = title;
+        this.username = username;
+        this.password = password;
+        this.url = url;
+        this.notes = notes;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+}
+
+
+    package com.example.Passwortmanager.Model;
+
+    import org.springframework.data.mongodb.core.mapping.Document;
+    import org.springframework.data.annotation.Id;
+    import org.springframework.data.mongodb.core.mapping.Field;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.UUID;
+
+    @Document(collection = "users")
+    public class UserModel {
+        
+        @Id
+        private String id;
+        @Field("username")
+        private String username;
+        @Field("entries")
+        private List<EntryModel> entries;
+        @Field("masterKey")
+        private String masterKey;
+
+        private String token;
+        
+
+        public UserModel(String id, String username, List<EntryModel> entries, String masterKey) {
+            this.id = id;
+            this.username = username;
+            this.entries = entries;
+            this.masterKey = masterKey;
+        }
+
+
+
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public List<EntryModel> getEntries() {
+            return entries;
+        }
+
+        /*public void setPasswords(List<EntryModel> passwords) {
+            this.passwords = passwords;
+        }*/
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setMasterKey(String masterKey) {
+            this.masterKey = masterKey;
+        }
+
+        public String getMasterKey() {
+            return masterKey;
+        }
+        
+
+
+        public void addEntry(EntryModel entry) {
+            if (entries == null) {
+                entries = new ArrayList<>();
+            }
+            /*
+            String newId = UUID.randomUUID().toString();
+            entry.setId(newId);
+            */
+
+            this.entries.add(entry);
+        }
+
+        public void setEntries(List<EntryModel> entries)
+        {
+            this.entries = entries;
+        }
+
+
+    }
+
+
+
+package com.example.Passwortmanager.Repository;
+
+import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface EntryRepository extends MongoRepository<EntryModel, String> {
+
+
+
+    
+
+}
+
+
+package com.example.Passwortmanager.Repository;
+
+import com.example.Passwortmanager.*;
+import com.example.Passwortmanager.Model.UserModel;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
+@Repository
+public interface UserRepository extends MongoRepository<UserModel, String> {
+
+    UserModel save(UserModel user);
+
+    Optional<UserModel> findByUsernameAndMasterKey(String username, String masterKey);
+    Optional<UserModel> findByUsername(String username);
+    
+    /*
+    @Override
+    default <S extends UserModel> S save(S entity) {
+        return super.save(entity);
+    }*/
+
+}
+
+
+package com.example.Passwortmanager.Service;
+
+import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Repository.EntryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EntryService {
+
+
+
+    private final EntryRepository entryRepository;
+
+    @Autowired
+    public EntryService(EntryRepository entryRepository) {
+        this.entryRepository = entryRepository;
+    }
+
+   /*private final UserService userService;
+
+
+    @Autowired
+    public EntryService(UserService userService) {
+        this.userService = userService;
+
+
+    }
+    */
+
+
+    public UserModel createEntry(EntryModel entryModel, UserModel userModel) {
+        userModel.addEntry(entryModel);
+        entryRepository.save(entryModel);
+
+        return userModel;
+    }
+
+
+
+
+
+
+/*
+    public List<EntryModel> getAllEntries() {
+        return entryModels;
+    }
+
+    public EntryModel getEntryById(String id) {
+        for (EntryModel entry : entryModels) {
+            if (entry.getId().equals(id)) {
+                return entry;
+            }
+        }
+        return null;
+    }
+
+
+
+    public EntryModel updateEntry(String id, EntryModel entryModel) {
+        for (int i = 0; i < entryModels.size(); i++) {
+            EntryModel entry = entryModels.get(i);
+            if (entry.getId().equals(id)) {
+                entryModels.set(i, entryModel);
+                return entryModel;
+            }
+        }
+        return null;
+    }*/
+
+    /*
+    public boolean deleteEntry(String id) {
+
+        for (int i = 0; i < entryModels.size(); i++) {
+            EntryModel entry = entryModels.get(i);
+            if (entry.getId().equals(id)) {
+                entryModels.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }*/
+
+
+}
+
+package com.example.Passwortmanager.Service;
+
+import com.example.Passwortmanager.DTOs.EntryDTO;
+import com.example.Passwortmanager.DTOs.UserDTO;
+import com.example.Passwortmanager.Model.EntryModel;
+import com.example.Passwortmanager.Model.UserModel;
+import com.example.Passwortmanager.Repository.EntryRepository;
+import com.example.Passwortmanager.Repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+//import org.springframework.security.authentication.BadCredentialsException;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.security.Key;
+
+import com.example.Passwortmanager.Exception.UserNotFoundException;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    private final EntryRepository entryRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @Autowired
+    public UserService(UserRepository userRepository, EntryRepository entryRepository) {
+        this.userRepository = userRepository;
+        this.entryRepository = entryRepository;
+    }
+
+/*
+    public UserModel updateUser(UserModel updatedUser, EntryDTO entryDTO) {
+
+        Optional<UserModel> existingUserOptional = userRepository.findById(updatedUser.getId());
+
+        if (existingUserOptional.isEmpty()) {
+            throw new UserNotFoundException("User with ID " + updatedUser.getId() + " not found");
+        }
+
+        // Benutzer aus der Optional-Instanz abrufen
+        UserModel existingUser = existingUserOptional.get();
+
+        // Die Felder des vorhandenen Benutzers mit den aktualisierten Werten aktualisieren
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setMasterKey(updatedUser.getMasterKey());
+        existingUser.addEntry(entryDTO.toEntryModel());
+
+        return userRepository.save(existingUser);
+    }
+*/
+
+
+
+
+    public UserModel updateUser(UserModel userModel, Optional<EntryModel> entryModel) {
+
+        Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
+
+
+        if(entryModel != null)
+        {
+            Optional<EntryModel> entry = entryRepository.findById(entryModel.get().getId());
+            if (entry.isPresent()) {
+                entry.get().setId(ObjectId.get().toString());
+            }
+        }
+
+        
+
+        if (existingUser.isPresent()) {
+            List<EntryModel> entries = userModel.getEntries();
+            existingUser.get().setEntries(entries);
+
+            //entryRepository.save(entries);
+
+            return userRepository.save(existingUser.get());
+        } else {
+            return null;
+        }
+
+    }
+
+
+    public UserModel createUser(UserModel user) {
+
+        Optional<UserModel> existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("Benutzername bereits vergeben");
+        }
+        
+        return userRepository.save(user);
+    }
+
+    public Optional<UserModel> getUserById(String id) {
+        return userRepository.findById(id);
+    }
+
+    public Optional<UserModel> getUserByUsernameAndMasterKey(String username, String masterKey) {
+        return userRepository.findByUsernameAndMasterKey(username, masterKey);
+    }
+
+
+
+
+
+
+    public UserModel authenticateUserAsync(UserDTO userDto) {
+        // Find user by username
+        Query query = new Query(Criteria.where("username").is(userDto.getUsername()));
+        UserModel user = mongoTemplate.findOne(query, UserModel.class);
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
+
+
+        // Check password
+        if (!compareHashedPasswords(userDto.getMasterKey(), user.getMasterKey())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
+
+
+
+
+        // Generate JWT token
+        String token = Jwts.builder()
+                .setSubject(user.getId())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 999999999))
+                .signWith(SignatureAlgorithm.HS512, getSecretKey())
+                .compact();
+
+        // Return user with token
+        user.setToken(token);
+        return user;
+    }
+
+
+    public boolean compareHashedPasswords(String hashedPassword1, String hashedPassword2) {
+        if (hashedPassword1 == null || hashedPassword2 == null) {
+            throw new IllegalArgumentException("Both hashed passwords must not be null");
+        }
+
+        // Remove any whitespace and convert to lowercase
+        hashedPassword1 = hashedPassword1.replaceAll("\\s", "").toLowerCase();
+        hashedPassword2 = hashedPassword2.replaceAll("\\s", "").toLowerCase();
+
+        // Split the hashed passwords into byte arrays
+        String[] hashedPassword1Bytes = hashedPassword1.split(":");
+        String[] hashedPassword2Bytes = hashedPassword2.split(":");
+
+        // Check that the hashed passwords have the same number of bytes
+        if (hashedPassword1Bytes.length != hashedPassword2Bytes.length) {
+            return false;
+        }
+
+        // Compare the hashed passwords byte by byte
+        for (int i = 0; i < hashedPassword1Bytes.length; i++) {
+            if (!hashedPassword1Bytes[i].equals(hashedPassword2Bytes[i])) {
+                return false;
+            }
+        }
+
+        // If all bytes are equal, the hashed passwords are equal
+        return true;
+    }
+
+
+    private Key getSecretKey() {
+        String secret = "myKey";
+        return new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
+    }
+
+
+}
+
+
+package com.example.Passwortmanager;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PasswortmanagerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(PasswortmanagerApplication.class, args);
+	}
+	
+}
+

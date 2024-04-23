@@ -1,4 +1,4 @@
-class EntryDTO {
+export class EntryDTO {
     constructor() {
       this.id = '';
       this.title = '';

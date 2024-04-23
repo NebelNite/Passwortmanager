@@ -1,5 +1,5 @@
 
-class EntryApi extends LoginApi {
+export class EntryApi extends LoginApi {
 
     constructor(httpClient, connectionString) {
         super(httpClient, connectionString);

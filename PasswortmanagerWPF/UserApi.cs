@@ -64,11 +64,10 @@ namespace PasswortmanagerWPF
                 response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
                 response.EnsureSuccessStatusCode();
 
-
-                var createdUser = await response.Content.ReadAsAsync<UserModel>();
+                //UserModel createdUser = await response.Content.ReadAsAsync<UserModel>();
 
                 MessageBox.Show("Benutzer erfolgreich erstellt! " + Char.ConvertFromUtf32(0x1F480));
-                return createdUser;
+                //return createdUser;
             }
             catch (Exception ex)
             {
@@ -142,6 +141,11 @@ namespace PasswortmanagerWPF
         // optional
         public static string EncryptMessage(string message, byte[] fileKey = null)
         {
+            if (message == null)
+            {
+                return null;
+            }
+
             using (Aes aes = Aes.Create())
             {
                 if (fileKey != null)

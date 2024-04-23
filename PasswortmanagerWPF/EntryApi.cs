@@ -77,6 +77,7 @@ namespace PasswortmanagerWPF
 
                 UserApi.user = user;
 
+                //UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
 
                 //user.entries.Remove(user.entries.Find(entry => entry.id == selectedEntry.id));
 
@@ -103,13 +104,16 @@ namespace PasswortmanagerWPF
                 UserDTO userDTO = new UserDTO();
                 userDTO.id = user.id;
 
-                UserApi userApi = UserApi.GetInstance();
+                //UserApi userApi = UserApi.GetInstance();
 
 
                 entryDto = EncryptEntry(entryDto);
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
                 response.EnsureSuccessStatusCode();
+
+
+                UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
 
                 EntryCreated?.Invoke(this, user);
             }
@@ -135,6 +139,9 @@ namespace PasswortmanagerWPF
 
                 userDTO.entries = user.entries;
 
+
+
+
                 entryDto = EncryptEntry(entryDto);
 
                 UserApi userApi = UserApi.GetInstance();
@@ -152,6 +159,8 @@ namespace PasswortmanagerWPF
                 MessageBox.Show("Creating/Editing Entry failed!");
             }
         }
+
+
 
         public EntryDTO EncryptEntry(EntryDTO entry)
         {

@@ -76,13 +76,32 @@ public class UserService {
         Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
 
 
+/*
         if(entryModel != null)
         {
             Optional<EntryModel> entry = entryRepository.findById(entryModel.get().getId());
+
             if (entry.isPresent()) {
                 entry.get().setId(ObjectId.get().toString());
             }
+        }*/
+
+
+        // same id
+        if(entryModel != null)
+        {
+            if(entryModel.isPresent()) {
+                Optional<EntryModel> entry = entryRepository.findById(entryModel.get().getId());
+
+                if (entry.isPresent()) {
+                    entry.get().setId(ObjectId.get().toString());
+                    entryRepository.save(entry.get());
+                }
+            }
         }
+
+
+
 
         
 

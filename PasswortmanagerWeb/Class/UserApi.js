@@ -1,5 +1,5 @@
 
-class UserApi extends LoginApi {
+export class UserApi extends LoginApi {
 
     static instance;
     

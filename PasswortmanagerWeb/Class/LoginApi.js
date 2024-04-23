@@ -1,6 +1,6 @@
 
 
-class LoginApi {
+export class LoginApi {
     constructor(httpClient, connectionString) {
       this._httpClient = httpClient;
       this._connectionString = connectionString;

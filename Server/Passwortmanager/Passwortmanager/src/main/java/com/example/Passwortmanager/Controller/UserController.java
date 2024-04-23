@@ -25,7 +25,6 @@ public class UserController {
     }
 
 
-    
 
     @PostMapping("/getUserByUsernameAndMasterKey")
     public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
@@ -41,7 +40,6 @@ public class UserController {
     }
 
 
-
     @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 
@@ -50,15 +48,14 @@ public class UserController {
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
+    
 
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
         return userService.authenticateUserAsync(userDto);
     }
 
-
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
 
@@ -81,7 +78,7 @@ public class UserController {
         if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
+        
 
 
 
