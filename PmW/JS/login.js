@@ -73,10 +73,9 @@ require(['axios'], function(axios) {
 
 
 //const axios = require('axios');
-  
-  console.log("Here");
 
-  let userApi = UserApi.getInstance();
+
+  console.log("Here");
 
   function isValidPassword(masterkey) {
     let output = "";
@@ -98,7 +97,7 @@ require(['axios'], function(axios) {
 
   
   function signUpButtonClick(event) {
-    
+
     console.log("SignUp1");
     
     const username = document.getElementById("usernameInput").value;
@@ -112,17 +111,22 @@ require(['axios'], function(axios) {
     }
 
     //UserApi.aesKey = getAesKeyForUser(username);
-
-    UserApi.setAesKey(getAesKeyForUser(username));
-
-    console.log("SignUp2");
+    let key = getAesKeyForUser(username);
+    
+    let userApi = UserApi.getInstance(getAesKeyForUser(username));
+    
+    //UserApi.setAesKey(getAesKeyForUser(username));
+    
+    
+    console.log("Key: SignUp: " + UserApi.aesKey);
 
 
       const userDTO = new UserDTO();
       userDTO.masterKey = userApi.encryptMessage(masterkey);
       userDTO.username = userApi.encryptMessage(username);
+      
 
-      userApi.createUserAsync(userDTO)
+      userApi.createUser(userDTO)
         .then(() => {
           console.log("SignUp successful!");
         })
@@ -177,14 +181,14 @@ function getAesKeyForUser(username) {
     return null;
   }
 
-  const aesKey = CryptoJS.enc.Base64.parse(base64Key);
+  //const aesKey = CryptoJS.enc.Base64.parse(base64Key);
 
-  const aesKeyByteArray = CryptoJS.enc.Hex.parse(aesKey.toString(CryptoJS.enc.Hex));
+  //const aesKeyByteArray = CryptoJS.enc.Hex.parse(aesKey.toString(CryptoJS.enc.Hex));
   
   console.log("Array");
-  console.log(aesKeyByteArray);
-
-  return aesKeyByteArray;
+ //console.log(aesKeyByteArray);
+  
+  return base64Key;i
 
 
   /*
@@ -271,7 +275,11 @@ function getAesKeyForUser(username) {
     //let key = getAesKeyForUser(userDTO.username);
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);
-    UserApi.setAesKey(getAesKeyForUser(userDTO.username));
+    //UserApi.setAesKey(getAesKeyForUser(userDTO.username));
+    
+    let userApi = UserApi.getInstance(getAesKeyForUser(userDTO.username));
+
+    console.log("Key: SignIn :" +  UserApi.aesKey);
 
     //userApi.aesKey = getAesKeyForUser(userDTO.username);
 

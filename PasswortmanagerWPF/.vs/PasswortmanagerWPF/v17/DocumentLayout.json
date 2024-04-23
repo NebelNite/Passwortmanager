@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\ahinf\\4_ahinf\\pos\\passwortmanager-wpf-client-server\\repo\\passwortmanagerwpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\ahinf\\4_ahinf\\pos\\passwortmanager-wpf-client-server\\repo\\passwortmanagerwpf\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -186,7 +186,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AQIAAMcAAAAAAAAAAAAkwNcAAAAJAAAA",
+              "ViewState": "AQIAAMcAAAAAAAAAAAAkwNgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T06:33:46.971Z",
               "EditorCaption": ""
@@ -318,8 +318,7 @@
               "RelativeToolTip": "LoginWindow.xaml.cs",
               "ViewState": "AQIAAFgAAAAAAAAAAAAmwIUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-11T06:33:47.093Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-11T06:33:47.093Z"
             }
           ]
         }

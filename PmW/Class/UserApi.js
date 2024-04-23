@@ -10,31 +10,33 @@ import { UserModel } from "../Class/UserModel.js";
 
 
 export class UserApi extends LoginApi {
-  
+
     static instance;
     static user = new UserModel();
-    
+    aesKey;
+
     // byteArr  32bit
-    static aesKey = new Uint8Array(32);
+    //static aesKey = new Uint8Array(32);
+
     //CryptoJS.lib.WordArray.random(32);
     
-    constructor(httpClient, connectionString) {
-      super(httpClient, connectionString);
-      //this.aesKey = null;
-    }
+    constructor(connectionString, key = this.aesKey) {
+      super(connectionString);
+      this.aesKey = key;
+    };
     
-    
+    /*
     static setAesKey(key)
     {
       this.aesKey = key;
-    }
+    }*/
+
     
-    
-    static getInstance() {
+    static getInstance(key = null) {
 
       if (UserApi.instance == null) {
         
-        UserApi.instance = new UserApi('http://localhost:8080');
+        UserApi.instance = new UserApi('http://localhost:8080', key);
       }
 
       return UserApi.instance;
@@ -119,7 +121,7 @@ export class UserApi extends LoginApi {
     }
     
     encryptMessage(message, fileKey = null) {
-
+      
       
       //const aes = new Aes();
 
@@ -131,6 +133,7 @@ export class UserApi extends LoginApi {
       }
       */
      
+     
         
     let encKey = null;
     console.log(this.aesKey);
@@ -140,26 +143,29 @@ export class UserApi extends LoginApi {
       encKey = fileKey;
     }
     else{
-      encKey = CryptoJS.lib.WordArray.create(this.aesKey.words.slice());
+      //encKey = CryptoJS.lib.WordArray.create(this.aesKey.words.slice());
+      encKey = this.aesKey;
     }
-    
+
+    const encryptedString = CryptoJS.AES.encrypt(message, encKey);
+  
+    /*
     const aes = CryptoJS.algo.AES.create({ key: encKey });
     aes.mode = CryptoJS.mode.ECB;
 
 
     // Encrypt the message
+
     const encryptor = aes.encryptor();
     const encryptedBytes = encryptor.finalize(CryptoJS.enc.Utf8.parse(message));
 
     const encryptedString = CryptoJS.enc.Base64.stringify(encryptedBytes);
+    */
     return encryptedString;
 
-  /*
-    const aes = CryptoJS.algo.AES.createEncryptor(
-      fileKey || aesKey,
-      { mode: CryptoJS.mode.ECB }
-    );
-*/
+
+
+
 
 /*
     const encryptedBytes = CryptoJS.enc.Utf8.parse(message);
