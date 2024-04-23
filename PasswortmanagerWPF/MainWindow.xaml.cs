@@ -1,4 +1,4 @@
-﻿using SharedLibrary;
+﻿//using SharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SharedLibrary;
 using System.Collections.ObjectModel;
 using CredentialManagement;
 using System.Security.Cryptography;
@@ -31,6 +30,7 @@ namespace PasswortmanagerWPF
 
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
         private EntryModel selectedEntry;
+
 
         public MainWindow(UserModel user)
         {

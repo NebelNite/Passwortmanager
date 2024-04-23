@@ -1,82 +1,81 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\",
+  "WorkspaceRootPath": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\ahinf\\4_ahinf\\pos\\passwortmanager-wpf-client-server\\repo\\passwortmanagerwpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\users\\bogen\\documents\\repo\\passwortmanagerwpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\userapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\userapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:userapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\loginapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\loginapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:loginapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\entryapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\entryapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entryapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:loginwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\entrywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\entrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entrydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\entrymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entrymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\entrywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entrywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\entrywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\entrywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entrywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\passwordgeneratorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\passwordgeneratorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:passwordgeneratorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\passwordinputwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\passwordinputwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:passwordinputwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\passwordgeneratorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\passwordgeneratorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:passwordgeneratorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\passwordinputwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\passwordinputwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:passwordinputwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:obj\\Debug\\MainWindow.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:obj\\Debug\\MainWindow.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UserDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UserModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:EntryModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:EntryDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -98,11 +97,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 9,
               "Title": "UserDTO.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserDTO.cs",
               "RelativeDocumentMoniker": "UserDTO.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserDTO.cs",
               "RelativeToolTip": "UserDTO.cs",
               "ViewState": "AQIAAAUAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -110,11 +109,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 8,
               "Title": "UserModel.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserModel.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserModel.cs",
               "RelativeDocumentMoniker": "UserModel.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserModel.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserModel.cs",
               "RelativeToolTip": "UserModel.cs",
               "ViewState": "AQIAAAQAAAAAAAAAAAAAABEAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -122,11 +121,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 7,
               "Title": "EntryModel.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryModel.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryModel.cs",
               "RelativeDocumentMoniker": "EntryModel.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryModel.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryModel.cs",
               "RelativeToolTip": "EntryModel.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAAABoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -134,11 +133,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 6,
               "Title": "EntryDTO.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryDTO.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryDTO.cs",
               "RelativeDocumentMoniker": "EntryDTO.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryDTO.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryDTO.cs",
               "RelativeToolTip": "EntryDTO.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -148,20 +147,20 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "LoginWindow.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml",
               "RelativeDocumentMoniker": "LoginWindow.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml",
               "RelativeToolTip": "LoginWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-04-03T14:16:22.351Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "MainWindow.g.i.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs",
               "RelativeDocumentMoniker": "obj\\Debug\\MainWindow.g.i.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.i.cs",
               "RelativeToolTip": "obj\\Debug\\MainWindow.g.i.cs",
               "ViewState": "AQIAAGEAAAAAAAAAAAAtwGcAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -169,11 +168,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "PasswordInputWindow.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml",
               "RelativeDocumentMoniker": "PasswordInputWindow.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml",
               "RelativeToolTip": "PasswordInputWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-03-21T06:38:31.188Z"
@@ -182,45 +181,45 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AQIAABcAAAAAAAAAAAAiwCYAAAAKAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAM0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T06:33:46.971Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "MainWindow.g.cs",
               "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs",
-              "RelativeDocumentMoniker": "obj\\Debug\\MainWindow.g.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs",
               "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs",
-              "RelativeToolTip": "obj\\Debug\\MainWindow.g.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\MainWindow.g.cs",
               "ViewState": "AQIAAK0AAAAAAAAAAAAmwL8AAACAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-11T08:45:47.564Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "PasswordGeneratorWindow.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml",
               "RelativeDocumentMoniker": "PasswordGeneratorWindow.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml",
               "RelativeToolTip": "PasswordGeneratorWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-03-11T06:33:46.7Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "EntryWindow.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml",
               "RelativeDocumentMoniker": "EntryWindow.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml",
               "RelativeToolTip": "EntryWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-03-11T06:33:46.754Z"
@@ -229,9 +228,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "LoginApi.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginApi.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginApi.cs",
               "RelativeDocumentMoniker": "LoginApi.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginApi.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginApi.cs",
               "RelativeToolTip": "LoginApi.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAAQwBIAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -239,11 +238,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "EntryWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
               "RelativeDocumentMoniker": "EntryWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
               "RelativeToolTip": "EntryWindow.xaml.cs",
               "ViewState": "AQIAABkAAAAAAAAAAAAqwCEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -251,11 +250,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-03-11T06:33:46.759Z"
@@ -264,9 +263,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "EntryApi.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
               "RelativeDocumentMoniker": "EntryApi.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
               "RelativeToolTip": "EntryApi.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAAABUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -274,11 +273,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "PasswordInputWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
               "RelativeDocumentMoniker": "PasswordInputWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
               "RelativeToolTip": "PasswordInputWindow.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -286,11 +285,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "PasswordGeneratorWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml.cs",
               "RelativeDocumentMoniker": "PasswordGeneratorWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\PasswordGeneratorWindow.xaml.cs",
               "RelativeToolTip": "PasswordGeneratorWindow.xaml.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -300,9 +299,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "UserApi.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserApi.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserApi.cs",
               "RelativeDocumentMoniker": "UserApi.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserApi.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\UserApi.cs",
               "RelativeToolTip": "UserApi.cs",
               "ViewState": "AQIAAJsAAAAAAAAAAAAAAJ8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -312,9 +311,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "LoginWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
               "RelativeDocumentMoniker": "LoginWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\bogen\\Documents\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
               "RelativeToolTip": "LoginWindow.xaml.cs",
               "ViewState": "AQIAAFgAAAAAAAAAAAAmwIUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SharedLibrary;
+//using SharedLibrary;
 using System.Text.RegularExpressions;
 using System.Net.PeerToPeer;
 using System.Security.Cryptography;
@@ -34,7 +34,7 @@ namespace PasswortmanagerWPF
 
         }
 
-        
+
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
@@ -200,7 +200,7 @@ namespace PasswortmanagerWPF
             return output;
 
         }
-        
+
 
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -222,7 +222,7 @@ namespace PasswortmanagerWPF
         }
 
 
-        
+
 
     }
 }
