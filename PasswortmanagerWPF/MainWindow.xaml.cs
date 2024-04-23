@@ -32,11 +32,6 @@ namespace PasswortmanagerWPF
         private ObservableCollection<EntryModel> entries = new ObservableCollection<EntryModel>();
         private EntryModel selectedEntry;
 
-<<<<<<< HEAD
-=======
-        
->>>>>>> parent of c042a07 (NodeJS + ReadMe)
-
         public MainWindow(UserModel user)
         {
             InitializeComponent();

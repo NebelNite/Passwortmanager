@@ -151,7 +151,6 @@ C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\b
 C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\PasswordInputWindow.baml
 C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\PasswordInputWindow.g.cs
 <<<<<<< HEAD
-<<<<<<< HEAD
 C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\Passwort.D83A149F.Up2Date
 =======
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\bin\Debug\CredentialManagement.dll
@@ -160,5 +159,4 @@ D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\bin\Debug\System.Security.Cry
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\PasswordInputWindow.baml
 D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\PasswordInputWindow.g.cs
 >>>>>>> 28dfc58f262c83a7d819a6ff3ed6d539ab690695
-=======
 >>>>>>> parent of c042a07 (NodeJS + ReadMe)
