@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
+
+@CrossOrigin(origins="http://localhost:3001")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -23,6 +26,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
 
 
 
@@ -52,10 +56,13 @@ public class UserController {
 
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
-        return userService.authenticateUserAsync(userDto);
+
+        UserModel user = userService.authenticateUserAsync(userDto);
+        return user;
+        //return userService.authenticateUserAsync(userDto);
     }
 
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") String id) {
 

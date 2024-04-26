@@ -1,5 +1,6 @@
 
 export class UserDTO {
+  
   constructor() {
     this.id = '';
     this.username = '';

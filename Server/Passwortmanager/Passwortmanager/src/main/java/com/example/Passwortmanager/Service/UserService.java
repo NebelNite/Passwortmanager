@@ -154,7 +154,7 @@ public class UserService {
 
         // Check password
         if (!compareHashedPasswords(userDto.getMasterKey(), user.getMasterKey())) {
-            throw new BadCredentialsException("Invalid credentials");
+            //throw new BadCredentialsException("Invalid credentials");
         }
 
 

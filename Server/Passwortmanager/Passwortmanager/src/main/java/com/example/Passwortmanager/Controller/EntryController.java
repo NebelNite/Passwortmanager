@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
+@CrossOrigin(origins="http://localhost:3001")
 @RestController
 @RequestMapping("/entries")
 public class EntryController {
@@ -28,6 +30,7 @@ public class EntryController {
         this.userService = userService;
     }
 
+    
     /*
     @GetMapping
     public ResponseEntity<List<EntryModel>> getAllEntries() {
@@ -52,7 +55,7 @@ public class EntryController {
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);
     }*/
 
-    
+
     @PostMapping("/delete/{id}")
     public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
 

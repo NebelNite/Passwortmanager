@@ -13,20 +13,20 @@ export class UserApi extends LoginApi {
 
     static instance;
     static user = new UserModel();
-    aesKey;
+    static aesKey;
 
     // byteArr  32bit
     //static aesKey = new Uint8Array(32);
 
     //CryptoJS.lib.WordArray.random(32);
-    
+
     constructor(connectionString, key = this.aesKey) {
       super(connectionString);
       this.aesKey = key;
     };
     
     /*
-    static setAesKey(key)
+    setAesKey(key)
     {
       this.aesKey = key;
     }*/
@@ -35,21 +35,22 @@ export class UserApi extends LoginApi {
     static getInstance(key = null) {
 
       if (UserApi.instance == null) {
-        
+
         UserApi.instance = new UserApi('http://localhost:8080', key);
       }
 
       return UserApi.instance;
     }
     
-    
-    
     async createUser(userDto) {
-      
+
+      // duplicate Entries for Users
+      userDto.id = null;
+
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-
+      
       const data = await LoginApi.postRequest(this._connectionString + "/users/create", userDto, null);
-
+      
       /*
       try {
         const response = this.getHttpClient().post('/users/create', {
@@ -70,16 +71,21 @@ export class UserApi extends LoginApi {
     }
     
     encodeMasterKey(secret) {
-      const sha512 = new Hashes.SHA512();
-      const hash = sha512.hex(secret);
+      
+      var hash = CryptoJS.SHA512(secret).toString();
       return hash.toLowerCase();
     }
 
     
     authenticateUser(userDto) {
-      
+
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
+      const data = LoginApi.postRequest(this._connectionString + "/users/authenticate", userDto, null);
+
+      console.log("TestAuth: " + data.message);
+      
+      /*
       const response = this.getHttpClient().post('/users/authenticate', {
         body: JSON.stringify(userDto)
       });
@@ -90,7 +96,7 @@ export class UserApi extends LoginApi {
         UserApi.user = user;
         return user;
       }
-    
+    */
       return null;
     }
     
@@ -123,6 +129,7 @@ export class UserApi extends LoginApi {
     encryptMessage(message, fileKey = null) {
       
       
+
       //const aes = new Aes();
 
       /*
@@ -147,8 +154,32 @@ export class UserApi extends LoginApi {
       encKey = this.aesKey;
     }
 
-    const encryptedString = CryptoJS.AES.encrypt(message, encKey);
-  
+    encKey = CryptoJS.enc.Utf8.parse(encKey);
+    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zeros
+    
+    const encryptedString = CryptoJS.AES.encrypt(message, encKey, {
+      mode: CryptoJS.mode.ECB,
+      iv: iv,
+      padding: CryptoJS.pad.NoPadding
+    }).toString();
+
+    
+    
+    /*
+    const encryptedString = CryptoJS.AES.encrypt(message, encKey, {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.NoPadding
+    }).toString();
+*/
+
+    //const encryptedString = CryptoJS.AES.encrypt(message, encKey).toString(CryptoJS.enc.Base64);
+
+    /*
+    const encryptObject = CryptoJS.AES.encrypt(message, encKey);
+    const encryptedString = encryptObject.toString();
+*/
+
+    //const encodedData = Base64.stringify(encryptedString);
     /*
     const aes = CryptoJS.algo.AES.create({ key: encKey });
     aes.mode = CryptoJS.mode.ECB;
@@ -181,7 +212,7 @@ export class UserApi extends LoginApi {
       const encryptedBytes = encryptor.transformFinalBlock(
         Buffer.from(message, 'utf-8'), 0, message.length
       );
-    
+      
       const encryptedString = Buffer.from(encryptedBytes).toString('base64');
     
       return encryptedString;
@@ -189,25 +220,41 @@ export class UserApi extends LoginApi {
     }
     
     decryptMessage(encryptedMessage, fileKey = null) {
-      const aes = new Aes();
-    
-      if (fileKey !== null) {
-        aes.key = fileKey;
-      } else {
-        aes.key = this.aesKey;
-      }
-    
       
-      aes.mode = CipherMode.ECB;
-      const decryptor = aes.createDecryptor();
-    
-      //const encryptedBytes = Buffer.from(
-        const encryptedBytes = Buffer.from(encryptedMessage, 'base64');
-    
-        const decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
-        decryptedMessage = System.Text.Encoding.UTF8.GetString(decryptedBytes);
-    
-        return decryptedMessage;
+      let encKey = null;
+      console.log(this.aesKey);
+      
+      if(fileKey!=null)
+      {
+        encKey = fileKey;
+      }
+      else{
+        //encKey = CryptoJS.lib.WordArray.create(this.aesKey.words.slice());
+        encKey = this.aesKey;
+      }
+
+      
+    encKey = CryptoJS.enc.Utf8.parse(encKey); 
+    const iv = CryptoJS.enc.Utf8.parse('0000000000000000'); // Set the IV to a known value
+
+     const decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
+      mode: CryptoJS.mode.ECB,
+      iv: iv,
+      padding: CryptoJS.pad.NoPadding
+    }).toString();
+
+     decryptedString = decryptedString.toString(CryptoJS.enc.Utf8);
+     
+     
+      //const encryptedString = CryptoJS.AES.encrypt(message, encKey).toString(CryptoJS.enc.Base64);
+  
+      /*
+      const decryptedObject = CryptoJS.AES.encrypt(encryptedMessage, encKey);
+      const decryptedString = decryptedObject.toString();
+    */
+  
+
+      return decryptedString;
     }
     
 }

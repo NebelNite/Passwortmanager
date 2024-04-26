@@ -82,7 +82,7 @@ namespace PasswortmanagerWPF
 
         public string EncodeMasterKey(string secret)
         {
-            using (var sha512 = SHA512.Create())
+            using (SHA512 sha512 = SHA512.Create())
             {
                 byte[] hash = sha512.ComputeHash(Encoding.UTF8.GetBytes(secret));
                 return BitConverter.ToString(hash).Replace("-", "").ToLower();

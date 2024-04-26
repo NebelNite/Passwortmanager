@@ -6,66 +6,122 @@ import { UserDTO } from "../Class/UserDTO.js";
 import { UserModel } from "../Class/UserModel.js";
 
 
+
+
 export class LoginApi {
     
 
     constructor(connectionString) {
       this._connectionString = connectionString;
     }
-    
-      getHttpClient() {
+
+    getHttpClient() {
         return null;
-      }
+    }
       
       getConnectionString() {
         return this._connectionString;
       }
-      
-      
+
+    // CORS:
+    /*
+    fetch("http://localhost:8080/users/create", {
+  method: "POST",
+  mode: "cors",
+  credentials: "include",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    // ...
+  })
+})
+.then(response => {
+  // ...
+})
+.catch(error => {
+  // ...
+});
+    */
+
+
+/*
       static async sendRequest(url, method, data) {
 
-        try {
-            let requestData = {
-                method: method, // Die Methode der Anfrage (GET oder POST)
-                headers: {
-                    'Content-Type': 'application/json' // Der Content-Type der Daten (JSON)
-                }
-            };
-    
-            if (method === 'POST') {
-                requestData.body = JSON.stringify({ data }); // Die Daten, die gesendet werden sollen, als JSON formatieren
-            }
-    
-            // Die Anfrage senden
-            const response = await fetch(url, requestData);
-    
-            // Die Antwort verarbeiten
-            if (response.ok) {
-                // Die Anfrage war erfolgreich (Statuscode 200-299)
-                const responseData = await response.json(); // Die Antwortdaten als JSON parsen
-                console.log('Antwort des Servers:', responseData);
-                return responseData;
-            } else {
-                // Es gab einen Fehler bei der Anfrage (Statuscode außerhalb von 200-299)
-                console.error('Fehler bei der Anfrage:', response.statusText);
-                return null;
-            }
-        } catch (error) {
-            // Es gab einen Fehler beim Senden der Anfrage
-            console.error('Fehler beim Senden der Anfrage:', error);
-            return null;
-        }
+        const jsonData = JSON.stringify({data, url});
+
+        console.log("Data(LoginApi): " + data.username);
+
+        fetch('/sendToServer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: jsonData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("LoginApi: ResponseFromNodeJS:" + data.message);
+          // Do something with the response data
+        })
+        .catch(error => {
+          console.error(error);
+        });
+        
     }
-    
-    static async getRequest(url) {
-        return await this.sendRequest(url, 'GET', null, null);
-    }
-    
-    static async postRequest(url, data) {
-        return await this.sendRequest(url, 'POST', data);
-    }
+    */
 
     
+    static async getRequest(url, dataInUrl) {
+      
+      const queryParams = new URLSearchParams(dataInUrl).toString();
+      const jsonData = JSON.stringify({ data, url });
+      
+
+      const response = await fetch(`/getToServer?${queryParams}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    
+      const responseData = await response.json();
+      
+      //console.log("LoginApi: ResponseFromNodeJS:" + responseData.message);
+      // Do something with the response data
+    }
+    
+    
+    static async postRequest(url, data) {
+
+      const jsonData = JSON.stringify({data, url});
+
+      //console.log("Data(LoginApi): " + data.username);
+    
+      
+
+      fetch('/postToServer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+      //.then(response => response.json())
+      .then(data => {
+        console.log("LoginAPI:RetrievedData");
+        console.log(data);
+        //console.log("LoginApi: ResponseFromNodeJS:" + data.message);
+        // Do something with the response data
+      })
+      .catch(error => {
+        console.log("LoginAPI-Client-Error:");
+        console.error(error);
+      });
+
+        //return await this.sendRequest(url, 'POST', data);
+    }
+
 }
 
 

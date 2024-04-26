@@ -43,7 +43,7 @@ import { UserModel } from "../Class/UserModel.js";
 document.addEventListener('DOMContentLoaded', function() {
   
   console.log("Here");
-  
+
 
 /*
 const axios = require('axios');
@@ -69,7 +69,6 @@ require(['axios'], function(axios) {
   
 });
 */
-
 
 
 //const axios = require('axios');
@@ -111,21 +110,26 @@ require(['axios'], function(axios) {
     }
 
     //UserApi.aesKey = getAesKeyForUser(username);
-    let key = getAesKeyForUser(username);
+    //let key = getAesKeyForUser(username);
     
     let userApi = UserApi.getInstance(getAesKeyForUser(username));
     
     //UserApi.setAesKey(getAesKeyForUser(username));
+    //UserApi.aesKey = getAesKeyForUser(username);
     
     
     console.log("Key: SignUp: " + UserApi.aesKey);
-
 
       const userDTO = new UserDTO();
       userDTO.masterKey = userApi.encryptMessage(masterkey);
       userDTO.username = userApi.encryptMessage(username);
       
+      console.log(userApi.aesKey);
+      console.log("Test: SignUp: Mes: " + userApi.encryptMessage("username"));
 
+      //let test = userApi.decryptMessage(userDTO.username);
+      userDTO.id = null;
+      
       userApi.createUser(userDTO)
         .then(() => {
           console.log("SignUp successful!");
@@ -185,7 +189,6 @@ function getAesKeyForUser(username) {
 
   //const aesKeyByteArray = CryptoJS.enc.Hex.parse(aesKey.toString(CryptoJS.enc.Hex));
   
-  console.log("Array");
  //console.log(aesKeyByteArray);
   
   return base64Key;i
@@ -264,31 +267,36 @@ function getAesKeyForUser(username) {
   function signInButtonClick(event) {
     
     const userDTO = new UserDTO();
-    
+    let masterKey = document.getElementById("usernameInput").value;
+    let username = document.getElementById("masterKeyInput").value;
+
     userDTO.masterKey= document.getElementById("usernameInput").value;
     userDTO.username = document.getElementById("masterKeyInput").value;
 
-    /*
-    userDTO.masterKey = document.getElementById("SignInMasterkey").value;
-    userDTO.username = document.getElementById("SignInUsername").value;
-    */
+    
     //let key = getAesKeyForUser(userDTO.username);
 
-    //UserApi.aesKey = getAesKeyForUser(userDTO.username);
     //UserApi.setAesKey(getAesKeyForUser(userDTO.username));
     
     let userApi = UserApi.getInstance(getAesKeyForUser(userDTO.username));
+    
 
-    console.log("Key: SignIn :" +  UserApi.aesKey);
+    //UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
     //userApi.aesKey = getAesKeyForUser(userDTO.username);
 
     userDTO.masterKey = userApi.encryptMessage(userDTO.masterKey);
     userDTO.username = userApi.encryptMessage(userDTO.username);
+    
+    console.log(userApi.aesKey);
+    console.log("Test: SignIn: Mes: " + userApi.encryptMessage("username"));
 
+    console.log("Key: SignIn :" +  UserApi.aesKey);
+    userApi.authenticateUser(userDTO);
+
+    /*
     userApi.authenticateUserAsync(userDTO)
       .then((user) => {
-
           const userJson = encodeURIComponent(JSON.stringify(user));
           const url = `../HTML/homepage.html?user=${userJson}`;
           window.location.href = url;
@@ -297,6 +305,7 @@ function getAesKeyForUser(username) {
         console.error("Authentication failed:", error);
         alert("Authentication failed. Please check your credentials and try again.");
       });
+      */
   }
   
 
