@@ -27,6 +27,14 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    overflow: auto;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+#leftBackgroundImg{
+    z-index: 0;
+    transform: translateX(-20%);
 }
 
 #data-grid {
@@ -41,6 +49,7 @@ body {
 }
 
 
+
 /* ContextMenu-Stile */
 .context-menu {
     position: absolute;
@@ -50,8 +59,10 @@ body {
     padding: 4px;
     list-style-type: none;
     margin: 0;
+    z-index: 1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     left: 10%; /* Position the context menu to the right of the button */
+    
   }
 
 .context-menu li {
@@ -67,6 +78,25 @@ body {
     display: none;
 }
 
+#data-grid table {
+    margin: 0 auto;
+  }
+
+#data-grid table th {
+    width: calc(100% / 5);
+  }
+
+#data-grid table th,
+#data-grid table td {
+  text-align: center;
+
+}
+
+/*
+#data-grid table th:nth-child(6),
+#data-grid table td:nth-child(6) {
+  display: none;
+}*/
 
 #surveyElement {
     display: flex;
@@ -94,3 +124,4 @@ body {
     border-radius: 4px;
     border: 1px solid #ccc;
 }
+

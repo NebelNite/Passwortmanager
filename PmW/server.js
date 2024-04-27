@@ -62,6 +62,10 @@ app.use((req, res, next) => {
     res.sendFile(__dirname + "/HTML/homepage.html");
 });
 
+app.get('/Images/leftBack.png', (req, res) => {
+    res.sendFile(__dirname + '/Images/leftBack.png');
+});
+
   
   app.post('/postToServer', (req, res) => {
     

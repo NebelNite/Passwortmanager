@@ -56,7 +56,7 @@ public class EntryController {
 
 
         Optional<UserModel> userOptional  = userService.getUserById(id);
-
+        
         if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

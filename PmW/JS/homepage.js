@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     
     function fillTable()
     {
+
           // Hole alle Einträge des aktuellen Benutzers
         const entries = UserApi.user.entries;
         let index = 0;
@@ -75,13 +76,13 @@ document.addEventListener('DOMContentLoaded',async () => {
     
         // Füge alle Einträge in die Tabelle ein
         entries.forEach((entry, index) => {
-          const tr = document.createElement('tr');
+        const tr = document.createElement('tr');
 
           tr.entry = entry;
-    
+          /*
           const tdIndex = document.createElement('td');
           tdIndex.textContent = index;
-          tr.appendChild(tdIndex);
+          tr.appendChild(tdIndex);*/
     
           const tdTitle = document.createElement('td');
           tdTitle.textContent = entry.title;
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     
     
-let selectedEntryIndex;
+let selectedEntry;
 
 
 function exportFunction() {
@@ -184,17 +185,23 @@ function createSurveyAndEntry(entry)
                     name: "notes",
                     title: "Notes:"
                 },
+                {
+                  type: "text",
+                  name: "id",
+                  title: "ID:",
+                  isHidden: true,
+                  inputType: "hidden"
+                },
             ],
         },
     ],
 });
 
-surveyModel.completedHtml = " ";
+  surveyModel.completedHtml = " ";
 
   if(!addEntryClicked)
   {
-
-      //surveyModel.currentPage.getQuestionByName("id").value = entry.id;
+      surveyModel.currentPage.getQuestionByName("id").value = entry.id;
       surveyModel.currentPage.getQuestionByName("title").value = entry.title;
       surveyModel.currentPage.getQuestionByName("username").value = entry.username;
       surveyModel.currentPage.getQuestionByName("password").value = entry.password;
@@ -212,6 +219,7 @@ $("#surveyElement").Survey({
       const userInput = survey.data;
       const entryDTO = new EntryDTO();
       
+      entryDTO.id = surveyModel.currentPage.getQuestionByName("id").value;
       entryDTO.title = userInput.title;
       entryDTO.username = userInput.username;
       entryDTO.password = userInput.password;
@@ -223,12 +231,28 @@ $("#surveyElement").Survey({
         
         let newId = generateGuid();
         entryDTO.id = newId;
+        
+        EntryApi.GetInstance().createEntry(entryDTO)
+        .then(() => {
+          fillTable();
+        })
+        .catch((error) => {
+          console.error('Error deleting entry:', error);
+        });
 
-        EntryApi.GetInstance().createEntry(entryDTO);
+        
         addEntryClicked = false;
       }
       else{
-        EntryApi.GetInstance.editEntry(entryDTO);
+
+        EntryApi.GetInstance().editEntry(entryDTO)
+        .then(() => {
+          fillTable();
+        })
+        .catch((error) => {
+          console.error('Error deleting entry:', error);
+        });
+
       }
       
       fillTable();
@@ -278,9 +302,12 @@ $("#surveyElement").Survey({
         surveyModel.data.notes
     );
 
+    /*
     if(addEntryClicked)
-    EntryApi.GetInstance().createEntry(entryDTO);
+    EntryApi.GetInstance().createEntry(entryDTO);*/
+
   });
+
 }
 
 
@@ -288,20 +315,28 @@ $("#surveyElement").Survey({
 
 function editEntry() {
 
-  let row = tbody.rows[selectedEntryIndex];
-  let entry = row.entry;
 
-  createSurveyAndEntry(entry);
+  createSurveyAndEntry(selectedEntry);
 
 
 
 }
 
 
-
-
 function deleteEntry() {
-  console.log('Deleting entry...');
+
+  EntryApi.GetInstance().deleteEntry(selectedEntry)
+  .then(() => {
+    fillTable();
+  })
+  .catch((error) => {
+    console.error('Error deleting entry:', error);
+  });
+  
+/*
+  EntryApi.GetInstance().deleteEntry(entry);
+
+  fillTable();*/
 }
 /*
     function toggleEntryMenu() {
@@ -337,9 +372,12 @@ function deleteEntry() {
       return base64Key;i
     }
     
-
+    
     
 entryButton.addEventListener('click', function () {
+
+    //event.stopPropagation();
+    
     entryMenu.classList.toggle('hidden');
     
     if (!fileMenu.classList.contains('hidden')) {
@@ -370,7 +408,12 @@ fileButton.addEventListener('click', function () {
             event.preventDefault();
             const contextMenu = document.getElementById(menuId);
 
-            selectedEntryIndex = Array.from(tbody.children).indexOf(event.target.closest('tr'));
+            if (contextMenu.style.display === 'block') {
+              contextMenu.style.display = 'none';
+              return;
+            }
+            selectedEntry = event.target.closest('tr').entry;
+            //selectedEntryIndex = Array.from(tbody.children).indexOf(event.target.closest('tr'));
 
             contextMenu.style.display = 'block';
             contextMenu.style.left = `${event.clientX}px`;
