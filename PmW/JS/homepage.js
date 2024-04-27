@@ -1,7 +1,7 @@
 //import Entry from "./Entry"
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+  
     const app = document.getElementById('app');
     const dataGrid = document.getElementById('data-grid');
     const menuItems = document.querySelectorAll('#menu a');
@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const editEntryBtn = document.getElementById('editEntry');
     const deleteEntryBtn = document.getElementById('deleteEntry');
     const addEntryBtn = document.getElementById('addEntry');
+    const entryButton = document.getElementById('entry-button');
+
+
+entryButton.addEventListener('click', function () {
+    const entryMenu = document.getElementById('entry-menu');
+    entryMenu.classList.toggle('hidden');
+});
 
     
     editEntryBtn.addEventListener('click', function(){
@@ -21,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         UserApi.getInstance().deleteEntry();
     });
     addEntryBtn.addEventListener('click', function(){
-
-
 
         UserApi.getInstance().editEntry();
     });

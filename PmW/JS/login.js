@@ -42,6 +42,7 @@ import { UserModel } from "../Class/UserModel.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   
+
   console.log("Here");
 
 

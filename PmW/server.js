@@ -9,7 +9,6 @@ const http = require('http');
 const cors = require('cors');
 const axios = require('axios');
 
-
 const port = 3001;
 
 const app = express();
@@ -31,7 +30,7 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/static', express.static(path.join(__dirname, 'public')))
+//app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use('/JS', express.static(path.join(__dirname, 'JS')));
 app.use('/CSS', express.static(path.join(__dirname, 'CSS')));
@@ -54,8 +53,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
   });
-
   
+
+  app.get('/homepage', (req, res) => {
+    res.sendFile(__dirname + "/HTML/homepage.html");
+});
+
   
   app.post('/postToServer', (req, res) => {
     

@@ -79,10 +79,40 @@ export class UserApi extends LoginApi {
     
     authenticateUser(userDto) {
 
+      window.location.href = '../homepage';
+      
+      //window.location.href = '../HTML/homepage.html';
+      /*
+      fetch('/homepage')
+      .then(response => {
+          if (response.ok) {
+            window.location.href = '/HTML/homepage.html';
+          } else {
+            console.error('Error:', response.status);
+          }
+          })
+        .catch(error => console.error(error));
+        */
+
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
       const data = LoginApi.postRequest(this._connectionString + "/users/authenticate", userDto, null);
 
+      /*
+      if(data != null)
+      {
+        
+        fetch('/homepage')
+      .then(response => {
+          if (response.ok) {
+            //window.location.href = '/homepage.html';
+          } else {
+            console.error('Error:', response.status);
+          }
+          })
+        .catch(error => console.error(error));
+      }
+      */
       console.log("TestAuth: " + data.message);
       
       /*

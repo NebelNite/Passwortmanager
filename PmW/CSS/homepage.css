@@ -70,3 +70,46 @@ body {
     display: none;
 }
 
+/* Hide dropdown menus by default */
+.hidden {
+    display: none;
+  }
+  
+  /* Style dropdown buttons */
+  .dropdown-btn {
+    background-color: #f9f9f9;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+  }
+  
+  /* Add a downward arrow icon */
+  .dropdown-btn:after {
+    content: '\25BC';
+    float: right;
+    margin-left: 5px;
+  }
+  
+  /* Style the dropdown menu (hide on click) */
+  .context-menu {
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 160px;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  /* Style the links inside the dropdown */
+  .context-menu li {
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+  
+  /* Change color of links on hover */
+  .context-menu li:hover {
+    background-color: #f1f1f1
+  }
