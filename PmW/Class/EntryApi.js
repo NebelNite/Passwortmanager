@@ -9,6 +9,9 @@ import { UserModel } from "../Class/UserModel.js";
 
 export class EntryApi extends LoginApi {
 
+    
+    static instance = null;
+    
     constructor(httpClient, connectionString) {
         super(httpClient, connectionString);
         this.EntryCreated = null;
@@ -17,11 +20,11 @@ export class EntryApi extends LoginApi {
     // Methode zum Abrufen einer Singleton-Instanz der EntryApi-Klasse
     static GetInstance() {
         if (!this.instance) {
-            this.instance = new EntryApi(new HttpClient(), "http://localhost:8080");
+            EntryApi.instance = new EntryApi("http://localhost:8080");
         }
         return this.instance;
     }
-    
+
   
     // Methode zum Löschen eines Eintrags
     async deleteEntry(selectedEntry) {
@@ -33,7 +36,7 @@ export class EntryApi extends LoginApi {
             userDTO.masterKey = user.masterKey;
             userDTO.entries = user.entries;
   
-            const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
+            const response = await this.GetHttpClient().PostAsJsonAsync(this.connectionString + "/entries/delete/" + selectedEntry.id, userDTO);
             
             response.EnsureSuccessStatusCode();
   
@@ -60,10 +63,10 @@ export class EntryApi extends LoginApi {
           userDTO.id = user.id;
   
           const userApi = UserApi.GetInstance();
-  
+          
           entryDto = this.EncryptEntry(entryDto);
   
-          const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
+          const response = await this.GetHttpClient().PostAsJsonAsync(this.connectionString + "/entries/editEntry/" + userDTO.id, entryDto);
           response.EnsureSuccessStatusCode();
   
           this.EntryCreated?.(this, user);
@@ -74,6 +77,7 @@ export class EntryApi extends LoginApi {
   
   // Methode zum Erstellen eines Eintrags
   async createEntry(entryDto) {
+    
       try {
           const user = UserApi.user;
           const userDTO = new UserDTO();
@@ -81,17 +85,19 @@ export class EntryApi extends LoginApi {
           userDTO.id = user.id;
           userDTO.masterKey = user.masterKey;
           userDTO.entries = user.entries;
-  
-          entryDto = this.EncryptEntry(entryDto);
+
+          //entryDto = this.EncryptEntry(entryDto);
           
           const userApi = UserApi.GetInstance();
+
+          let response = await LoginApi.postRequest(this.connectionString + "/users/" + user.id + "/addEntry", entryDto);
+
           
-          const response = await this.GetHttpClient().PostAsJsonAsync(this.GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
-          response.EnsureSuccessStatusCode();
-  
-          UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
-  
-          this.EntryCreated?.(this, user);
+          UserApi.user = await UserApi.getUserById(UserApi.user.id);
+
+          //return response;
+          
+          //this.EntryCreated?.(this, user);
       } catch (ex) {
           //MessageBox.show("Creating/Editing Entry failed!");
       }

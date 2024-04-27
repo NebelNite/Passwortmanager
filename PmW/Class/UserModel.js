@@ -33,6 +33,8 @@ export class UserModel {
     userDTO.masterKey = this.masterKey;
     return userDTO;
   }
+  
+  
 }
 
 //module.exports = UserModel;

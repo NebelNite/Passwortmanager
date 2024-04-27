@@ -30,30 +30,7 @@ public class EntryController {
         this.userService = userService;
     }
 
-    
-    /*
-    @GetMapping
-    public ResponseEntity<List<EntryModel>> getAllEntries() {
-        List<EntryModel> entries = entryService.getAllEntries();
-        return new ResponseEntity<>(entries, HttpStatus.OK);
-    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EntryModel> getEntryById(@PathVariable("id") String id) {
-        EntryModel entry = entryService.getEntryById(id);
-        if (entry != null) {
-            return new ResponseEntity<>(entry, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-*/
-    /*
-    @PostMapping("/create")
-    public ResponseEntity<UserModel> createEntry(@RequestBody EntryModel entryModel, UserModel userModel) {
-        UserModel createdEntry = entryService.createEntry(entryModel, userModel);
-        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
-    }*/
 
 
     @PostMapping("/delete/{id}")

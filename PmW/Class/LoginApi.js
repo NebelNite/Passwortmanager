@@ -10,9 +10,10 @@ import { UserModel } from "../Class/UserModel.js";
 
 export class LoginApi {
     
-
+  static connectionString;
+  
     constructor(connectionString) {
-      this._connectionString = connectionString;
+      this.connectionString = connectionString;
     }
 
     getHttpClient() {
@@ -20,13 +21,12 @@ export class LoginApi {
     }
       
       getConnectionString() {
-        return this._connectionString;
+        return this.connectionString;
       }
 
 
     
     static async getRequest(url) {
-      
       
       const jsonData = JSON.stringify({ url });
 
@@ -44,7 +44,7 @@ export class LoginApi {
         return user;
         
       //UserApi.user = springBootResponse.message;
-      
+
 
       })
       .catch(error => {
@@ -61,10 +61,27 @@ export class LoginApi {
 
       const jsonData = JSON.stringify({data, url});
 
-      //console.log("Data(LoginApi): " + data.username);
-      
-      
 
+      try {
+        const response = await fetch('/postToServer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: jsonData
+        });
+    
+        const springBootResponse = await response.json();
+  
+    
+        let user = springBootResponse.message;
+        return user;
+      } catch (error) {
+        console.log("LoginAPI-Client-Error:");
+        console.error(error);
+      }
+
+      /*
       fetch('/postToServer', {
         method: 'POST',
         headers: {
@@ -72,23 +89,30 @@ export class LoginApi {
         },
         body: jsonData
       })
-      .then(response => response.json())
+      .then(response => await response.json())
       .then(springBootResponse => {
 
-      //Wenn fetch Erfolgreich war:
-      UserApi.user = springBootResponse.message;
-      localStorage.setItem(UserApi.user.id, UserApi.user);
-
-      window.location.href = '../homepage?id=' + encodeURIComponent(UserApi.user.id);
+      let user = springBootResponse.message;
+      return user;
+      */
       
+      /*
+      localStorage.setItem(UserApi.user.id, UserApi.user);
+      let id = UserApi.user.id;
 
+      let username = UserApi.user.username;
+
+
+      window.location.href = '../homepage?id=' + encodeURIComponent(id) + "&usn=" + encodeURIComponent(username);
+      */
+
+      /*
       })
       .catch(error => {
         console.log("LoginAPI-Client-Error:");
         console.error(error);
-      });
+      });*/
 
-        //return await this.sendRequest(url, 'POST', data);
     }
 
 }

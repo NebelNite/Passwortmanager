@@ -13,30 +13,31 @@ export class UserApi extends LoginApi {
 
     static instance;
     static user = new UserModel();
-    static aesKey;
+
+    static aesKey = null;
 
     // byteArr  32bit
     //static aesKey = new Uint8Array(32);
 
     //CryptoJS.lib.WordArray.random(32);
-
-    constructor(connectionString, key = this.aesKey) {
-      super(connectionString);
-      this.aesKey = key;
-    };
     
+    constructor(connectionString) {
+      super(connectionString);
+      //this.aesKey = key;
+    };
+
     /*
     setAesKey(key)
     {
       this.aesKey = key;
     }*/
-
     
-    static getInstance(key = null) {
-
+    
+    static GetInstance() {
+      
       if (UserApi.instance == null) {
 
-        UserApi.instance = new UserApi('http://localhost:8080', key);
+        UserApi.instance = new UserApi('http://localhost:8080');
       }
 
       return UserApi.instance;
@@ -47,9 +48,11 @@ export class UserApi extends LoginApi {
       // duplicate Entries for Users
       userDto.id = null;
 
+      let str = this.connectionString;
+
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
       
-      const data = await LoginApi.postRequest(this._connectionString + "/users/create", userDto, null);
+      const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
       
       /*
       try {
@@ -77,7 +80,7 @@ export class UserApi extends LoginApi {
     }
 
     
-    authenticateUser(userDto) {
+    async authenticateUser(userDto) {
       
       
       //window.location.href = '../homepage';
@@ -97,7 +100,7 @@ export class UserApi extends LoginApi {
 
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
-      const data = LoginApi.postRequest(this._connectionString + "/users/authenticate", userDto, null);
+      const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
 
       /*
       if(data != null)
@@ -114,7 +117,6 @@ export class UserApi extends LoginApi {
         .catch(error => console.error(error));
       }
       */
-      console.log("TestAuth: " + data.message);
       
       /*
       const response = this.getHttpClient().post('/users/authenticate', {
@@ -128,7 +130,7 @@ export class UserApi extends LoginApi {
         return user;
       }
     */
-      return null;
+      return user;
     }
     
     
@@ -149,142 +151,74 @@ export class UserApi extends LoginApi {
     static async getUserById(id) {
 
       let user = await LoginApi.getRequest("http://localhost:8080/users/" + id);
-      
+      //user = user.then(user);
       
       return user;
     }
-    
-    encryptMessage(message, fileKey = null) {
-      
-      
 
-      //const aes = new Aes();
+    EncryptMessage(message, fileKey = null) {
 
-      /*
-      if (fileKey !== null) {
-        aes.key = fileKey;
-      } else {
-        aes.key = this.aesKey;
-      }
-      */
-     
-     
-        
     let encKey = null;
-    console.log(this.aesKey);
-    
+
     if(fileKey!=null)
     {
       encKey = fileKey;
     }
     else{
-      //encKey = CryptoJS.lib.WordArray.create(this.aesKey.words.slice());
-      encKey = this.aesKey;
+      encKey = UserApi.aesKey;
     }
 
     encKey = CryptoJS.enc.Utf8.parse(encKey);
-    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zeros
+
+    message = CryptoJS.enc.Utf8.parse(message);
+
+    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zero
+
+
     
-    const encryptedString = CryptoJS.AES.encrypt(message, encKey, {
+    let encryptedString = CryptoJS.AES.encrypt(message, encKey, {
       mode: CryptoJS.mode.ECB,
       iv: iv,
       padding: CryptoJS.pad.NoPadding
     }).toString();
 
     
-    
-    /*
-    const encryptedString = CryptoJS.AES.encrypt(message, encKey, {
-      mode: CryptoJS.mode.ECB,
-      padding: CryptoJS.pad.NoPadding
-    }).toString();
-*/
 
-    //const encryptedString = CryptoJS.AES.encrypt(message, encKey).toString(CryptoJS.enc.Base64);
-
-    /*
-    const encryptObject = CryptoJS.AES.encrypt(message, encKey);
-    const encryptedString = encryptObject.toString();
-*/
-
-    //const encodedData = Base64.stringify(encryptedString);
-    /*
-    const aes = CryptoJS.algo.AES.create({ key: encKey });
-    aes.mode = CryptoJS.mode.ECB;
-
-
-    // Encrypt the message
-
-    const encryptor = aes.encryptor();
-    const encryptedBytes = encryptor.finalize(CryptoJS.enc.Utf8.parse(message));
-
-    const encryptedString = CryptoJS.enc.Base64.stringify(encryptedBytes);
-    */
     return encryptedString;
-
-
-
-
-
-/*
-    const encryptedBytes = CryptoJS.enc.Utf8.parse(message);
-    const encryptedWordArray = aes.finalize(encryptedBytes);
-    const encryptedBase64 = encryptedWordArray.toString(CryptoJS.enc.Base64);
     
-    return encryptedBase64;
-*/
-      /*
-      aes.mode = CipherMode.ECB;
+  }
     
-      const encryptor = aes.createEncryptor();
-      const encryptedBytes = encryptor.transformFinalBlock(
-        Buffer.from(message, 'utf-8'), 0, message.length
-      );
+    DecryptMessage(encryptedMessage, fileKey = null) {
       
-      const encryptedString = Buffer.from(encryptedBytes).toString('base64');
-    
-      return encryptedString;
-      */
-    }
-    
-    decryptMessage(encryptedMessage, fileKey = null) {
-      
+
       let encKey = null;
-      console.log(this.aesKey);
       
       if(fileKey!=null)
       {
         encKey = fileKey;
       }
       else{
-        //encKey = CryptoJS.lib.WordArray.create(this.aesKey.words.slice());
-        encKey = this.aesKey;
+        encKey = UserApi.aesKey;
       }
-
       
-    encKey = CryptoJS.enc.Utf8.parse(encKey); 
-    const iv = CryptoJS.enc.Utf8.parse('0000000000000000'); // Set the IV to a known value
 
-     const decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
+    encKey = CryptoJS.enc.Utf8.parse(encKey);
+
+    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zeros
+
+
+     let decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
       mode: CryptoJS.mode.ECB,
       iv: iv,
       padding: CryptoJS.pad.NoPadding
     }).toString();
 
-     decryptedString = decryptedString.toString(CryptoJS.enc.Utf8);
-     
-     
-      //const encryptedString = CryptoJS.AES.encrypt(message, encKey).toString(CryptoJS.enc.Base64);
-  
-      /*
-      const decryptedObject = CryptoJS.AES.encrypt(encryptedMessage, encKey);
-      const decryptedString = decryptedObject.toString();
-    */
-  
+      decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
 
       return decryptedString;
+      
     }
-    
+
 }
 
 //module.exports = UserApi;

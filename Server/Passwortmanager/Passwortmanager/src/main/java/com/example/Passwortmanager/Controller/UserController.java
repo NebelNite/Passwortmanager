@@ -53,7 +53,7 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    
+
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
 
@@ -86,7 +86,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         
-
 
 
         UserModel user = userOptional.get();

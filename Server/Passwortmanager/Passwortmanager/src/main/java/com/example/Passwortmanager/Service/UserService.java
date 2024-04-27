@@ -146,7 +146,7 @@ public class UserService {
         // Find user by username
         Query query = new Query(Criteria.where("username").is(userDto.getUsername()));
         UserModel user = mongoTemplate.findOne(query, UserModel.class);
-
+        
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }

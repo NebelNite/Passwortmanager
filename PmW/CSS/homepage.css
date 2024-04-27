@@ -40,6 +40,7 @@ body {
     text-align: center;
 }
 
+
 /* ContextMenu-Stile */
 .context-menu {
     position: absolute;
@@ -64,4 +65,32 @@ body {
 
 .hidden {
     display: none;
+}
+
+
+#surveyElement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.sv_question {
+    margin-bottom: 10px;
+}
+
+.sv_control {
+    margin-bottom: 10px;
+}
+
+.sv_label {
+    font-size: 14px;
+}
+
+.sv_input {
+    height: 30px;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }

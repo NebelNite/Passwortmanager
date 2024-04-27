@@ -113,23 +113,23 @@ require(['axios'], function(axios) {
     //UserApi.aesKey = getAesKeyForUser(username);
     //let key = getAesKeyForUser(username);
     
-    let userApi = UserApi.getInstance(getAesKeyForUser(username));
+    let userApi = UserApi.GetInstance(getAesKeyForUser(username));
     
     //UserApi.setAesKey(getAesKeyForUser(username));
     //UserApi.aesKey = getAesKeyForUser(username);
-    
-    
+
     console.log("Key: SignUp: " + UserApi.aesKey);
 
       const userDTO = new UserDTO();
-      userDTO.masterKey = userApi.encryptMessage(masterkey);
-      userDTO.username = userApi.encryptMessage(username);
+      userDTO.masterKey = UserApi.GetInstance().EncryptMessage(masterkey);
+      userDTO.username = UserApi.GetInstance().EncryptMessage(username);
       
       console.log(userApi.aesKey);
-      console.log("Test: SignUp: Mes: " + userApi.encryptMessage("username"));
+      console.log("Test: SignUp: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
 
       //let test = userApi.decryptMessage(userDTO.username);
       userDTO.id = null;
+      
       
       userApi.createUser(userDTO)
         .then(() => {
@@ -142,6 +142,7 @@ require(['axios'], function(axios) {
     } else {
       alert(msg);
     }
+    
     
     console.log("SignUp3");
   }
@@ -181,7 +182,7 @@ require(['axios'], function(axios) {
 function getAesKeyForUser(username) {
   
   const base64Key = localStorage.getItem(username);
-
+  
   if (!base64Key) {
     return null;
   }
@@ -234,7 +235,7 @@ function getAesKeyForUser(username) {
    
   }
 
-  function signInButtonClick(event) {
+  async function signInButtonClick(event) {
     
     const userDTO = new UserDTO();
     let masterKey = document.getElementById("usernameInput").value;
@@ -243,26 +244,44 @@ function getAesKeyForUser(username) {
     userDTO.masterKey= document.getElementById("usernameInput").value;
     userDTO.username = document.getElementById("masterKeyInput").value;
 
-    
+
     //let key = getAesKeyForUser(userDTO.username);
 
     //UserApi.setAesKey(getAesKeyForUser(userDTO.username));
     
-    let userApi = UserApi.getInstance(getAesKeyForUser(userDTO.username));
+    //UserApi.aesKey = UserApi.GetInstance(getAesKeyForUser(userDTO.username));
+    
+    UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
+    let enc = UserApi.GetInstance().EncryptMessage("Message");
+    console.log("EncryptedMessage: " + enc);
+
+    let dec = UserApi.GetInstance().DecryptMessage(enc);
+    console.log("DecryptedMessage:" + dec);
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
     //userApi.aesKey = getAesKeyForUser(userDTO.username);
 
-    userDTO.masterKey = userApi.encryptMessage(userDTO.masterKey);
-    userDTO.username = userApi.encryptMessage(userDTO.username);
+    userDTO.masterKey = UserApi.GetInstance().EncryptMessage(userDTO.masterKey);
+    userDTO.username = UserApi.GetInstance().EncryptMessage(userDTO.username);
     
-    console.log(userApi.aesKey);
-    console.log("Test: SignIn: Mes: " + userApi.encryptMessage("username"));
+    console.log("Test: SignIn: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
 
     console.log("Key: SignIn :" +  UserApi.aesKey);
-    userApi.authenticateUser(userDTO);
+
+    UserApi.user = await UserApi.GetInstance().authenticateUser(userDTO);
+    
+    if(UserApi.user.id.length > 1)
+    {
+      
+      localStorage.setItem(UserApi.user.id, UserApi.user);
+      let id = UserApi.user.id;
+      let username = UserApi.user.username;
+      
+      window.location.href = '../homepage?id=' + encodeURIComponent(id) + "&usn=" + encodeURIComponent(username);
+    }
+
 
     /*
     userApi.authenticateUserAsync(userDTO)
