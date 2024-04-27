@@ -1,3 +1,4 @@
+Library:
 Bei Änderung:
 SharedLibrary:
  Projektmappe erstellen
@@ -5,3 +6,10 @@ SharedLibrary:
 PasswortmanagerWPF:
  Projektmappe -> Verweis hinzufügen -> Durchsuchen -> dll-file auswählen
  
+
+
+Merge-Conflict:
+">>>>>Head"
+VS -> delete Folder -> 
+bin 
+.vs
