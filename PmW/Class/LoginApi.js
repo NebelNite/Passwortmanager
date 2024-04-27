@@ -23,72 +23,37 @@ export class LoginApi {
         return this._connectionString;
       }
 
-    // CORS:
-    /*
-    fetch("http://localhost:8080/users/create", {
-  method: "POST",
-  mode: "cors",
-  credentials: "include",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    // ...
-  })
-})
-.then(response => {
-  // ...
-})
-.catch(error => {
-  // ...
-});
-    */
-
-
-/*
-      static async sendRequest(url, method, data) {
-
-        const jsonData = JSON.stringify({data, url});
-
-        console.log("Data(LoginApi): " + data.username);
-
-        fetch('/sendToServer', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: jsonData
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("LoginApi: ResponseFromNodeJS:" + data.message);
-          // Do something with the response data
-        })
-        .catch(error => {
-          console.error(error);
-        });
-        
-    }
-    */
 
     
-    static async getRequest(url, dataInUrl) {
+    static async getRequest(url) {
       
-      const queryParams = new URLSearchParams(dataInUrl).toString();
-      const jsonData = JSON.stringify({ data, url });
       
+      const jsonData = JSON.stringify({ url });
 
-      const response = await fetch(`/getToServer?${queryParams}`, {
-        method: 'GET',
+      return fetch('/getToServer', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
-      });
-    
-      const responseData = await response.json();
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(springBootResponse => {
+
+        let user = springBootResponse.message;
+        return user;
+        
+      //UserApi.user = springBootResponse.message;
       
-      //console.log("LoginApi: ResponseFromNodeJS:" + responseData.message);
-      // Do something with the response data
+
+      })
+      .catch(error => {
+        console.log("LoginAPI-Client-Error:");
+        console.error(error);
+      });
+      
+
+    
     }
     
     
@@ -97,7 +62,7 @@ export class LoginApi {
       const jsonData = JSON.stringify({data, url});
 
       //console.log("Data(LoginApi): " + data.username);
-    
+      
       
 
       fetch('/postToServer', {
@@ -107,12 +72,16 @@ export class LoginApi {
         },
         body: jsonData
       })
-      //.then(response => response.json())
-      .then(data => {
-        console.log("LoginAPI:RetrievedData");
-        console.log(data);
-        //console.log("LoginApi: ResponseFromNodeJS:" + data.message);
-        // Do something with the response data
+      .then(response => response.json())
+      .then(springBootResponse => {
+
+      //Wenn fetch Erfolgreich war:
+      UserApi.user = springBootResponse.message;
+      localStorage.setItem(UserApi.user.id, UserApi.user);
+
+      window.location.href = '../homepage?id=' + encodeURIComponent(UserApi.user.id);
+      
+
       })
       .catch(error => {
         console.log("LoginAPI-Client-Error:");

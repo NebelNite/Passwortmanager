@@ -9,18 +9,17 @@
 <body>
     
 <div id="app">
+    
     <div id="menu">
+        <button class="dropdown-btn" id="file-button" onclick="toggleFileMenu()">File</button>
+        <div id="file-menu" class="context-menu hidden">
+            <li class="dropdown-item" onclick="exportFunction()">Export</li>
+            <li class="dropdown-item" onclick="importFunction()">Import</li>
+            <li class="dropdown-item" onclick="lockFunction()">Lock</li>
+            <li class="dropdown-item" onclick="exitFunction()">Exit</li>
+        </div>
         
-        <a href="#">File</a>
-
-        <ul id="file-menu" class="context-menu">
-            <li>Export</li>
-            <li>Import</li>
-            <li>Lock</li>
-            <li>Exit</li>
-        </ul>
-
-        <button class="dropdown-btn" id="entry-button">Entry</button>
+        <button class="dropdown-btn" id="entry-button" onclick="toggleEntryMenu()">Entry</button>
         <ul id="entry-menu" class="context-menu hidden">
             <li id="addEntry">Add Entry</li>
             <li id="editEntry">Edit Entry</li>
@@ -33,7 +32,7 @@
         <input type="text" placeholder="Search...">
     </div>
     <div id="left-content">
-        <img src="../Images/leftBack2.png" alt="Background Image">
+        <img id="bImage" src="../Images/leftBack2.png" alt="Background Image">
     </div>
 
     <div id="data-grid">
@@ -61,7 +60,7 @@
 </div>
 
 
-<script src="../JS/homepage.js"></script>
+<script type="module" src="../JS/homepage.js"></script>
 
 </body>
 </html>

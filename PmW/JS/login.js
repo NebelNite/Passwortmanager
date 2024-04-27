@@ -174,7 +174,7 @@ require(['axios'], function(axios) {
 
     credentialSet.save();
     */
-
+   
   }
 
 
@@ -185,40 +185,9 @@ function getAesKeyForUser(username) {
   if (!base64Key) {
     return null;
   }
-
-  //const aesKey = CryptoJS.enc.Base64.parse(base64Key);
-
-  //const aesKeyByteArray = CryptoJS.enc.Hex.parse(aesKey.toString(CryptoJS.enc.Hex));
-  
- //console.log(aesKeyByteArray);
-  
   return base64Key;i
 
 
-  /*
-  let aesKeyObj = null;
-  const retrievedAesKey = localStorage.getItem(username);
-  aesKeyObj = CryptoJS.enc.Base64.parse(retrievedAesKey);
-  
-  return aesKeyObj;
-
-    
-    const credential = new Credential({
-      target: "AESKey",
-      username: username
-    });
-
-    if (credential.load()) {
-      const aesKeyBase64 = credential.password;
-      const aesKey = Uint8Array.from(atob(aesKeyBase64), c => c.charCodeAt(0));
-
-      return aesKey;
-    } else {
-      console.log("The AES key was not found.");
-    }
-
-    return null;
-    */
   }
 
 
@@ -280,7 +249,7 @@ function getAesKeyForUser(username) {
     //UserApi.setAesKey(getAesKeyForUser(userDTO.username));
     
     let userApi = UserApi.getInstance(getAesKeyForUser(userDTO.username));
-    
+
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);
 

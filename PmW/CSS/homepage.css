@@ -42,74 +42,26 @@ body {
 
 /* ContextMenu-Stile */
 .context-menu {
-    display: none;
     position: absolute;
-    z-index: 100;
-    background-color: #f2f2f2;
+    background-color: #fff;
     border: 1px solid #ccc;
-    padding: 5px;
-}
-
-.context-menu ul {
+    border-radius: 4px;
+    padding: 4px;
     list-style-type: none;
     margin: 0;
-    padding: 0;
-}
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    left: 10%; /* Position the context menu to the right of the button */
+  }
 
 .context-menu li {
-    padding: 5px;
+    padding: 4px;
     cursor: pointer;
 }
 
 .context-menu li:hover {
-    background-color: #ddd;
+    background-color: #f5f5f5;
 }
 
-/* Hide the scrollbar for DataGrid */
-#data-grid::-webkit-scrollbar {
-    display: none;
-}
-
-/* Hide dropdown menus by default */
 .hidden {
     display: none;
-  }
-  
-  /* Style dropdown buttons */
-  .dropdown-btn {
-    background-color: #f9f9f9;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 10px 15px;
-    width: 100%;
-    border: none;
-  }
-  
-  /* Add a downward arrow icon */
-  .dropdown-btn:after {
-    content: '\25BC';
-    float: right;
-    margin-left: 5px;
-  }
-  
-  /* Style the dropdown menu (hide on click) */
-  .context-menu {
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    min-width: 160px;
-    position: absolute;
-    z-index: 1;
-  }
-  
-  /* Style the links inside the dropdown */
-  .context-menu li {
-    padding: 8px 12px;
-    text-decoration: none;
-    color: #333;
-    display: block;
-  }
-  
-  /* Change color of links on hover */
-  .context-menu li:hover {
-    background-color: #f1f1f1
-  }
+}

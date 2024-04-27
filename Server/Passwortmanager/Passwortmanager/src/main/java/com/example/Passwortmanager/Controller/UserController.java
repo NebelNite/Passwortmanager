@@ -52,8 +52,8 @@ public class UserController {
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-    
 
+    
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
 

@@ -78,8 +78,9 @@ export class UserApi extends LoginApi {
 
     
     authenticateUser(userDto) {
-
-      window.location.href = '../homepage';
+      
+      
+      //window.location.href = '../homepage';
       
       //window.location.href = '../HTML/homepage.html';
       /*
@@ -145,15 +146,12 @@ export class UserApi extends LoginApi {
       return null;
     }
     
-    getUserById(id) {
+    static async getUserById(id) {
 
-      const response = this.getHttpClient().get(`/users/${id}`);
-    
-      if (response.statusCode == 200) {
-        return response.json();
-      }
+      let user = await LoginApi.getRequest("http://localhost:8080/users/" + id);
       
-      return null;
+      
+      return user;
     }
     
     encryptMessage(message, fileKey = null) {

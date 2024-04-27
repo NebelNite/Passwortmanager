@@ -37,6 +37,9 @@ app.use('/CSS', express.static(path.join(__dirname, 'CSS')));
 
 app.use('/Class', express.static(path.join(__dirname, 'Class')));
 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/HTML/login.html");
+  });
 
 app.use((req, res, next) => {
     if (req.url.endsWith('.js')) {
@@ -67,7 +70,7 @@ app.use((req, res, next) => {
     const data = obj.data;
     const url = obj.url;
     
-
+    
     console.log(url);
     //let objectToReturn;
     
@@ -87,19 +90,17 @@ app.use((req, res, next) => {
   });
 
   
-  app.get('/getToServer', (req, res) => {
+  app.post('/getToServer', (req, res) => {
     
-    const urlParams = new URLSearchParams(req.url.split('?')[1]);
-    const data = Object.fromEntries(urlParams.entries());
+    const springUrl = req.body.url;
+    console.log("SpringURL: " + springUrl);
     
-    const url = req.query.url;
-  
-    axios.get(url, {
-      params: data
+    axios.get(springUrl, {
+      //params: data
     })
     .then(response => {
-      console.log("Server:Response: " + JSON.stringify(response));
-      res.json({ message: response });
+      console.log("Server:Response: " + response);
+      res.json({ message: response.data });
     })
     .catch(error => {
       console.log("Error");
