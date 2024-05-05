@@ -26,23 +26,41 @@ body {
 }
 
 #left-content {
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     overflow: auto;
     z-index: 0;
     height: 100%;
-    
+    bottom: 0px;
+
     opacity: 1;
     overflow: hidden;
 }
 
+
+
 #leftBackgroundImg{
-    width: auto;
+  
+    background-repeat: no-repeat;
+
+    position: absolute;
+    left: -5%;
+    top: 36%;
+
+    height: 130%;
+    width: 40%;
     transform: translateX(-27%) translateY(-25%);
     position: 10% 50%;
+
     
-  object-fit: cover;
+    background-image: url("../Images/leftBack.png");
+    object-fit: cover;
+}
+
+.sv-string-viewer {
+  color: white;
 }
 
 #data-grid {
@@ -100,7 +118,25 @@ body {
 
 }
 
+th{
+  font-size: 20px;
 
+}
+
+.left-border {
+  border-left: 10px solid teal;
+  height: 10%;
+}
+
+
+.underlined {
+  border-bottom: 2px solid rgb(0, 0, 0);
+  height: 25px;
+}
+
+.data-row:last-child td {
+  border-bottom: 20px solid #ccc;
+}
 
 
 /*
@@ -115,8 +151,13 @@ body {
     align-items: center;
     height: 100%;
     z-index: 1;
-    
-    
+
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: 0;
+    left: 0;
+
 }
 
 .sv_question {
@@ -150,7 +191,7 @@ html {
   
   .bg {
     animation:slide 3s ease-in-out infinite alternate;
-    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    background-image: linear-gradient(-60deg, rgb(81, 171, 37) 50%, rgb(23, 109, 166) 50%);
     bottom:0;
     left:-50%;
     opacity:.5;

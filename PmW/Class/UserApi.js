@@ -36,7 +36,7 @@ export class UserApi extends LoginApi {
     static GetInstance() {
       
       if (UserApi.instance == null) {
-
+        
         UserApi.instance = new UserApi('http://localhost:8080');
       }
 
@@ -97,10 +97,13 @@ export class UserApi extends LoginApi {
           })
         .catch(error => console.error(error));
         */
-
+       
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
       const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
+      
+      return user;
+
       
       /*
       if(data != null)
@@ -130,7 +133,6 @@ export class UserApi extends LoginApi {
         return user;
       }
     */
-      return user;
     }
     
     
@@ -169,6 +171,7 @@ export class UserApi extends LoginApi {
     }
 
     encKey = CryptoJS.enc.Utf8.parse(encKey);
+
     message = CryptoJS.enc.Utf8.parse(message);
 
     

@@ -271,6 +271,7 @@ function getAesKeyForUser(username) {
     console.log("Key: SignIn :" +  UserApi.aesKey);
 
     UserApi.user = await UserApi.GetInstance().authenticateUser(userDTO);
+    
 
     if(UserApi.user.id.length > 1)
     {

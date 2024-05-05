@@ -12,7 +12,8 @@
     <script src="https://unpkg.com/survey-jquery@1.9.67/survey.jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    
 <div id="app">
     
     <div id="menu">
@@ -32,13 +33,13 @@
         </ul>
     </div>
     
-
+    
     <div id="search">
         <input type="text" placeholder="Search...">
     </div>
 
     <div id="left-content">
-        <img id="leftBackgroundImg" src="../Images/leftBack.png" alt="Background Image">
+        <img id="leftBackgroundImg"  alt="Background Image">
     </div>
 
     <div id="data-grid">
@@ -51,7 +52,7 @@
                 <th>Password</th>
                 <th>URL</th>
                 <th>Notes</th>
-                <th>ID</th>
+                <th hidden>ID</th>
             </tr>
             </thead>
             <tbody>
@@ -62,11 +63,12 @@
             </tbody>
         </table>
     </div>
-
     
     <div id="surveyElement"></div>
-
+    
 </div>
+
+
 
 
 <script type="module" src="../JS/homepage.js"></script>
