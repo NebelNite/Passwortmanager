@@ -100,22 +100,22 @@ export class EntryApi extends LoginApi {
   
   // Methode zum Verschlüsseln eines Eintrags
   EncryptEntry(entry) {
-      entry.notes = UserApi.EncryptMessage(entry.notes);
-      entry.password = UserApi.EncryptMessage(entry.password);
-      entry.username = UserApi.EncryptMessage(entry.username);
-      entry.title = UserApi.EncryptMessage(entry.title);
-      entry.url = UserApi.EncryptMessage(entry.url);
+      entry.notes = UserApi.GetInstance().EncryptMessage(entry.notes).toString();
+      entry.password = UserApi.GetInstance().EncryptMessage(entry.password).toString();
+      entry.username = UserApi.GetInstance().EncryptMessage(entry.username).toString();
+      entry.title = UserApi.GetInstance().EncryptMessage(entry.title).toString();
+      entry.url = UserApi.GetInstance().EncryptMessage(entry.url).toString();
   
       return entry;
   }
   
   // Methode zum Entschlüsseln eines Eintrags
   static DecryptEntry(entry) {
-      entry.notes = UserApi.DecryptMessage(entry.notes);
-      entry.password = UserApi.DecryptMessage(entry.password);
-      entry.username = UserApi.DecryptMessage(entry.username);
-      entry.title = UserApi.DecryptMessage(entry.title);
-      entry.url = UserApi.DecryptMessage(entry.url);
+      entry.notes = UserApi.GetInstance().DecryptMessage(entry.notes);
+      entry.password = UserApi.GetInstance().DecryptMessage(entry.password);
+      entry.username = UserApi.GetInstance().DecryptMessage(entry.username);
+      entry.title = UserApi.GetInstance().DecryptMessage(entry.title);
+      entry.url = UserApi.GetInstance().DecryptMessage(entry.url);
   
       return entry;
   }

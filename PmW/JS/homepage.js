@@ -24,12 +24,13 @@ document.addEventListener('DOMContentLoaded',async () => {
     UserApi.user = await UserApi.getUserById(userId);
     UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
     */
+   
+    UserApi.user = await JSON.parse(sessionStorage.getItem('user'));
+    UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
 
-    UserApi.user = await JSON.parse(sessionStorage.getItem('user'))
     UserApi.user = await UserApi.getUserById(UserApi.user.id);
     
     
-    UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
 
     const app = document.getElementById('app');
     const dataGrid = document.getElementById('data-grid');
@@ -68,27 +69,31 @@ document.addEventListener('DOMContentLoaded',async () => {
     let addEntryClicked = false;
 
     
-    function fillTable()
+    async function fillTable()
     {
 
         let fontSize = '18px';
-        // Hole alle Einträge des aktuellen Benutzers
-        const entries = UserApi.user.entries;
+
+        //const entries = UserApi.user.entries;
+        let user  = await UserApi.getUserById(UserApi.user.id);
+        const entries = user.entries;
+
+        
         let index = 0;
     
         // Lösche alle aktuellen Zeilen in der Tabelle
         const tbody = document.querySelector('#data-grid tbody');
         tbody.innerHTML = '';
     
+        
         // Füge alle Einträge in die Tabelle ein
         entries.forEach((entry, index) => {
         const tr = document.createElement('tr');
 
+
           tr.entry = entry;
-          /*
-          const tdIndex = document.createElement('td');
-          tdIndex.textContent = index;
-          tr.appendChild(tdIndex);*/
+          tr.entry = EntryApi.DecryptEntry(entry);
+          
     
           const tdTitle = document.createElement('td');
           tdTitle.textContent = entry.title;
@@ -204,12 +209,10 @@ function exitFunction() {
 
 
 async function addEntry() {
-
-
+  
   addEntryClicked = true;
 
   await createSurveyAndEntry(null).then(() => {
-    
 
     createPasswordgeneratorBtn();
     
@@ -391,7 +394,7 @@ $("#surveyElement").Survey({
 
     onComplete: function (survey, options) {
       const userInput = survey.data;
-      const entryDTO = new EntryDTO();
+      let entryDTO = new EntryDTO();
       
       
       entryDTO.id = surveyModel.currentPage.getQuestionByName("id").value;
@@ -403,11 +406,12 @@ $("#surveyElement").Survey({
 
       if(addEntryClicked)
       {
-        
         let newId = generateGuid();
         entryDTO.id = newId;
+
+
         
-        EntryApi.GetInstance().createEntry(entryDTO)
+        EntryApi.GetInstance().createEntry(EntryApi.GetInstance().EncryptEntry(entryDTO))
         .then(() => {
           fillTable();
         })
@@ -534,16 +538,21 @@ function deleteEntry() {
 
     
     
-    function getAesKeyForUser(username) {
+function getAesKeyForUser(username) {
   
-      const base64Key = localStorage.getItem(username);
-    
-      if (!base64Key) {
-        return null;
-      }
-      
-      return base64Key;i
-    }
+  const stringKey = localStorage.getItem(username);
+  const aes256Key = CryptoJS.enc.Hex.parse(stringKey);
+
+  if(aes256Key == null)
+  {
+      return false;
+  }
+
+
+  return aes256Key;
+
+
+  }
     
     
     
@@ -649,7 +658,7 @@ fileButton.addEventListener('click', function () {
 
         // Füge Daten an den DataGrid an
         // table.dataset.dataSource = JSON.stringify(dataGridSource);
-
+        
 /*
         // Behandle die Sortierung
         const ths = table.querySelectorAll('thead th');

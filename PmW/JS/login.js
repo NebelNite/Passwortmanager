@@ -125,8 +125,8 @@ require(['axios'], function(axios) {
 
 
       const userDTO = new UserDTO();
-      userDTO.masterKey = UserApi.GetInstance().EncryptMessage(masterkey);
-      userDTO.username = UserApi.GetInstance().EncryptMessage(username);
+      userDTO.masterKey = UserApi.GetInstance().EncryptMessage(masterkey).toString();
+      userDTO.username = UserApi.GetInstance().EncryptMessage(username).toString();
       
       //console.log(userApi.aesKey);
       //console.log("Test: SignUp: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
@@ -148,7 +148,6 @@ require(['axios'], function(axios) {
       alert(msg);
     }
     
-    
     console.log("SignUp3");
   }
   
@@ -157,7 +156,6 @@ require(['axios'], function(axios) {
     const keyLength = 256 / 8; // 32 bytes = 256 bits (AES-256)
     const aes256Key = CryptoJS.lib.WordArray.random(keyLength);
     console.log(aes256Key);
-
 
     localStorage.setItem(username, aes256Key);
 
@@ -220,6 +218,7 @@ function getAesKeyForUser(username) {
 
   async function signInButtonClick(event) {
     
+    
     const userDTO = new UserDTO();
     let masterKey = document.getElementById("usernameInput").value;
     let username = document.getElementById("masterKeyInput").value;
@@ -238,7 +237,8 @@ function getAesKeyForUser(username) {
 
     /*
     let enc = UserApi.GetInstance().EncryptMessage("Message");
-    console.log("EncryptedMessage: " + enc);    
+    console.log("EncryptedMessage: " + enc);   
+
     enc = UserApi.GetInstance().EncryptMessage("Message");
     console.log("EncryptedMessage: " + enc);
 
@@ -253,16 +253,16 @@ function getAesKeyForUser(username) {
 
     //userApi.aesKey = getAesKeyForUser(userDTO.username);
 
-    userDTO.masterKey = UserApi.GetInstance().EncryptMessage(userDTO.masterKey);
-    userDTO.username = UserApi.GetInstance().EncryptMessage(userDTO.username);
     
-    console.log("Test: SignIn: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
 
-    console.log("Key: SignIn :" +  UserApi.aesKey);
+    userDTO.masterKey = UserApi.GetInstance().EncryptMessage(userDTO.masterKey).toString();
+    userDTO.username = UserApi.GetInstance().EncryptMessage(userDTO.username).toString();
 
     UserApi.user = await UserApi.GetInstance().authenticateUser(userDTO);
     
-
+    //UserApi.user.masterKey = UserApi.GetInstance().DecryptMessage(UserApi.user.masterKey);
+    UserApi.user.username = UserApi.GetInstance().DecryptMessage(UserApi.user.username);
+    
     if(UserApi.user.id.length > 1)
     {
       /*
@@ -272,7 +272,7 @@ function getAesKeyForUser(username) {
       
       window.location.href = '../homepage?id=' + encodeURIComponent(id) + "&usn=" + encodeURIComponent(username);
       */
-
+     
       sessionStorage.setItem('user', JSON.stringify(UserApi.user));
       window.location.href = '../homepage';
 

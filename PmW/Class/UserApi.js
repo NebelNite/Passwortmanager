@@ -190,15 +190,17 @@ export class UserApi extends LoginApi {
       padding: CryptoJS.pad.Pkcs7
     });
 
-    //encryptedString = encryptedString.toString();
+
+    //encryptedString = encryptedString.toString(CryptoJS.enc.Utf8);
 
 
     return encryptedString;
     
   }
-    
+
     DecryptMessage(encryptedMessage, fileKey = null) {
       
+      //encryptedMessage = CryptoJS.enc.Latin1.parse(encryptedMessage);
 
       let encKey = null;
       
