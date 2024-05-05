@@ -101,7 +101,7 @@ export class UserApi extends LoginApi {
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
       const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
-
+      
       /*
       if(data != null)
       {
@@ -169,20 +169,21 @@ export class UserApi extends LoginApi {
     }
 
     encKey = CryptoJS.enc.Utf8.parse(encKey);
-
     message = CryptoJS.enc.Utf8.parse(message);
 
+    
+
+
     const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zero
-
-
+    
     
     let encryptedString = CryptoJS.AES.encrypt(message, encKey, {
       mode: CryptoJS.mode.ECB,
       iv: iv,
       padding: CryptoJS.pad.NoPadding
     }).toString();
+  
 
-    
 
     return encryptedString;
     

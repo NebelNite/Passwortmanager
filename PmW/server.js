@@ -57,10 +57,19 @@ app.use((req, res, next) => {
     next();
   });
   
-
+  
   app.get('/homepage', (req, res) => {
     res.sendFile(__dirname + "/HTML/homepage.html");
 });
+
+app.get('/passwordGenerator', (req, res) => {
+    res.sendFile(__dirname + "/HTML/passwordGenerator.html");
+});
+
+app.get('/passwordInput', (req, res) => {
+    res.sendFile(__dirname + "/HTML/passwordInput.html");
+});
+
 
 app.get('/Images/leftBack.png', (req, res) => {
     res.sendFile(__dirname + '/Images/leftBack.png');

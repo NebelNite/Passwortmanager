@@ -7,7 +7,6 @@ import { UserModel } from "../Class/UserModel.js";
 
 
 
-
 export class LoginApi {
     
   static connectionString;

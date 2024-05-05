@@ -271,15 +271,20 @@ function getAesKeyForUser(username) {
     console.log("Key: SignIn :" +  UserApi.aesKey);
 
     UserApi.user = await UserApi.GetInstance().authenticateUser(userDTO);
-    
+
     if(UserApi.user.id.length > 1)
     {
-      
+      /*
       localStorage.setItem(UserApi.user.id, UserApi.user);
       let id = UserApi.user.id;
       let username = UserApi.user.username;
       
       window.location.href = '../homepage?id=' + encodeURIComponent(id) + "&usn=" + encodeURIComponent(username);
+      */
+
+      sessionStorage.setItem('user', JSON.stringify(UserApi.user));
+      window.location.href = '../homepage';
+
     }
 
 
