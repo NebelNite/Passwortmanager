@@ -108,30 +108,35 @@ require(['axios'], function(axios) {
     if (msg.length == 0) {
       if (!aesKeyExistsForUser(username)) {
         setAesKeyForUser(username);
+        UserApi.aesKey = getAesKeyForUser(username);
     }
+
+
 
     //UserApi.aesKey = getAesKeyForUser(username);
     //let key = getAesKeyForUser(username);
     
-    let userApi = UserApi.GetInstance(getAesKeyForUser(username));
+    //let userApi = UserApi.GetInstance(getAesKeyForUser(username));
     
     //UserApi.setAesKey(getAesKeyForUser(username));
     //UserApi.aesKey = getAesKeyForUser(username);
 
     console.log("Key: SignUp: " + UserApi.aesKey);
 
+
       const userDTO = new UserDTO();
       userDTO.masterKey = UserApi.GetInstance().EncryptMessage(masterkey);
       userDTO.username = UserApi.GetInstance().EncryptMessage(username);
       
-      console.log(userApi.aesKey);
-      console.log("Test: SignUp: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
+      //console.log(userApi.aesKey);
+      //console.log("Test: SignUp: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
 
       //let test = userApi.decryptMessage(userDTO.username);
       userDTO.id = null;
       
-      
-      userApi.createUser(userDTO)
+
+
+      UserApi.GetInstance().createUser(userDTO)
         .then(() => {
           console.log("SignUp successful!");
         })
@@ -149,44 +154,38 @@ require(['axios'], function(axios) {
   
   function setAesKeyForUser(username) {
 
-    //const aesKey = CryptoJS.enc.Hex.parse('000102030405060708090a0b0c0d0e0f');
+    const keyLength = 256 / 8; // 32 bytes = 256 bits (AES-256)
+    const aes256Key = CryptoJS.lib.WordArray.random(keyLength);
+    console.log(aes256Key);
+
+
+    localStorage.setItem(username, aes256Key);
+
+    /*
     const aesKey = CryptoJS.lib.WordArray.random(32);
-    //const aesKeyByteArr = CryptoJS.enc.Utf8.parse(aesKey.toString(CryptoJS.enc.Utf8));
     
     const base64Key = CryptoJS.enc.Base64.stringify(aesKey);
-    //const base64Key = CryptoJS.enc.Base64.stringify(aesKeyByteArr);
     
     console.log(aesKey);
     
     localStorage.setItem(username, base64Key);
-    
-    /*
-    const aes = new Aes();
-    aes.generateKey();
-    const aesKey = Array.from(aes.key);
-    const aesKeyBase64 = btoa(String.fromCharCode.apply(null, aesKey));
-    
-    const credentialSet = new Credential({
-      target: "AESKey",
-      username: username,
-      password: aesKeyBase64,
-      persistanceType: PersistanceType.LocalComputer
-    });
-
-    credentialSet.save();
     */
-   
+
   }
 
 
 function getAesKeyForUser(username) {
   
-  const base64Key = localStorage.getItem(username);
-  
-  if (!base64Key) {
-    return null;
+  const stringKey = localStorage.getItem(username);
+  const aes256Key = CryptoJS.enc.Hex.parse(stringKey);
+
+  if(aes256Key == null)
+  {
+      return false;
   }
-  return base64Key;i
+
+
+  return aes256Key;
 
 
   }
@@ -195,6 +194,16 @@ function getAesKeyForUser(username) {
   
   function aesKeyExistsForUser(username) {
     
+
+    const retrievedAesKey = localStorage.getItem(username);
+    
+    if (retrievedAesKey == null) {
+      return false;
+    } else {
+      return true;
+    }
+
+    /*
     console.log(username);
     
     const retrievedAesKey = localStorage.getItem(username);
@@ -204,32 +213,6 @@ function getAesKeyForUser(username) {
     } else {
       return true;
     }
-    
-    /*
-    let credential= new Credential({
-      target: "AESKey",
-      username: username
-    })
-    
-    
-    console.log(credential.target);
-
-
-    let credential = new UserCredential({
-      target: "AESKey",
-      username: username
-    });
-
-
-    credential.get((error, result) => {
-      if (error) {
-        console.error(`Error retrieving credential: ${error}`);
-      } else {
-        // The AES key is stored in the password property of the result object
-        const aesKey = Buffer.from(result.password, 'base64');
-        console.log('AES key:', aesKey.toString('hex'));
-      }
-    });
     */
 
    
@@ -253,11 +236,18 @@ function getAesKeyForUser(username) {
     
     UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
+    /*
     let enc = UserApi.GetInstance().EncryptMessage("Message");
+    console.log("EncryptedMessage: " + enc);    
+    enc = UserApi.GetInstance().EncryptMessage("Message");
     console.log("EncryptedMessage: " + enc);
 
     let dec = UserApi.GetInstance().DecryptMessage(enc);
     console.log("DecryptedMessage:" + dec);
+    dec = UserApi.GetInstance().DecryptMessage(enc);
+    console.log("DecryptedMessage:" + dec);
+*/
+
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);
 

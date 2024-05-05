@@ -159,6 +159,7 @@ export class UserApi extends LoginApi {
     }
 
     EncryptMessage(message, fileKey = null) {
+      
 
     let encKey = null;
 
@@ -170,22 +171,26 @@ export class UserApi extends LoginApi {
       encKey = UserApi.aesKey;
     }
 
-    encKey = CryptoJS.enc.Utf8.parse(encKey);
-
     message = CryptoJS.enc.Utf8.parse(message);
+
+
+
+    //encKey = CryptoJS.enc.Utf8.parse(encKey);
+    //message = CryptoJS.enc.Utf8.parse(message);
 
     
 
 
-    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zero
+    const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zero
     
     
     let encryptedString = CryptoJS.AES.encrypt(message, encKey, {
       mode: CryptoJS.mode.ECB,
       iv: iv,
-      padding: CryptoJS.pad.NoPadding
-    }).toString();
-  
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    //encryptedString = encryptedString.toString();
 
 
     return encryptedString;
@@ -206,19 +211,26 @@ export class UserApi extends LoginApi {
       }
       
 
-    encKey = CryptoJS.enc.Utf8.parse(encKey);
+    //encKey = CryptoJS.enc.Utf8.parse(encKey);
 
-    const iv = CryptoJS.enc.Hex.parse("0000000000000000"); // IV of all zeros
+    const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zeros
 
-
+    
      let decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
       mode: CryptoJS.mode.ECB,
       iv: iv,
-      padding: CryptoJS.pad.NoPadding
-    }).toString();
+      padding: CryptoJS.pad.Pkcs7
+    });
 
-      decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
-
+      //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
+      
+      decryptedString = decryptedString.toString(CryptoJS.enc.Latin1);
+      
+      //decryptedString = decryptedString.toString();
+      //decryptedString = decryptedString.toString(CryptoJS.enc.Utf16);
+      
+      //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
+      
       return decryptedString;
       
     }
