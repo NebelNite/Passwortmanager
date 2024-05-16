@@ -18,6 +18,7 @@ import java.util.Optional;
 @CrossOrigin(origins="http://localhost:3001")
 @RestController
 @RequestMapping("/users")
+
 public class UserController {
 
     private final UserService userService;
@@ -77,27 +78,7 @@ public class UserController {
     }
     
 
-    @PostMapping("/{userId}/addEntry")
-    public ResponseEntity<EntryModel> addEntry(@PathVariable("userId") String userId, @RequestBody EntryDTO entryDTO) {
 
-        Optional<UserModel> userOptional = userService.getUserById(userId);
-
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        
-
-
-        UserModel user = userOptional.get();
-        EntryModel entryModel = entryDTO.toEntryModel();
-        user.addEntry(entryModel);
-
-        EntryModel model = entryDTO.toEntryModel();
-
-        user = userService.updateUser(user, Optional.of(model));
-
-        return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
-    }
 
     
 }

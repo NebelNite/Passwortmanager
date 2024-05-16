@@ -235,18 +235,14 @@ function getAesKeyForUser(username) {
     
     UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
-    /*
+    
     let enc = UserApi.GetInstance().EncryptMessage("Message");
     console.log("EncryptedMessage: " + enc);   
-
-    enc = UserApi.GetInstance().EncryptMessage("Message");
-    console.log("EncryptedMessage: " + enc);
-
+    
+    //enc = CryptoJS.enc.Latin1.parse(enc);
+    
     let dec = UserApi.GetInstance().DecryptMessage(enc);
     console.log("DecryptedMessage:" + dec);
-    dec = UserApi.GetInstance().DecryptMessage(enc);
-    console.log("DecryptedMessage:" + dec);
-*/
 
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);

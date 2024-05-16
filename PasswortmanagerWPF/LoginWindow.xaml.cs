@@ -58,8 +58,9 @@ namespace PasswortmanagerWPF
                 UserApi.aesKey = GetAesKeyForUser(userDTO.username);
 
 
-                userDTO.masterKey = UserApi.EncryptMessage(masterkey);
-                userDTO.username = UserApi.EncryptMessage(username);
+                userDTO.masterKey = Encryption.EncryptMessage(masterkey);
+                userDTO.username = Encryption.EncryptMessage(username);
+                
 
                 try
                 {
@@ -160,8 +161,8 @@ namespace PasswortmanagerWPF
 
                 UserApi.aesKey = GetAesKeyForUser(userDTO.username);
 
-                userDTO.masterKey = UserApi.EncryptMessage(userDTO.masterKey);
-                userDTO.username = UserApi.EncryptMessage(userDTO.username);
+                userDTO.masterKey = Encryption.EncryptMessage(userDTO.masterKey);
+                userDTO.username = Encryption.EncryptMessage(userDTO.username);
 
 
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);

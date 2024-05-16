@@ -5,25 +5,12 @@ import { EntryModel } from "../Class/EntryModel.js";
 import { LoginApi } from "../Class/LoginApi.js";
 import { UserDTO } from "../Class/UserDTO.js";
 import { UserModel } from "../Class/UserModel.js";
-//import $ from "jquery";
-
 
 document.addEventListener('DOMContentLoaded',async () => {
 
+
+
   
-    /*
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    let userId = urlParams.get('id');
-    userId = decodeURIComponent(userId);
-
-    let username = urlParams.get('usn');
-    username = decodeURIComponent(username);
-
-    UserApi.user = await UserApi.getUserById(userId);
-    UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
-    */
    
     UserApi.user = await JSON.parse(sessionStorage.getItem('user'));
     UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
@@ -74,17 +61,15 @@ document.addEventListener('DOMContentLoaded',async () => {
 
         let fontSize = '18px';
 
-        //const entries = UserApi.user.entries;
         let user  = await UserApi.getUserById(UserApi.user.id);
         const entries = user.entries;
 
         
         let index = 0;
-    
+        
         // Lösche alle aktuellen Zeilen in der Tabelle
         const tbody = document.querySelector('#data-grid tbody');
         tbody.innerHTML = '';
-    
         
         // Füge alle Einträge in die Tabelle ein
         entries.forEach((entry, index) => {
@@ -94,12 +79,35 @@ document.addEventListener('DOMContentLoaded',async () => {
           tr.entry = entry;
           tr.entry = EntryApi.DecryptEntry(entry);
           
-    
+          
+          if(tr.entry.title == 'undefined')
+          {
+            entry.title = ''
+          }
+          if(tr.entry.notes == 'undefined')
+          {
+              entry.notes = ''
+          }
+          if(tr.entry.username == 'undefined')
+          {
+                entry.username = ''
+          }
+          if(tr.entry.url == 'undefined')
+          {
+                entry.url = ''
+          }
+          if(tr.entry.password == 'undefined')
+          {
+                entry.password = ''
+          }
+          
           const tdTitle = document.createElement('td');
           tdTitle.textContent = entry.title;
           tdTitle.style.fontSize = fontSize;
           //tdTitle.classList.add('left-border');
           tdTitle.classList.add('underlined');
+
+
           tr.appendChild(tdTitle);
     
           const tdUsername = document.createElement('td');
@@ -326,7 +334,7 @@ async function createSurveyAndEntry(entry)
   
   const myElement = document.getElementById('surveyElement');
   myElement.style.position = 'absolute';
-  myElement.style.top = '30%';
+  myElement.style.top = '50%';
   myElement.style.left = '14%';
 
   

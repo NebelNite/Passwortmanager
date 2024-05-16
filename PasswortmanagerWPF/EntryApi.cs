@@ -82,7 +82,6 @@ namespace PasswortmanagerWPF
                 //user.entries.Remove(user.entries.Find(entry => entry.id == selectedEntry.id));
 
 
-
                 //UserApi.GetInstance().updateUser(userDTO);
 
                 EntryCreated?.Invoke(this, user);
@@ -107,7 +106,7 @@ namespace PasswortmanagerWPF
                 //UserApi userApi = UserApi.GetInstance();
 
 
-                entryDto = EncryptEntry(entryDto);
+                entryDto = Encryption.EncryptEntry(entryDto);
 
                 var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
                 response.EnsureSuccessStatusCode();
@@ -140,13 +139,11 @@ namespace PasswortmanagerWPF
                 userDTO.entries = user.entries;
 
 
-
-
-                entryDto = EncryptEntry(entryDto);
+                entryDto = Encryption.EncryptEntry(entryDto);
 
                 UserApi userApi = UserApi.GetInstance();
 
-                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/" + user.id + "/addEntry", entryDto);
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/addEntry/" + user.id, entryDto);
                 response.EnsureSuccessStatusCode();
 
 
@@ -160,7 +157,7 @@ namespace PasswortmanagerWPF
             }
         }
 
-
+        /*
 
         public EntryDTO EncryptEntry(EntryDTO entry)
         {
@@ -217,7 +214,8 @@ namespace PasswortmanagerWPF
 
             return entries;
         }
-
+        
+        ^*/
 
 
 

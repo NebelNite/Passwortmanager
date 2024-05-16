@@ -1,44 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\ahinf\\4_ahinf\\pos\\passwortmanager-wpf-client-server\\repo\\passwortmanagerwpf\\passwordinputwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:passwordinputwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\entrywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entrywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|c:\\ahinf\\4_ahinf\\pos\\passwortmanager-wpf-client-server\\repo\\passwortmanagerwpf\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\entryapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:entryapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:loginwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\userapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C08EC599-ABFA-4997-B181-6AD9A37B0DF0}|PasswortmanagerWPF.csproj|solutionrelative:userapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\LoginWindow.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:obj\\Debug\\LoginWindow.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -46,118 +9,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": -1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PasswordInputWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
-              "RelativeDocumentMoniker": "PasswordInputWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\PasswordInputWindow.xaml.cs",
-              "RelativeToolTip": "PasswordInputWindow.xaml.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAAwBsAAAA6AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-03T08:15:11.385Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserModel.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserModel.cs",
-              "RelativeDocumentMoniker": "UserModel.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserModel.cs",
-              "RelativeToolTip": "UserModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-02T09:19:47.255Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "App.xaml",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\App.xaml",
-              "RelativeDocumentMoniker": "App.xaml",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\App.xaml",
-              "RelativeToolTip": "App.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-02T09:19:47.442Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "LoginWindow.g.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\LoginWindow.g.cs",
-              "RelativeDocumentMoniker": "obj\\Debug\\LoginWindow.g.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\obj\\Debug\\LoginWindow.g.cs",
-              "RelativeToolTip": "obj\\Debug\\LoginWindow.g.cs",
-              "ViewState": "AQIAAIIAAAAAAAAAAAAEwJcAAABrAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-02T09:19:47.457Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "LoginWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
-              "RelativeDocumentMoniker": "LoginWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\LoginWindow.xaml.cs",
-              "RelativeToolTip": "LoginWindow.xaml.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAuwDIAAAAwAAAA",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH\u002BSURBVDhP7ZRPaNNQHMe/TdNma2NrW1jUFYZYN0YKHqZischAMCCjh94siEfp0buIeBZ2LYKXHvSWQ4toDkKC0F7EU93NQyEthkFnG9uuaf6YhIcusknBHTz4gR\u002B/x\u002B/7e1/ee8l7IRzhmbi3s0TTzc3zcYQpp3R3K9sk0sJQJPtscgmcSzJ4\u002BeErPvemj99\u002B6t0j0sKEcF96SsbgV\u002BOX\u002BQvxyvu9A9zaSOL2\u002BrK8Zn9R6vU66QBomkYul0OpVNJns9mLYrGoE8mHhhPaImNoI4Nboikcmjb29TkYOr6dZtPbPM\u002BTDmAwGGAymaDb7Q44jttvt9tSoVDQiOyu8AhvPqo7\u002BqHVfP5OReXGCgQ\u002BiRU2BMMwSAcgSZIfiUQC5XIZLMs\u002BSKVSYj6f/\u002B7pgTPs9CbofTPw6E4WQj6JTAyYz\u002BdE/YXjONB1HaIoQtO03el0\u002BpBIQcPrq6Ybbr64jLOMA8e2/MnHYds2RqMR3C2nG43GGVJGmGSfm1evrI8PtMqltSzoMOVPOo5MJuN/GC/6/T5UVVU6nY7saYEVyrKMVquF8Xh8oplnIgjCz/DMTdMk6m\u002BGlmX5Z3bSNhchYHga/Df8e/59Q5pkn2g0CoqioCgKGIYh1T8zHA4Ri7mXnhB4barV6jX3hjzxmryffBG8VycSibyu1WqvSOk0AX4A4Q67Z\u002BxJ14gAAAAASUVORK5CYII=",
-              "WhenOpened": "2024-05-02T09:19:47.459Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserApi.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserApi.cs",
-              "RelativeDocumentMoniker": "UserApi.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\UserApi.cs",
-              "RelativeToolTip": "UserApi.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAawDcAAAA0AAAA",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALNSURBVDhP7VNdSFNhGH7POds8znNy080/BIXldAbJcEkXiaChXRRCCIGK6E1CV/lDeZHl8EowxYtAIgxC7CIvRIe48kLDC5Vz41EmbhpDS51uudOmubNztr7vuILqoiDoyufie3nP9/B8z/tz4Bz/DCoRYc23xlTdqUpXl6rZ6NUoa6g0sJabFrasrkzjmnJ9xZxgMKhnKhi9\u002B6JbI8wJkc7OTuN28fYF\u002BbIMh/OHIuaQ\u002BMAQT8RWJM9JGolTkSpOikkcQRKcilINJigggzyI72gVPRgOhw2RWGRGDWouQkVaExQg8MF7\u002BW7nprNxZXfFTFM0FGcWA5PEABKFiBRxtJS2NGGxoYWhG/Nb85neI68PifLWXGu559BDH50cuUmCHN18vNmrOFz8uHjFG/Ca4/E41JhrwiU5JU\u002BtOVZ7gaHAnsVkvU5NTY3G4rHVbDZbMDJGIAhC0Gq0fJGxKMomsdjWLpLZwloK6l7UTda/rI/bHXZfKBR6hXqVlrj6CYEvgcm\u002Bt31xU69p6iB8kB0QAp\u002BaR5tx3pOgnPVww78BGpUGdFrdMsuyTTqd7rNymwByTqKHMvxhP30sHqMPQA8vDGf4Qj5KlEVkkGByn\u002BQqJhRBSZZwANRwJf6K7wMYeD9QPs6PQzQWvTayOOJsGGswcDscyDH5Lh4U5iqC\u002Bfp8OJVOgd/ncfobUlJSBOTqYe2lWr7CVIEfXjUbzQ\u002B6KruEQmMhoIE4UF\u002BfYa5iqbqoGlz7LnAfuM1tb9p6cM5oGEAlwl5oz02S5BiivQsEAwa0CYUkkG7nPeekP\u002Bg3Tq9Ps6jmOc8jzzLWUtZm6cNS94xrphEttzlNmwaWDAskq5NxaSBKoqP9evstzPsbKIIYs\u002BuzHWh1OiZWJ2BH2AGKpMCUboI8fd5s/\u002B3\u002BpgTtj/jxp9BAP0fBRkqkDfXEhiZro\u002BKUTY7K988Y5/g/APgG2Ocp0eSbumcAAAAASUVORK5CYII=",
-              "WhenOpened": "2024-05-02T09:19:47.461Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EntryWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
-              "RelativeDocumentMoniker": "EntryWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryWindow.xaml.cs",
-              "RelativeToolTip": "EntryWindow.xaml.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAIwD8AAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-02T09:19:47.463Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAAArwFkAAABNAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-02T09:19:47.464Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EntryApi.cs",
-              "DocumentMoniker": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
-              "RelativeDocumentMoniker": "EntryApi.cs",
-              "ToolTip": "C:\\AHINF\\4_AHINF\\POS\\Passwortmanager-WPF-Client-Server\\Repo\\PasswortmanagerWPF\\EntryApi.cs",
-              "RelativeToolTip": "EntryApi.cs",
-              "ViewState": "AQIAAH0AAAAAAAAAAAAAwJYAAAAAAAAA",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALNSURBVDhP7VNdSFNhGH7POds8znNy080/BIXldAbJcEkXiaChXRRCCIGK6E1CV/lDeZHl8EowxYtAIgxC7CIvRIe48kLDC5Vz41EmbhpDS51uudOmubNztr7vuILqoiDoyufie3nP9/B8z/tz4Bz/DCoRYc23xlTdqUpXl6rZ6NUoa6g0sJabFrasrkzjmnJ9xZxgMKhnKhi9\u002B6JbI8wJkc7OTuN28fYF\u002BbIMh/OHIuaQ\u002BMAQT8RWJM9JGolTkSpOikkcQRKcilINJigggzyI72gVPRgOhw2RWGRGDWouQkVaExQg8MF7\u002BW7nprNxZXfFTFM0FGcWA5PEABKFiBRxtJS2NGGxoYWhG/Nb85neI68PifLWXGu559BDH50cuUmCHN18vNmrOFz8uHjFG/Ca4/E41JhrwiU5JU\u002BtOVZ7gaHAnsVkvU5NTY3G4rHVbDZbMDJGIAhC0Gq0fJGxKMomsdjWLpLZwloK6l7UTda/rI/bHXZfKBR6hXqVlrj6CYEvgcm\u002Bt31xU69p6iB8kB0QAp\u002BaR5tx3pOgnPVww78BGpUGdFrdMsuyTTqd7rNymwByTqKHMvxhP30sHqMPQA8vDGf4Qj5KlEVkkGByn\u002BQqJhRBSZZwANRwJf6K7wMYeD9QPs6PQzQWvTayOOJsGGswcDscyDH5Lh4U5iqC\u002Bfp8OJVOgd/ncfobUlJSBOTqYe2lWr7CVIEfXjUbzQ\u002B6KruEQmMhoIE4UF\u002BfYa5iqbqoGlz7LnAfuM1tb9p6cM5oGEAlwl5oz02S5BiivQsEAwa0CYUkkG7nPeekP\u002Bg3Tq9Ps6jmOc8jzzLWUtZm6cNS94xrphEttzlNmwaWDAskq5NxaSBKoqP9evstzPsbKIIYs\u002BuzHWh1OiZWJ2BH2AGKpMCUboI8fd5s/\u002B3\u002BpgTtj/jxp9BAP0fBRkqkDfXEhiZro\u002BKUTY7K988Y5/g/APgG2Ocp0eSbumcAAAAASUVORK5CYII=",
-              "WhenOpened": "2024-05-02T09:19:47.466Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             }
           ]
         }

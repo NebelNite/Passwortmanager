@@ -58,7 +58,7 @@ namespace PasswortmanagerWPF
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
-            categoryRoot.Header = "DB: " + UserApi.DecryptMessage(UserApi.user.username);
+            categoryRoot.Header = "DB: " + Encryption.DecryptMessage(UserApi.user.username);
 
             UserDTO userDTO = new UserDTO();
 
@@ -68,12 +68,12 @@ namespace PasswortmanagerWPF
             userDTO.entries = UserApi.user.entries;
 
 
-            userDTO = (UserDTO)UserApi.DecryptUser(userDTO);
+            userDTO = (UserDTO)Encryption.DecryptUser(userDTO);
 
             //UserModel user = await UserApi.GetInstance().GetUserByUsernameAndMasterKey(userDTO);
             UserModel user = await UserApi.GetInstance().GetUserById(userDTO.id);
 
-            entries = new ObservableCollection<EntryModel>(EntryApi.DecryptEntries(user.entries));
+            entries = new ObservableCollection<EntryModel>(Encryption.DecryptEntries(user.entries));
 
             dataGrid.ItemsSource = entries;
         }
@@ -110,7 +110,7 @@ namespace PasswortmanagerWPF
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
                 passwordBytes = fillKey(passwordBytes);
 
-                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
+                jsonString = Encryption.DecryptMessage(jsonString, passwordBytes);
 
                 importedUser = JsonConvert.DeserializeObject<UserModel>(jsonString);
 
@@ -147,7 +147,7 @@ namespace PasswortmanagerWPF
 
                 UserApi.user = await UserApi.GetInstance().GetUserById(id);
 
-                currentEntries = EntryApi.DecryptEntries(UserApi.user.entries);
+                currentEntries = Encryption.DecryptEntries(UserApi.user.entries);
 
                 /*
                 foreach(EntryModel entry in importedUser.entries)
@@ -186,7 +186,7 @@ namespace PasswortmanagerWPF
 
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
                 passwordBytes = fillKey(passwordBytes);
-                jsonString = UserApi.EncryptMessage(jsonString, passwordBytes);
+                jsonString = Encryption.EncryptMessage(jsonString, passwordBytes);
 
 
                 /*
@@ -279,7 +279,7 @@ namespace PasswortmanagerWPF
             UserApi.user = user;
 
 
-            userDTO.entries = EntryApi.DecryptEntries(user.entries);
+            userDTO.entries = Encryption.DecryptEntries(user.entries);
 
             entries = new ObservableCollection<EntryModel>(user.entries);
             dataGrid.ItemsSource = entries;

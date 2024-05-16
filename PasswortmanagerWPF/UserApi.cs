@@ -90,6 +90,7 @@ namespace PasswortmanagerWPF
         }
 
 
+        /*
 
         public bool VerifyPassword(string passwort, string storedHash)
         {
@@ -100,6 +101,7 @@ namespace PasswortmanagerWPF
                 return computedHash == storedHash;
             }
         }
+        */
 
 
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
@@ -137,8 +139,7 @@ namespace PasswortmanagerWPF
             return await response.Content.ReadAsAsync<UserModel>();
         }
 
-
-        // optional
+        /*
         public static string EncryptMessage(string message, byte[] fileKey = null)
         {
             if (message == null)
@@ -156,7 +157,7 @@ namespace PasswortmanagerWPF
                 {
                     aes.Key = aesKey;
                 }
-                
+
 
                 aes.Mode = CipherMode.ECB;
 

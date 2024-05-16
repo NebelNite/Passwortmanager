@@ -31,6 +31,7 @@ namespace PasswortmanagerWPF
             this.jsonString = jsonString;
         }
 
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             FileInput?.Invoke(this, new Tuple<string, string>(PasswordBox.Password, jsonString));

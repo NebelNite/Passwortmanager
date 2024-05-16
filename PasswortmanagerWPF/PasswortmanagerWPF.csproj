@@ -172,6 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Encryption.cs" />
     <Compile Include="EntryDTO.cs" />
     <Compile Include="EntryModel.cs" />
     <Compile Include="EntryWindow.xaml.cs">

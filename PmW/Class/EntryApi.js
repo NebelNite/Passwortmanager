@@ -86,8 +86,8 @@ export class EntryApi extends LoginApi {
           
           const userApi = UserApi.GetInstance();
 
-          await LoginApi.postRequest(this.connectionString + "/users/" + user.id + "/addEntry", entryDto);
-          
+          await LoginApi.postRequest(this.connectionString + "/entries/addEntry/"+ user.id, entryDto);
+
           UserApi.user = await UserApi.getUserById(UserApi.user.id);
 
           //return response;

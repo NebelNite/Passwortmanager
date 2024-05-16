@@ -29,7 +29,29 @@ public class EntryController {
         this.entryService = entryService;
         this.userService = userService;
     }
+    
 
+    @PostMapping("/addEntry/{userId}")
+    public ResponseEntity<EntryModel> addEntry(@PathVariable("userId") String userId, @RequestBody EntryDTO entryDTO) {
+
+        Optional<UserModel> userOptional = userService.getUserById(userId);
+
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
+
+        UserModel user = userOptional.get();
+        EntryModel entryModel = entryDTO.toEntryModel();
+        user.addEntry(entryModel);
+
+        EntryModel model = entryDTO.toEntryModel();
+
+        user = userService.updateUser(user, Optional.of(model));
+
+        return new ResponseEntity<>(entryModel, HttpStatus.CREATED);
+    }
 
 
 
@@ -84,28 +106,6 @@ public class EntryController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    
 
-/*
-    @PutMapping("/{id}")
-    public ResponseEntity<EntryModel> updateEntry(@PathVariable("id") String id, @RequestBody EntryModel entryModel) {
-        EntryModel updatedEntry = entryService.updateEntry(id, entryModel);
-        if (updatedEntry != null) {
-            return new ResponseEntity<>(updatedEntry, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id) {
-        boolean deleted = entryService.deleteEntry(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-*/
     
 }
