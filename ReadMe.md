@@ -15,15 +15,20 @@
     - [API](#api)
       - [Routen](#routen)
         - [**UserController** (`/users`):](#usercontroller-users)
+        - [Create](#create)
+        - [Authenticate](#authenticate)
+        - [id](#id)
+        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey)
         - [**EntryController** (`/entries`):](#entrycontroller-entries)
+        - [addEntry](#addentry)
+        - [deleteEntry](#deleteentry)
+        - [editEntry](#editentry)
     - [Datenbank](#datenbank)
       - [Benutzer (UserModel)](#benutzer-usermodel)
       - [Eintrag (EntryModel)](#eintrag-entrymodel)
   - [WPF-Application](#wpf-application)
   - [Web-Application](#web-application)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
-    - [Use-Case:](#use-case)
-    - [User einloggen](#user-einloggen)
 
 
 ## <u>Einführung</u>
@@ -38,6 +43,7 @@ Das Projekt besteht aus folgenden Hauptkomponenten:
 - **Server**: Die Backend-Komponente, die mithilfe von Spring Boot implementiert ist. Der Server ist verantwortlich für die Verarbeitung von Anfragen der Clients, die Datenbankinteraktion und die Bereitstellung von RESTful Web Services (CRUD).
 
 - **WPF-Client**: Ein Desktop-Client, der in C# implementiert ist. Dieser Client bietet eine grafische Benutzeroberfläche für die Benutzer des Passwortmanagers. Mit dem WPF-Client können Benutzer ihre Passwortdaten verwalten und verschiedene Funktionen des Passwortmanagers nutzen.
+
 
 - **Web-Client**: Ein webbasierte Client-Anwendung, die mithilfe von HTML, Java und CSS entwickelt ist. Der Web-Client bietet eine plattformübergreifende Benutzeroberfläche für den Zugriff auf den Passwortmanager über einen Webbrowser. Benutzer können sich über den Web-Client anmelden, ihre Passwortdaten anzeigen und verwalten sowie verschiedene Funktionen des Passwortmanagers nutzen.
   
@@ -103,27 +109,81 @@ Die einzelnen Endpunkte der Controller sind erreichar unter
 * /users
  
 
+
 #### Routen
 
 ##### **UserController** (`/users`):
 
+##### Create
 - `/create`: Ein POST-Endpunkt, der verwendet wird, um einen neuen Benutzer in der DB zu speichern. Der Client sendet Benutzerdaten an diesen Endpunkt, und der Server erstellt dann den entsprechenden Benutzer in der DB.
+  
 
+```mermaid
+graph TD;
+    A[Neuer Benutzer] -->|Gibt Benutzernamen und Master-Key ein| B[Passwortmanager]
+    B -->|Speichert neuen Benutzer in der Datenbank| C{Speichern erfolgreich?}
+    C -- Ja --> D[Benutzer registriert]
+    C -- Nein --> E[Fehlermeldung anzeigen]
+```
+
+
+
+
+##### Authenticate
 - `/authenticate`: Ein POST-Endpunkt, der für die Benutzeranmeldung verwendet wird. Der Client sendet Anmeldeinformationen an diesen Endpunkt, und der Server überprüft die Gültigkeit dieser Informationen. Wenn die Anmeldeinformationen korrekt sind und in der DB enthalten sind, wird der Benutzer angemeldet und erhält Zugriff auf die Daten.
 
+```mermaid
+graph TD;
+    A[Benutzer] -->|Gibt Benutzername und Master-Key ein| B[Passwortmanager]
+    B -->|Überprüft Anmeldeinformationen| C{Anmeldeinformationen korrekt?}
+    C -- Ja --> D[Authentifizierung erfolgreich]
+    D --> E[Zeige Passwortdaten an]
+    C -- Nein --> F[Authentifizierung fehlgeschlagen]
+    F --> G[Fehlermeldung anzeigen]
+```
+
+##### id
 - `/{id}`: Ein GET-Endpunkt, der verwendet wird, um Benutzerdetails anhand der Benutzer-ID abzurufen. Der Client kann die Benutzer-ID als Teil der URL bereitstellen, und der Server gibt dann die Details des entsprechenden Benutzers zurück.
 
 
-
+##### getUserByUsernameAndMasterKey
 - `/getUserByUsernameAndMasterKey`: Ein POST-Endpunkt, der verwendet wird, um einen Benutzer anhand seines Benutzernamens und seines Master-Passworts abzurufen. Der Client sendet Benutzerdaten an diesen Endpunkt, und der Server gibt den entsprechenden Benutzer zurück, falls vorhanden.
 
 ##### **EntryController** (`/entries`):
 
+##### addEntry
 - `/addEntry/{userId}`: Ein POST-Endpunkt, der verwendet wird, um einen neuen Eintrag für einen bestimmten Benutzer hinzuzufügen. Der Client sendet Eintragsdaten an diesen Endpunkt, und der Server fügt dann den Eintrag zur Liste der Einträge des Benutzers hinzu.
   
+```mermaid
+graph TD;
+    A[Benutzer] -->|Erstellt neuen Eintrag| B[Passwortmanager]
+    B -->|Speichert Eintrag in der Datenbank| C{Speichern erfolgreich?}
+    C -- Ja --> D[Eintrag hinzugefügt]
+    C -- Nein --> E[Eintrag nicht hinzugefügt]
+```
+
+##### deleteEntry
 - `/delete/{id}`: Ein POST-Endpunkt, der verwendet wird, um einen Eintrag anhand seiner ID zu löschen. Der Client sendet die ID des zu löschenden Eintrags an diesen Endpunkt, und der Server löscht dann den Eintrag aus der DB.
 
+```mermaid
+graph TD;
+    A[Benutzer] -->|Wählt Eintrag zum Löschen aus| B[Passwortmanager]
+    B -->|Löscht Eintrag aus der Datenbank| C{Löschen erfolgreich?}
+    C -- Ja --> D[Eintrag gelöscht]
+    C -- Nein --> E[Eintrag besteht weiterhin in der Datenbank]
+```
+
+##### editEntry
 - `/editEntry/{id}`: Ein POST-Endpunkt, der verwendet wird, um einen Eintrag anhand seiner ID zu bearbeiten. Der Client sendet aktualisierte Eintragsdaten an diesen Endpunkt, und der Server aktualisiert dann die entsprechenden Eintragsdetails in der DB.
+
+```mermaid
+graph TD;
+    A[Benutzer] -->|Wählt Eintrag zum Bearbeiten aus| B[Passwortmanager]
+    B -->|Zeigt Formular zur Bearbeitung an| C[Benutzer aktualisiert Eintrag]
+    C -->|Speichert aktualisierte Eintrag in der Datenbank| D{Aktualisierung erfolgreich?}
+    D -- Ja --> E[Eintrag aktualisiert]
+    D -- Nein --> F[Eintrag bleibt unverändert]
+```
 
 
 ### Datenbank  
@@ -146,6 +206,7 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 - **notes**: Zusätzliche Notizen oder Informationen zu diesem Eintrag.
 
 
+
 ## <u>WPF-Application</u>
 
 
@@ -154,58 +215,3 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 ## Diskussion der Ergebnisse
 
 
-### Use-Case:
-
-### User einloggen
-```mermaid
-graph TD;
-    A[Benutzer] -->|Gibt Benutzername und Master-Key ein| B[Passwortmanager]
-    B -->|Überprüft Anmeldeinformationen| C{Anmeldeinformationen korrekt?}
-    C -- Ja --> D[Authentifizierung erfolgreich]
-    D --> E[Zeige Passwortdaten an]
-    C -- Nein --> F[Authentifizierung fehlgeschlagen]
-    F --> G[Fehlermeldung anzeigen]
-```
-
-/
-add
-```mermaid
-graph TD;
-    A[Benutzer] -->|Erstellt neuen Eintrag| B[Passwortmanager]
-    B -->|Speichert Eintrag in der Datenbank| C{Speichern erfolgreich?}
-    C -- Ja --> D[Eintrag hinzugefügt]
-    C -- Nein --> E[Eintrag nicht hinzugefügt]
-```
-
-/
-edit
-
-```mermaid
-graph TD;
-    A[Benutzer] -->|Wählt Eintrag zum Bearbeiten aus| B[Passwortmanager]
-    B -->|Zeigt Formular zur Bearbeitung an| C[Benutzer aktualisiert Eintrag]
-    C -->|Speichert aktualisierte Eintrag in der Datenbank| D{Aktualisierung erfolgreich?}
-    D -- Ja --> E[Eintrag aktualisiert]
-    D -- Nein --> F[Eintrag bleibt unverändert]
-```
-
-/
-
-delete
-```mermaid
-graph TD;
-    A[Benutzer] -->|Wählt Eintrag zum Löschen aus| B[Passwortmanager]
-    B -->|Löscht Eintrag aus der Datenbank| C{Löschen erfolgreich?}
-    C -- Ja --> D[Eintrag gelöscht]
-    C -- Nein --> E[Eintrag besteht weiterhin in der Datenbank]
-```
-
-/
-register
-```mermaid
-graph TD;
-    A[Neuer Benutzer] -->|Gibt Benutzernamen und Master-Key ein| B[Passwortmanager]
-    B -->|Speichert neuen Benutzer in der Datenbank| C{Speichern erfolgreich?}
-    C -- Ja --> D[Benutzer registriert]
-    C -- Nein --> E[Fehlermeldung anzeigen]
-```
