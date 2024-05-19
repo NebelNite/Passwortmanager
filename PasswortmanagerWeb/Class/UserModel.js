@@ -15,7 +15,8 @@ export class UserModel {
     this.entries = [];
     this.masterKey = '';
   }
-  
+
+
   static fromDTO(userDTO) {
     const userModel = new UserModel();
     userModel.id = userDTO.id;

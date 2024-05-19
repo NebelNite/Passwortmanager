@@ -5,6 +5,7 @@ import { EntryModel } from "../Class/EntryModel.js";
 import { LoginApi } from "../Class/LoginApi.js";
 import { UserDTO } from "../Class/UserDTO.js";
 import { UserModel } from "../Class/UserModel.js";
+import { Encryption } from "../Class/Encryption.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
 
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
 
           tr.entry = entry;
-          tr.entry = EntryApi.DecryptEntry(entry);
+          tr.entry = Encryption.DecryptEntry(entry);
           
           
           if(tr.entry.title == 'undefined')
@@ -179,7 +180,7 @@ function exportFunction() {
       let jsonUser = JSON.stringify(UserApi.user);
 
       
-      const encryptedFile = UserApi.GetInstance().EncryptMessage(jsonUser,enteredPassword);
+      const encryptedFile = Encryption.EncryptMessage(jsonUser,enteredPassword);
       
       const data = new Blob([encryptedFile], { type: 'application/json' });
       
@@ -419,7 +420,7 @@ $("#surveyElement").Survey({
 
 
         
-        EntryApi.GetInstance().createEntry(EntryApi.GetInstance().EncryptEntry(entryDTO))
+        EntryApi.GetInstance().createEntry(Encryption.EncryptEntry(entryDTO))
         .then(() => {
           fillTable();
         })

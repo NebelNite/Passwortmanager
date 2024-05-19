@@ -7,6 +7,7 @@ import { EntryModel } from "../Class/EntryModel.js";
 import { LoginApi } from "../Class/LoginApi.js";
 import { UserDTO } from "../Class/UserDTO.js";
 import { UserModel } from "../Class/UserModel.js";
+import { Encryption } from "../Class/Encryption.js";
 
 
 
@@ -125,8 +126,9 @@ require(['axios'], function(axios) {
 
 
       const userDTO = new UserDTO();
-      userDTO.masterKey = UserApi.GetInstance().EncryptMessage(masterkey).toString();
-      userDTO.username = UserApi.GetInstance().EncryptMessage(username).toString();
+
+      userDTO.masterKey = Encryption.EncryptMessage(masterkey).toString();
+      userDTO.username = Encryption.EncryptMessage(username).toString();
       
       //console.log(userApi.aesKey);
       //console.log("Test: SignUp: Mes: " + UserApi.GetInstance().EncryptMessage("username"));
@@ -236,14 +238,6 @@ function getAesKeyForUser(username) {
     UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
     
-    let enc = UserApi.GetInstance().EncryptMessage("Message");
-    console.log("EncryptedMessage: " + enc);   
-    
-    //enc = CryptoJS.enc.Latin1.parse(enc);
-    
-    let dec = UserApi.GetInstance().DecryptMessage(enc);
-    console.log("DecryptedMessage:" + dec);
-
 
     //UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
@@ -251,13 +245,13 @@ function getAesKeyForUser(username) {
 
     
 
-    userDTO.masterKey = UserApi.GetInstance().EncryptMessage(userDTO.masterKey).toString();
-    userDTO.username = UserApi.GetInstance().EncryptMessage(userDTO.username).toString();
+    userDTO.masterKey = Encryption.EncryptMessage(userDTO.masterKey).toString();
+    userDTO.username = Encryption.EncryptMessage(userDTO.username).toString();
 
     UserApi.user = await UserApi.GetInstance().authenticateUser(userDTO);
     
     //UserApi.user.masterKey = UserApi.GetInstance().DecryptMessage(UserApi.user.masterKey);
-    UserApi.user.username = UserApi.GetInstance().DecryptMessage(UserApi.user.username);
+    UserApi.user.username = Encryption.DecryptMessage(UserApi.user.username);
     
     if(UserApi.user.id.length > 1)
     {

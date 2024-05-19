@@ -52,23 +52,15 @@ export class UserApi extends LoginApi {
 
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
       
-      const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
-      
-      /*
+
       try {
-        const response = this.getHttpClient().post('/users/create', {
-          body: JSON.stringify(userDto)
-        });
-    
-        if (response.statusCode == 200) {
-          const user = response.json();
-          //MessageBox.show(`Benutzer erfolgreich erstellt! ${String.fromCodePoint(0x1F480)}`);
-          return user;
-        }
-      } catch (error) {
-        //MessageBox.show('Username ist bereits vergeben!');
+        const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
+        alert('User erfolgreich erstellt!');
       }
-    */
+      catch (error) {
+        alert('Username ist bereits vergeben!');
+      }
+    
 
       return null;
     }
@@ -81,22 +73,6 @@ export class UserApi extends LoginApi {
 
     
     async authenticateUser(userDto) {
-      
-      
-      //window.location.href = '../homepage';
-      
-      //window.location.href = '../HTML/homepage.html';
-      /*
-      fetch('/homepage')
-      .then(response => {
-          if (response.ok) {
-            window.location.href = '/HTML/homepage.html';
-          } else {
-            console.error('Error:', response.status);
-          }
-          })
-        .catch(error => console.error(error));
-        */
        
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
 
@@ -104,38 +80,10 @@ export class UserApi extends LoginApi {
       
       return user;
 
-      
-      /*
-      if(data != null)
-      {
-        
-        fetch('/homepage')
-      .then(response => {
-          if (response.ok) {
-            //window.location.href = '/homepage.html';
-          } else {
-            console.error('Error:', response.status);
-          }
-          })
-        .catch(error => console.error(error));
-      }
-      */
-      
-      /*
-      const response = this.getHttpClient().post('/users/authenticate', {
-        body: JSON.stringify(userDto)
-      });
-    
-      if (response.statusCode == 200) {
-        const user = response.json();
-        this.aesKey = user.aesKey;
-        UserApi.user = user;
-        return user;
-      }
-    */
     }
-    
-    
+  
+
+
     getUserByUsernameAndMasterKey(userDto) {
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
     
@@ -158,6 +106,7 @@ export class UserApi extends LoginApi {
       return user;
     }
 
+    /*
     EncryptMessage(message, fileKey = null) {
       
 
@@ -197,7 +146,8 @@ export class UserApi extends LoginApi {
     return encryptedString;
     
   }
-
+  */
+/*
     DecryptMessage(encryptedMessage, fileKey = null) {
       
       //encryptedMessage = CryptoJS.enc.Latin1.parse(encryptedMessage);
@@ -236,7 +186,7 @@ export class UserApi extends LoginApi {
       return decryptedString;
       
     }
-
+*/
 }
 
 //module.exports = UserApi;

@@ -98,7 +98,7 @@ export class EntryApi extends LoginApi {
       }
   }
   
-  // Methode zum Verschlüsseln eines Eintrags
+/*
   EncryptEntry(entry) {
       entry.notes = UserApi.GetInstance().EncryptMessage(entry.notes).toString();
       entry.password = UserApi.GetInstance().EncryptMessage(entry.password).toString();
@@ -109,7 +109,7 @@ export class EntryApi extends LoginApi {
       return entry;
   }
   
-  // Methode zum Entschlüsseln eines Eintrags
+
   static DecryptEntry(entry) {
       entry.notes = UserApi.GetInstance().DecryptMessage(entry.notes);
       entry.password = UserApi.GetInstance().DecryptMessage(entry.password);
@@ -120,7 +120,7 @@ export class EntryApi extends LoginApi {
       return entry;
   }
   
-  // Methode zum Verschlüsseln einer Liste von Einträgen
+
   static EncryptEntries(entries) {
       for (const entry of entries) {
           entry.notes = UserApi.EncryptMessage(entry.notes);
@@ -133,7 +133,6 @@ export class EntryApi extends LoginApi {
       return entries;
   }
   
-  // Methode zum Entschlüsseln einer Liste von Einträgen
   static DecryptEntries(entries) {
       for (const entry of entries) {
           entry.notes = UserApi.DecryptMessage(entry.notes);
@@ -145,7 +144,7 @@ export class EntryApi extends LoginApi {
   
       return entries;
   }
-  
+  */
   
 
 }

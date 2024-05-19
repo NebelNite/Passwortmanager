@@ -90,6 +90,16 @@ Zusätzlich zur AES-Verschlüsselung wird der Masterkey, der für den Zugriff de
 - **Markdown**: Zur Dokumentation und Formatierung der Projektdokumentation verwendet.
 
 
+## <u>Installation</u>
+
+Um den Passwortmanager zu installieren und nutzen zu können, müssen Sie die folgenden Schritte ausführen:
+
+1. Das Projekt herunterladen und anschließend entzippen.
+2. Öffnen Sie den Ordner 'Server' mit InteliJ oder einer IDE Ihrer Wahl und führen sie die Datei 'PasswortmanagerApplication.java' aus.
+3. Nun wo der Server seinen Service bereit stellt, können Sie einen der beiden Clients starten und ebenfalls ausführen.
+4. Haben Sie sich für den WPF-Client entscheiden, öffnen Sie die Datei mit dem Namen 'PasswortmanagerWPF.sln' und drücken Sie, nachdem sich das Projekt in VS geöffnet hat, ```F5``` um das Projekt auszuführen.
+5. Um den Web-Client zu starten, öffnen sie den Ordner 'PasswortmanagerWeb' in VS Code und geben sie anschließend ```npm start``` im Terminal ein. Der Dienst sollte nun unter https://localhost:3001/login erreichbar sein.
+
 
 
 ## <u>Server</u>
@@ -204,6 +214,31 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 - **password**: Das Passwort für den Eintrag.
 - **url**: Die URL, die mit diesem Eintrag verknüpft ist.
 - **notes**: Zusätzliche Notizen oder Informationen zu diesem Eintrag.
+
+
+# Clients
+
+## Wichtige Klassen
+
+### API
+```
+- LoginApi.js
+- EntryApi.js
+- UserApi.js
+```
+### Models & DTOs
+```
+- UserModel.js / UserDTO.js
+- EntryModel.js / EntryDTO.js
+```
+
+### Encryption
+```
+- Encryption.js
+```
+
+
+
 
 
 

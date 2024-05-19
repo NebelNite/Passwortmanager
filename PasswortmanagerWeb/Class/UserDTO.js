@@ -7,7 +7,6 @@ export class UserDTO {
     this.entries = [];
     this.masterKey = '';
   }
-
   
   static fromModel(userModel) {
     const userDTO = new UserDTO();
