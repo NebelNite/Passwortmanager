@@ -155,9 +155,24 @@ graph TD;
 ##### id
 - `/{id}`: Ein GET-Endpunkt, der verwendet wird, um Benutzerdetails anhand der Benutzer-ID abzurufen. Der Client kann die Benutzer-ID als Teil der URL bereitstellen, und der Server gibt dann die Details des entsprechenden Benutzers zurück.
 
+```mermaid
+graph TD;
+    A[Benutzer] -->|Sendet Anfrage mit Benutzer-ID| B[Passwortmanager]
+    B -->|Sucht nach Benutzer in der Datenbank| C{Benutzer gefunden?}
+    C -- Ja --> D[Benutzerdaten zurückgeben]
+    C -- Nein --> E[Fehlermeldung anzeigen]
+```
 
 ##### getUserByUsernameAndMasterKey
 - `/getUserByUsernameAndMasterKey`: Ein POST-Endpunkt, der verwendet wird, um einen Benutzer anhand seines Benutzernamens und seines Master-Passworts abzurufen. Der Client sendet Benutzerdaten an diesen Endpunkt, und der Server gibt den entsprechenden Benutzer zurück, falls vorhanden.
+
+```mermaid
+graph TD;
+    A[Benutzer] -->|Sendet Anfrage mit Benutzername und Master-Key| B[Passwortmanager]
+    B -->|Sucht nach Benutzer in der Datenbank| C{Benutzer gefunden?}
+    C -- Ja --> D[Benutzerdaten zurückgeben]
+    C -- Nein --> E[Fehlermeldung anzeigen]
+```
 
 ##### **EntryController** (`/entries`):
 
@@ -221,26 +236,89 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 ## Wichtige Klassen
 
 ### API
+Diese Klassen enthalten alle Methoden, die mit dem Spring Boot Server kommunizieren. Die Beziehungen zwischen diesen Klassen ist im Diagramm dargestellt.
+
 ```
 - LoginApi.js
 - EntryApi.js
 - UserApi.js
 ```
+
+```mermaid
+classDiagram
+    class LoginApi {
+    }
+    class EntryApi {
+    }
+    class UserApi {
+    }
+
+    LoginApi <|-- EntryApi
+    LoginApi <|-- UserApi
+```
+
 ### Models & DTOs
+Diese Klassen definieren die Struktur der Benutzerdaten. Die Models dienen der internen Verarbeitung, während die DTOs verwendet werden, um Daten mit dem Server auszutauschen.
 ```
 - UserModel.js / UserDTO.js
 - EntryModel.js / EntryDTO.js
 ```
 
 ### Encryption
+Diese Klasse enthält Methoden deren einzige Aufgabe darin besteht, sensible Daten zu verschlüsseln und entschlüsseln.
 ```
 - Encryption.js
 ```
 
+# Diagramm
+```mermaid
+classDiagram
+    class MainWindow
+    class UserApi
+    class UserDTO
+    class UserModel
+    class PasswordGeneratorWindow
+    class PasswordInputWindow
+    class LoginWindow
+
+    MainWindow --* UserApi : uses
+    MainWindow --* PasswordGeneratorWindow : uses
+    MainWindow --* PasswordInputWindow : uses
+    MainWindow --* LoginWindow : uses
+
+    UserApi --* UserDTO : uses
+    UserApi --* UserModel : uses
+
+    PasswordGeneratorWindow --* PasswordGenerator : uses
+
+    PasswordInputWindow --* PasswordGenerator : uses
+
+    LoginWindow --* UserApi : uses
+
+    MainWindow --* MainWindow_xaml : has
+    MainWindow_xaml --* MainWindow_xaml_cs : has
+
+    PasswordGeneratorWindow --* PasswordGeneratorWindow_xaml : has
+    PasswordGeneratorWindow_xaml --* PasswordGeneratorWindow_xaml_cs : has
+
+    PasswordInputWindow --* PasswordInputWindow_xaml : has
+    PasswordInputWindow_xaml --* PasswordInputWindow_xaml_cs : has
+
+    LoginWindow --* LoginWindow_xaml : has
+    LoginWindow_xaml --* LoginWindow_xaml_cs : has
+
+    class MainWindow_xaml
+    class MainWindow_xaml_cs
+    class PasswordGeneratorWindow_xaml
+    class PasswordGeneratorWindow_xaml_cs
+    class PasswordInputWindow_xaml
+    class PasswordInputWindow_xaml_cs
+    class LoginWindow_xaml
+    class LoginWindow_xaml_cs
 
 
 
-
+```
 
 ## <u>WPF-Application</u>
 
@@ -249,4 +327,12 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 
 ## Diskussion der Ergebnisse
 
+### Sicherheit und Verschlüsselung
+Mögliche sinnvolle Ergänzungen um die Sicherheit der Nutzer zu gewährleisten wäre die Verschlüsselung auszubauen. Zum jetzigen Zeitpunkt erfolgt die Verschlüsselung ohne Initialisierungsvektor (IV), was dafür sorgt, dass der gleiche Input mit dem gleichen AES-Key der Encryption-Methode den selben Output produziert. Der IV würde dazu beitragen die Identifizierung von Mustern in den verschlüsselten Dateien zu erschweren.
+
+Eine weitere Sicherheitsmaßnahme könnte darin bestehen, alle Zugriffe auf die API zu protokollieren und im Falle von Sicherheitsvorfällen zu durchforsten, bzw bereits frühzeitig zu erkennen. 
+
+Ebenso auch die Implementierung der Zwei-Faktor-Authentifizierung um selbst im Falle einer Kompression des Masterkeys sicherzustellen, dass sich nur der autorisierte Nutzer anmelden kann, und Zugriff auf die sensiblen Daten erhält.
+
+### 
 
