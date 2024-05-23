@@ -338,7 +338,7 @@ classDiagram
 
 #### CreateUserAsync
 
-```
+``` csharp
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
