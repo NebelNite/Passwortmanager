@@ -10,6 +10,7 @@
     - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
     - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung)
     - [Technologien](#technologien)
+  - [Installation](#installation)
   - [Server](#server)
     - [Spring-Boot](#spring-boot)
     - [API](#api)
@@ -26,9 +27,19 @@
     - [Datenbank](#datenbank)
       - [Benutzer (UserModel)](#benutzer-usermodel)
       - [Eintrag (EntryModel)](#eintrag-entrymodel)
+- [Clients](#clients)
+  - [Wichtige Klassen](#wichtige-klassen)
+    - [API](#api-1)
+    - [Models \& DTOs](#models--dtos)
+    - [Encryption](#encryption)
+- [Diagramm](#diagramm)
   - [WPF-Application](#wpf-application)
+    - [Wichtige Methoden](#wichtige-methoden)
+      - [CreateUserAsync](#createuserasync)
   - [Web-Application](#web-application)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
+    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
+    - [](#)
 
 
 ## <u>Einführung</u>
@@ -322,6 +333,36 @@ classDiagram
 
 ## <u>WPF-Application</u>
 
+
+### Wichtige Methoden
+
+#### CreateUserAsync
+
+```
+        public async Task<UserModel> CreateUserAsync(UserDTO userDto)
+        {
+            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
+
+            HttpResponseMessage response = null;
+
+            try
+            {
+                response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
+                response.EnsureSuccessStatusCode();
+                
+
+                MessageBox.Show("Benutzer erfolgreich erstellt! " + Char.ConvertFromUtf32(0x1F480));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Username ist bereits vergeben!");
+
+            }
+
+
+            return null;
+        }
+```
 
 ## <u>Web-Application</u>
 
