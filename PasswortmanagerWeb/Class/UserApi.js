@@ -16,21 +16,13 @@ export class UserApi extends LoginApi {
 
     static aesKey = null;
 
-    // byteArr  32bit
-    //static aesKey = new Uint8Array(32);
-
-    //CryptoJS.lib.WordArray.random(32);
     
     constructor(connectionString) {
       super(connectionString);
-      //this.aesKey = key;
+
     };
 
-    /*
-    setAesKey(key)
-    {
-      this.aesKey = key;
-    }*/
+
     
     
     static GetInstance() {
@@ -51,7 +43,6 @@ export class UserApi extends LoginApi {
       let str = this.connectionString;
 
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-      
 
       try {
         const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
@@ -60,8 +51,6 @@ export class UserApi extends LoginApi {
       catch (error) {
         alert('Username ist bereits vergeben!');
       }
-    
-
       return null;
     }
     
@@ -73,11 +62,8 @@ export class UserApi extends LoginApi {
 
     
     async authenticateUser(userDto) {
-       
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-
       const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
-      
       return user;
 
     }

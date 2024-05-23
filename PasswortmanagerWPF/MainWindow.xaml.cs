@@ -138,7 +138,7 @@ namespace PasswortmanagerWPF
                     entryDTO.title = entry.title;
 
                     UserApi.user.entries.Add(entry);
-                    EntryApi.GetInstance().createEntry(entryDTO);
+                    EntryApi.GetInstance().CreateEntry(entryDTO);
 
                     //EntryApi.GetInstance().createEntry(entryDTO);
                 }
@@ -240,7 +240,7 @@ namespace PasswortmanagerWPF
 
         private void DeleteEntry_Click(object sender, EventArgs e)
         {
-            EntryApi.GetInstance().deleteEntry(selectedEntry);
+            EntryApi.GetInstance().DeleteEntry(selectedEntry);
 
             EntryApi.GetInstance().EntryCreated += EntryWindow_EntryCreated;
 

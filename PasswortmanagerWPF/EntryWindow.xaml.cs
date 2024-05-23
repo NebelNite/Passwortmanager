@@ -68,16 +68,16 @@ namespace PasswortmanagerWPF
 
             if (edit)
             {
-                EntryApi.GetInstance().editEntry(entryDTO);
+                EntryApi.GetInstance().EditEntry(entryDTO);
             }
             else
             {
-                
+
                 Guid newId = Guid.NewGuid();
                 string idAsString = newId.ToString();
                 entryDTO.id = idAsString;
-                
-                EntryApi.GetInstance().createEntry(entryDTO);
+
+                EntryApi.GetInstance().CreateEntry(entryDTO);
 
             }
 

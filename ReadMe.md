@@ -35,8 +35,21 @@
 - [Diagramm](#diagramm)
   - [WPF-Application](#wpf-application)
     - [Wichtige Methoden](#wichtige-methoden)
-      - [CreateUserAsync](#createuserasync)
+      - [UserApi](#userapi)
+        - [CreateUserAsync](#createuserasync)
+        - [AuthenticateUserAsync](#authenticateuserasync)
+        - [GetUserById](#getuserbyid)
+        - [GetUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-1)
+      - [EntryApi](#entryapi)
+        - [CreateEntry](#createentry)
+        - [EditEntry](#editentry-1)
+        - [DeleteEntry](#deleteentry-1)
   - [Web-Application](#web-application)
+    - [Wichtige Methoden](#wichtige-methoden-1)
+      - [UserApi](#userapi-1)
+        - [CreateUser](#createuser)
+        - [CreateUser](#createuser-1)
+      - [AuthenticateUser](#authenticateuser)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
     - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
     - [](#)
@@ -336,8 +349,9 @@ classDiagram
 
 ### Wichtige Methoden
 
-#### CreateUserAsync
+#### UserApi
 
+##### CreateUserAsync
 ``` csharp
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
@@ -364,7 +378,190 @@ classDiagram
         }
 ```
 
+##### AuthenticateUserAsync
+```csharp
+        public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
+        {
+
+            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
+
+            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
+            response.EnsureSuccessStatusCode();
+
+            return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
+        }
+```
+
+##### GetUserById
+
+```csharp
+        public async Task<UserModel> GetUserById(string id)
+        {
+
+            var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
+            response.EnsureSuccessStatusCode();
+
+
+            return await response.Content.ReadAsAsync<UserModel>();
+        }
+```
+
+##### GetUserByUsernameAndMasterKey
+
+```csharp
+        public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
+        {
+
+            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/getUserByUsernameAndMasterKey", userDto);
+            response.EnsureSuccessStatusCode();
+
+            // Antwort des Servers lesen und in ein UserModel-Objekt deserialisieren
+            return await response.Content.ReadAsAsync<UserModel>();
+        }
+```
+
+#### EntryApi
+
+##### CreateEntry
+
+```csharp
+
+        public async void CreateEntry(EntryDTO entryDto)
+        {
+            try
+            {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
+
+                userDTO.username = user.username;
+                userDTO.id = user.id;
+                userDTO.masterKey = user.masterKey;
+
+                userDTO.entries = user.entries;
+
+
+                entryDto = Encryption.EncryptEntry(entryDto);
+
+                UserApi userApi = UserApi.GetInstance();
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/addEntry/" + user.id, entryDto);
+                response.EnsureSuccessStatusCode();
+
+
+                UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
+
+                EntryCreated?.Invoke(this, user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Creating/Editing Entry failed!");
+            }
+        }
+```
+
+##### EditEntry
+
+```csharp
+        public async void EditEntry(EntryDTO entryDto)
+        {
+
+            try
+            {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
+                userDTO.id = user.id;
+
+                entryDto = Encryption.EncryptEntry(entryDto);
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/editEntry/" + userDTO.id, entryDto);
+                response.EnsureSuccessStatusCode();
+
+
+                UserApi.user = await UserApi.GetInstance().GetUserById(UserApi.user.id);
+
+                EntryCreated?.Invoke(this, user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Creating/Editing Entry failed!");
+            }
+
+        }
+```
+##### DeleteEntry
+
+```csharp
+        public async void DeleteEntry(EntryModel selectedEntry)
+        {
+            try
+            {
+                UserModel user = UserApi.user;
+                UserDTO userDTO = new UserDTO();
+
+                userDTO.username = user.username;
+                userDTO.id = user.id;
+                userDTO.masterKey = user.masterKey;
+                userDTO.entries = user.entries;
+
+
+                var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/entries/delete/" + selectedEntry.id, userDTO);
+                response.EnsureSuccessStatusCode();
+
+                int entryCount = user.entries.Count;
+
+                for (int i = 0; entryCount == user.entries.Count; i++)
+                {
+                    if (user.entries[i].id == selectedEntry.id)
+                    {
+                        user.entries.RemoveAt(i);
+                    }
+                }
+
+                UserApi.user = user;
+
+                EntryCreated?.Invoke(this, user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Deleting Entry failed!");
+            }
+        }
+```
+
 ## <u>Web-Application</u>
+
+
+### Wichtige Methoden
+
+#### UserApi
+
+##### CreateUser
+
+```javascript
+    async createUser(userDto) {
+
+      userDto.id = null;
+      
+      let str = this.connectionString;
+
+      userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
+
+      try {
+        const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
+        alert('User erfolgreich erstellt!');
+      }
+      catch (error) {
+        alert('Username ist bereits vergeben!');
+      }
+      return null;
+    }
+```
+
+
+##### CreateUser
+
+#### AuthenticateUser
+
 
 ## Diskussion der Ergebnisse
 
