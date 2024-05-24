@@ -40,7 +40,6 @@
         - [CreateUserAsync:](#createuserasync)
         - [AuthenticateUserAsync](#authenticateuserasync)
         - [GetUserById](#getuserbyid)
-        - [GetUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-1)
       - [EntryApi](#entryapi)
         - [CreateEntry](#createentry)
         - [EditEntry](#editentry-1)
@@ -50,7 +49,7 @@
       - [UserApi](#userapi-1)
         - [CreateUser](#createuser)
         - [AuthenticateUser](#authenticateuser)
-        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-2)
+        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-1)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
     - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
     - [](#)
@@ -426,20 +425,6 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
         }
 ```
 
-##### GetUserByUsernameAndMasterKey
-Diese Methode erfüllt den selben Zweck wie die Methode `GetUserById`, jedoch wird der User mit dem Username und MasterKey aus der Datenbank eingelesen. Diese Methode wird nur einmal 
-
-```csharp
-        public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
-        {
-
-            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/getUserByUsernameAndMasterKey", userDto);
-            response.EnsureSuccessStatusCode();
-
-            // Antwort des Servers lesen und in ein UserModel-Objekt deserialisieren
-            return await response.Content.ReadAsAsync<UserModel>();
-        }
-```
 
 #### EntryApi
 
