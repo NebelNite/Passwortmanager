@@ -9,8 +9,6 @@ import { Encryption } from "../Class/Encryption.js";
 
 document.addEventListener('DOMContentLoaded',async () => {
 
-
-
   
    
     UserApi.user = await JSON.parse(sessionStorage.getItem('user'));

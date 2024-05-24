@@ -67,9 +67,8 @@ export class UserApi extends LoginApi {
       return user;
 
     }
-  
 
-
+/*
     getUserByUsernameAndMasterKey(userDto) {
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
     
@@ -83,6 +82,7 @@ export class UserApi extends LoginApi {
     
       return null;
     }
+    */
     
     static async getUserById(id) {
 
@@ -91,88 +91,7 @@ export class UserApi extends LoginApi {
       
       return user;
     }
-
-    /*
-    EncryptMessage(message, fileKey = null) {
-      
-
-    let encKey = null;
-
-    if(fileKey!=null)
-    {
-      encKey = fileKey;
-    }
-    else{
-      encKey = UserApi.aesKey;
-    }
-
-    message = CryptoJS.enc.Utf8.parse(message);
-
-
-
-    //encKey = CryptoJS.enc.Utf8.parse(encKey);
-    //message = CryptoJS.enc.Utf8.parse(message);
-
     
-
-
-    const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zero
-    
-    
-    let encryptedString = CryptoJS.AES.encrypt(message, encKey, {
-      mode: CryptoJS.mode.ECB,
-      iv: iv,
-      padding: CryptoJS.pad.Pkcs7
-    });
-
-
-    //encryptedString = encryptedString.toString(CryptoJS.enc.Utf8);
-
-
-    return encryptedString;
-    
-  }
-  */
-/*
-    DecryptMessage(encryptedMessage, fileKey = null) {
-      
-      //encryptedMessage = CryptoJS.enc.Latin1.parse(encryptedMessage);
-
-      let encKey = null;
-      
-      if(fileKey!=null)
-      {
-        encKey = fileKey;
-      }
-      else{
-        encKey = UserApi.aesKey;
-      }
-      
-
-    //encKey = CryptoJS.enc.Utf8.parse(encKey);
-
-    const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zeros
-
-    
-     let decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
-      mode: CryptoJS.mode.ECB,
-      iv: iv,
-      padding: CryptoJS.pad.Pkcs7
-    });
-
-      //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
-      
-      decryptedString = decryptedString.toString(CryptoJS.enc.Latin1);
-      
-      //decryptedString = decryptedString.toString();
-      //decryptedString = decryptedString.toString(CryptoJS.enc.Utf16);
-      
-      //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
-      
-      return decryptedString;
-      
-    }
-*/
 }
 
 //module.exports = UserApi;

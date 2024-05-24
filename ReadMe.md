@@ -24,6 +24,7 @@
         - [addEntry](#addentry)
         - [deleteEntry](#deleteentry)
         - [editEntry](#editentry)
+      - [Actuator](#actuator)
     - [Datenbank](#datenbank)
       - [Benutzer (UserModel)](#benutzer-usermodel)
       - [Eintrag (EntryModel)](#eintrag-entrymodel)
@@ -36,7 +37,7 @@
   - [WPF-Application](#wpf-application)
     - [Wichtige Methoden](#wichtige-methoden)
       - [UserApi](#userapi)
-        - [CreateUserAsync](#createuserasync)
+        - [CreateUserAsync:](#createuserasync)
         - [AuthenticateUserAsync](#authenticateuserasync)
         - [GetUserById](#getuserbyid)
         - [GetUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-1)
@@ -48,8 +49,8 @@
     - [Wichtige Methoden](#wichtige-methoden-1)
       - [UserApi](#userapi-1)
         - [CreateUser](#createuser)
-        - [CreateUser](#createuser-1)
-      - [AuthenticateUser](#authenticateuser)
+        - [AuthenticateUser](#authenticateuser)
+        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-2)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
     - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
     - [](#)
@@ -234,6 +235,15 @@ graph TD;
     D -- Nein --> F[Eintrag bleibt unverändert]
 ```
 
+#### Actuator
+- `/actuator/health`: Der Actuator bietet die Möglichkeit, den Zustand des Servers zu überwachen und abzurufen, indem der Status der einzelnen Module des Servers regelmäßig geprüft werden ([Heartbeat](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.health)). 
+Der Actuator kennt dabei folgende Zustände, die dann über die Route abrufbar sind:
+  - `UP`
+  - `DOWN`
+  - `OUT_OF_SERVICE`
+  - `UNKNOWN`
+  
+  
 
 ### Datenbank  
 Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
@@ -351,7 +361,10 @@ classDiagram
 
 #### UserApi
 
-##### CreateUserAsync
+##### CreateUserAsync:
+Diese Methode dient dazu, einen neuen Benutzer in einem System zu erstellen. Sie nimmt als Parameter ein Datenübertragungsobjekt (userDto) entgegen, das die Benutzerdaten enthält. Zunächst wird der Master-Key des Benutzers verschlüsselt, bevor die Benutzerdaten mittels einer Post-Request an den Server gesendet werden.
+Wenn der Server einen Erfolgstatus zurückgibt, wird der User über die erfolgreiche Erstellung informiert, ansonsten wird im mittgeteilt, dass der Benutzername bereits vergeben ist. 
+
 ``` csharp
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
@@ -379,6 +392,11 @@ classDiagram
 ```
 
 ##### AuthenticateUserAsync
+Der User wird beim einloggen authentifiziert, indem er die Benutzerdaten an den Server sendet und die Antwort des Servers überprüft. Zuerst wird der Master-Key des Benutzers verschlüsselt. Dann wird eine HTTP POST-Anfrage an den Server gesendet, die die Benutzerdaten enthält.
+
+Nachdem die Antwort des Servers empfangen wurde und ein erfolgreicher Statuscode zurückgegeben wurde, wird die Antwort des Servers gelesen und in ein UserModel-Objekt deserialisiert. Dieses UserModel-Objekt enthält die authentifizierten Benutzerdaten, die dann zurückgegeben werden. 
+
+
 ```csharp
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
@@ -394,6 +412,8 @@ classDiagram
 
 ##### GetUserById
 
+Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine HTTP GET-Anfrage an den Server gesendet, wobei die Benutzer-ID als Teil der URL mitgeliefert wird. Als Antwort erhält der Client den gespeicherten User mit der selben ID wie in der Datenbank.
+
 ```csharp
         public async Task<UserModel> GetUserById(string id)
         {
@@ -407,6 +427,7 @@ classDiagram
 ```
 
 ##### GetUserByUsernameAndMasterKey
+Diese Methode erfüllt den selben Zweck wie die Methode `GetUserById`, jedoch wird der User mit dem Username und MasterKey aus der Datenbank eingelesen. Diese Methode wird nur einmal 
 
 ```csharp
         public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
@@ -488,6 +509,7 @@ classDiagram
 
         }
 ```
+
 ##### DeleteEntry
 
 ```csharp
@@ -557,10 +579,19 @@ classDiagram
     }
 ```
 
+##### AuthenticateUser
 
-##### CreateUser
+```javascript
+    async authenticateUser(userDto) {
+      userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
+      const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
+      return user;
 
-#### AuthenticateUser
+    }
+```
+
+##### getUserByUsernameAndMasterKey
+
 
 
 ## Diskussion der Ergebnisse

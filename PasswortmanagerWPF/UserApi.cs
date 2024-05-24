@@ -53,6 +53,7 @@ namespace PasswortmanagerWPF
             return instance;
         }
 
+
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
@@ -120,6 +121,7 @@ namespace PasswortmanagerWPF
         {
 
             var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
+
             response.EnsureSuccessStatusCode();
 
 

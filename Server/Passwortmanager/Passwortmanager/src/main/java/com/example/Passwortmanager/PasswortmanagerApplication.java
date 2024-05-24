@@ -18,16 +18,8 @@ public class PasswortmanagerApplication {
 		SpringApplication.run(PasswortmanagerApplication.class, args);
 	}
 
-/*
-	@Component("myHealthCheck")
-	public class HealthCheck implements HealthIndicator {
+	
 
-		@Override
-		public Health health() {
-			return Health.up().build();
-		}
-	}
-	*/
 }
 
 

@@ -30,7 +30,7 @@ public class UserController {
 
 
 
-
+/*
     @PostMapping("/getUserByUsernameAndMasterKey")
     public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
         Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
@@ -43,7 +43,7 @@ public class UserController {
         userDto = new UserDTO(user);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
-
+*/
 
     @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
