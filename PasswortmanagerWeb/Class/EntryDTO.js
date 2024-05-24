@@ -1,11 +1,3 @@
-import { UserApi } from "../Class/UserApi.js";
-import { EntryApi } from "../Class/EntryApi.js";
-import { EntryModel } from "../Class/EntryModel.js";
-import { LoginApi } from "../Class/LoginApi.js";
-import { UserDTO } from "../Class/UserDTO.js";
-import { UserModel } from "../Class/UserModel.js";
-
-
 
 export class EntryDTO {
     constructor() {
@@ -18,4 +10,3 @@ export class EntryDTO {
     }
   }
   
-//module.exports = EntryDTO;

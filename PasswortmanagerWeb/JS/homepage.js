@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
 
           tr.entry = entry;
-          tr.entry = Encryption.DecryptEntry(entry);
+          tr.entry = Encryption.decryptEntry(entry);
           
           
           if(tr.entry.title == 'undefined')
@@ -178,7 +178,7 @@ function exportFunction() {
       let jsonUser = JSON.stringify(UserApi.user);
 
       
-      const encryptedFile = Encryption.EncryptMessage(jsonUser,enteredPassword);
+      const encryptedFile = Encryption.encryptMessage(jsonUser,enteredPassword);
       
       const data = new Blob([encryptedFile], { type: 'application/json' });
       
@@ -418,7 +418,7 @@ $("#surveyElement").Survey({
 
 
         
-        EntryApi.GetInstance().createEntry(Encryption.EncryptEntry(entryDTO))
+        EntryApi.getInstance().createEntry(Encryption.encryptEntry(entryDTO))
         .then(() => {
           fillTable();
         })
@@ -431,7 +431,7 @@ $("#surveyElement").Survey({
       }
       else{
 
-        EntryApi.GetInstance().editEntry(entryDTO)
+        EntryApi.getInstance().editEntry(entryDTO)
         .then(() => {
           fillTable();
         })
@@ -488,10 +488,6 @@ $("#surveyElement").Survey({
         surveyModel.data.notes
     );
 
-    /*
-    if(addEntryClicked)
-    EntryApi.GetInstance().createEntry(entryDTO);*/
-
   });
 
 }
@@ -509,7 +505,7 @@ function editEntry() {
 
 function deleteEntry() {
 
-  EntryApi.GetInstance().deleteEntry(selectedEntry)
+  EntryApi.getInstance().deleteEntry(selectedEntry)
   .then(() => {
     fillTable();
   })
@@ -604,14 +600,12 @@ fileButton.addEventListener('click', function () {
               return;
             }
             selectedEntry = event.target.closest('tr').entry;
-            //selectedEntryIndex = Array.from(tbody.children).indexOf(event.target.closest('tr'));
 
             contextMenu.style.display = 'block';
             contextMenu.style.left = `${event.clientX}px`;
             contextMenu.style.top = `${event.clientY}px`;
         };
         
-        // Verstecke das ContextMenu
         const hideContextMenu = () => {
             const contextMenus = document.querySelectorAll('.context-menu');
             contextMenus.forEach(menu => menu.style.display = 'none');
@@ -625,25 +619,6 @@ fileButton.addEventListener('click', function () {
         // Füge einen Listener für Klicks auf die Menüelemente hinzu
         menuItems.forEach(item => item.addEventListener('click', hideContextMenu));
         
-        
-/*
-        // Binde die Daten an den DataGrid
-        const dataGridSource = new Proxy({
-            get length() {
-                return dataItems.length;
-            },
-            getItem(index) {
-                if (index < 0 || index >= dataItems.length) {
-                    return null;
-                }
-                return dataItems[index];
-            }
-        }, {
-            ownKeys() {
-                return Array.from({ length: dataItems.length }, (_, i) => i);
-            }
-        });
-*/
 
         const table = dataGrid.querySelector('table');
         const tbody = table.querySelector('tbody');

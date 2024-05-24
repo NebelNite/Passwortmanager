@@ -1,5 +1,6 @@
 # Passwortmanager
 
+
 ## Inhaltsverzeichnis
 - [Passwortmanager](#passwortmanager)
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
@@ -28,31 +29,34 @@
     - [Datenbank](#datenbank)
       - [Benutzer (UserModel)](#benutzer-usermodel)
       - [Eintrag (EntryModel)](#eintrag-entrymodel)
-- [Clients](#clients)
-  - [Wichtige Klassen](#wichtige-klassen)
-    - [API](#api-1)
-    - [Models \& DTOs](#models--dtos)
-    - [Encryption](#encryption)
-- [Diagramm](#diagramm)
-  - [WPF-Application](#wpf-application)
-    - [Wichtige Methoden](#wichtige-methoden)
-      - [UserApi](#userapi)
-        - [CreateUserAsync:](#createuserasync)
-        - [AuthenticateUserAsync](#authenticateuserasync)
-        - [GetUserById](#getuserbyid)
-      - [EntryApi](#entryapi)
-        - [CreateEntry](#createentry)
-        - [EditEntry](#editentry-1)
-        - [DeleteEntry](#deleteentry-1)
-  - [Web-Application](#web-application)
-    - [Wichtige Methoden](#wichtige-methoden-1)
-      - [UserApi](#userapi-1)
-        - [CreateUser](#createuser)
-        - [AuthenticateUser](#authenticateuser)
-        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey-1)
+  - [Clients](#clients)
+    - [Wichtige Klassen](#wichtige-klassen)
+      - [API](#api-1)
+      - [Models & DTOs](#models--dtos)
+      - [Encryption](#encryption)
+  - [Diagramm](#diagramm)
+    - [WPF-Application](#wpf-application)
+      - [Wichtige Methoden](#wichtige-methoden)
+        - [UserApi](#userapi)
+          - [CreateUserAsync:](#createuserasync)
+          - [AuthenticateUserAsync](#authenticateuserasync)
+          - [GetUserById](#getuserbyid)
+        - [EntryApi](#entryapi)
+          - [CreateEntry](#createentry)
+          - [EditEntry](#editentry-1)
+          - [DeleteEntry](#deleteentry-1)
+    - [Web-Application](#web-application)
+      - [Einführung](#einführung)
+      - [Technologien](#technologien)
+      - [Probleme](#probleme)
+      - [NodeJS Config](#nodejs-config)
+      - [SpringBoot Config](#springboot-config)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
+    - [Zusammenfassung](#zusammenfassung)
     - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
-    - [](#)
+    - [Passwortrichtlinien](#passwortrichtlinien)
+
+
 
 
 ## <u>Einführung</u>
@@ -176,7 +180,7 @@ graph TD;
     F --> G[Fehlermeldung anzeigen]
 ```
 
-##### id
+##### Id
 - `/{id}`: Ein GET-Endpunkt, der verwendet wird, um Benutzerdetails anhand der Benutzer-ID abzurufen. Der Client kann die Benutzer-ID als Teil der URL bereitstellen, und der Server gibt dann die Details des entsprechenden Benutzers zurück.
 
 ```mermaid
@@ -299,59 +303,11 @@ Diese Klassen definieren die Struktur der Benutzerdaten. Die Models dienen der i
 
 ### Encryption
 Diese Klasse enthält Methoden deren einzige Aufgabe darin besteht, sensible Daten zu verschlüsseln und entschlüsseln.
+
 ```
 - Encryption.js
 ```
 
-# Diagramm
-```mermaid
-classDiagram
-    class MainWindow
-    class UserApi
-    class UserDTO
-    class UserModel
-    class PasswordGeneratorWindow
-    class PasswordInputWindow
-    class LoginWindow
-
-    MainWindow --* UserApi : uses
-    MainWindow --* PasswordGeneratorWindow : uses
-    MainWindow --* PasswordInputWindow : uses
-    MainWindow --* LoginWindow : uses
-
-    UserApi --* UserDTO : uses
-    UserApi --* UserModel : uses
-
-    PasswordGeneratorWindow --* PasswordGenerator : uses
-
-    PasswordInputWindow --* PasswordGenerator : uses
-
-    LoginWindow --* UserApi : uses
-
-    MainWindow --* MainWindow_xaml : has
-    MainWindow_xaml --* MainWindow_xaml_cs : has
-
-    PasswordGeneratorWindow --* PasswordGeneratorWindow_xaml : has
-    PasswordGeneratorWindow_xaml --* PasswordGeneratorWindow_xaml_cs : has
-
-    PasswordInputWindow --* PasswordInputWindow_xaml : has
-    PasswordInputWindow_xaml --* PasswordInputWindow_xaml_cs : has
-
-    LoginWindow --* LoginWindow_xaml : has
-    LoginWindow_xaml --* LoginWindow_xaml_cs : has
-
-    class MainWindow_xaml
-    class MainWindow_xaml_cs
-    class PasswordGeneratorWindow_xaml
-    class PasswordGeneratorWindow_xaml_cs
-    class PasswordInputWindow_xaml
-    class PasswordInputWindow_xaml_cs
-    class LoginWindow_xaml
-    class LoginWindow_xaml_cs
-
-
-
-```
 
 ## <u>WPF-Application</u>
 
@@ -429,9 +385,9 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 #### EntryApi
 
 ##### CreateEntry
+Die Methode CreateEntry dient dazu, einen neuen Eintrag für einen Benutzer zu erstellen. Sie verschlüsselt die Eintragsdaten und sendet sie an den Server, um sie in der Datenbank zu speichern. Wenn die Erstellung nicht erfolgreich war, wird dies dem User mitgeteilt.
 
 ```csharp
-
         public async void CreateEntry(EntryDTO entryDto)
         {
             try
@@ -466,6 +422,7 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 ```
 
 ##### EditEntry
+Diese Methode folgt der seblen funktionsweise wie die Funktion CreateEntry. Der Hauptunterschied liegt darin, dass der Server mit den entgegengenommenen Daten keinen neuen Entry erstellt, sondern nach dem Entry mit jener ID sucht, und diesen aktualisiert.
 
 ```csharp
         public async void EditEntry(EntryDTO entryDto)
@@ -496,6 +453,9 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 ```
 
 ##### DeleteEntry
+
+Die Methode DeleteEntry dient dazu, einen ausgewählten Eintrag eines Benutzers zu löschen. Sie sendet die Anfrage an den Server und entfernt anschließend den entsprechenden Eintrag aus der Liste.
+
 
 ```csharp
         public async void DeleteEntry(EntryModel selectedEntry)
@@ -537,56 +497,70 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 
 ## <u>Web-Application</u>
 
+### Einführung
+Die Web-Anwendung des Passwortmanagers bietet Benutzern die Möglichkeit, von verschiedenen Plattformen aus auf ihre gespeicherten Passwörter zuzugreifen und sie zu verwalten.
 
-### Wichtige Methoden
+### Technologien
+Die Web-Anwendung wird mithilfe von `Node.js` entwickelt, was die  die Ausführung von JavaScript-Code auf dem Server ermöglicht und eine Vielzahl von Modulen und Tools anbietet, um die Entwicklung zu erleichtern. 
 
-#### UserApi
 
-##### CreateUser
+### Probleme
+Die CORS-Einschränkung des Browsers kann dazu führen, dass Anfragen zwischen verschiedenen Ursprüngen blockiert werden. Ohne eine entsprechende Konfiguration funktioniert die Kommunikation zwischen dem Web-Client und dem Server nicht ordnungsgemäß.
 
-```javascript
-    async createUser(userDto) {
 
-      userDto.id = null;
-      
-      let str = this.connectionString;
+### NodeJS Config
 
-      userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-
-      try {
-        const data = await LoginApi.postRequest(this.connectionString + "/users/create", userDto, null);
-        alert('User erfolgreich erstellt!');
-      }
-      catch (error) {
-        alert('Username ist bereits vergeben!');
-      }
-      return null;
-    }
-```
-
-##### AuthenticateUser
+Um CORS-Probleme zu lösen, wird eine Middleware in der Node.js-Anwendung verwendet. Diese Middleware fügt den HTTP-Antworten die erforderlichen CORS-Header hinzu, um Anfragen von einem bestimmten Ursprung zu akzeptieren. In der Konfiguration wird festgelegt, von welchem Ursprung Anfragen akzeptiert werden sollen, welche Methoden erlaubt sind und welche Header verwendet werden dürfen.
 
 ```javascript
-    async authenticateUser(userDto) {
-      userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-      const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
-      return user;
-
-    }
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); 
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 ```
 
-##### getUserByUsernameAndMasterKey
+### SpringBoot Config
+Auf der Serverseite wird ebenefalls eine CORS-Konfiguration vorgenommen. 
+
+``` java
+@Configuration
+public class CorsConfiguration implements WebMvcConfigurer {
+
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3001")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
+}
+```
+
+Zudem muss folgende Annotation für die Controller verwendet werden, um die Konfiguration der Klasse `CorsConfiguration`  anzuwenden.
+
+``` java
+@CrossOrigin(origins="http://localhost:3001")
+```
 
 
 
 ## Diskussion der Ergebnisse
 
-### Sicherheit und Verschlüsselung
+### Zusammenfassung
+Der Passwortmanager ist eine plattformübergreifende Anwendung, die es Benutzern ermöglicht, ihre Zugangsdaten verschlüsselt zu speichern und zu verwalten. Die Anwendung besteht aus einem Server, der mit Spring Boot implementiert ist, sowie aus zwei Clients: einem WPF-Client und einem Web-Client. Der Server verwendet MongoDB als Datenbank und bietet RESTful Web Services für die Kommunikation mit den Clients. 
+
+### Ausblick
+#### Sicherheit und Verschlüsselung
 Mögliche sinnvolle Ergänzungen um die Sicherheit der Nutzer zu gewährleisten wäre die Verschlüsselung auszubauen. Zum jetzigen Zeitpunkt erfolgt die Verschlüsselung ohne Initialisierungsvektor (IV), was dafür sorgt, dass der gleiche Input mit dem gleichen AES-Key der Encryption-Methode den selben Output produziert. Der IV würde dazu beitragen die Identifizierung von Mustern in den verschlüsselten Dateien zu erschweren.
 
 Eine weitere Sicherheitsmaßnahme könnte darin bestehen, alle Zugriffe auf die API zu protokollieren und im Falle von Sicherheitsvorfällen zu durchforsten, bzw bereits frühzeitig zu erkennen. 
 
 Ebenso auch die Implementierung der Zwei-Faktor-Authentifizierung um selbst im Falle einer Kompression des Masterkeys sicherzustellen, dass sich nur der autorisierte Nutzer anmelden kann, und Zugriff auf die sensiblen Daten erhält.
 
-### 
-
+#### Passwortrichtlinien
+Eine weitere Möglichkeit zur Stärkung der Sicherheit des Passwortmanagers besteht in der Implementierung einer automatischen Überprüfung der Passwortstärke. Durch die Festlegung von Richtlinien für die Erstellung von Passwörtern können Benutzer dazu motiviert werden, starke und einzigartige Passwörter zu wählen, die schwer zu erraten oder zu knacken sind. 

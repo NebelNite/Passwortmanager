@@ -1,8 +1,5 @@
-import { UserApi } from "../Class/UserApi.js";
-import { EntryApi } from "../Class/EntryApi.js";
-import { EntryDTO } from "../Class/EntryDTO.js";
+
 import { EntryModel } from "../Class/EntryModel.js";
-import { LoginApi } from "../Class/LoginApi.js";
 import { UserDTO } from "../Class/UserDTO.js";
 
 
@@ -35,7 +32,4 @@ export class UserModel {
     return userDTO;
   }
   
-  
 }
-
-//module.exports = UserModel;

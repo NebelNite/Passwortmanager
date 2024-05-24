@@ -27,24 +27,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-
-
-/*
-    @PostMapping("/getUserByUsernameAndMasterKey")
-    public ResponseEntity<UserDTO> getUserByUsernameAndMasterKey(@RequestBody UserDTO userDto) {
-        Optional<UserModel> userOptional = userService.getUserByUsernameAndMasterKey(userDto.getUsername(), userDto.getMasterKey());
-
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        UserModel user = userOptional.get();
-        userDto = new UserDTO(user);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
-*/
-
+    
     @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 

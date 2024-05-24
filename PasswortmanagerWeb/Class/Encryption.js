@@ -9,7 +9,7 @@ import { UserModel } from "../Class/UserModel.js";
 
 export class Encryption{
 
-    static EncryptMessage(message, fileKey = null) {
+    static encryptMessage(message, fileKey = null) {
 
         
         let encKey = null;
@@ -39,16 +39,14 @@ export class Encryption{
         });
     
     
-        //encryptedString = encryptedString.toString(CryptoJS.enc.Utf8);
     
     
         return encryptedString;
         
       }
     
-      static DecryptMessage(encryptedMessage, fileKey = null) {
+      static decryptMessage(encryptedMessage, fileKey = null) {
           
-          //encryptedMessage = CryptoJS.enc.Latin1.parse(encryptedMessage);
     
           let encKey = null;
           
@@ -61,7 +59,6 @@ export class Encryption{
           }
           
     
-        //encKey = CryptoJS.enc.Utf8.parse(encKey);
     
         const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zeros
     
@@ -72,62 +69,57 @@ export class Encryption{
           padding: CryptoJS.pad.Pkcs7
         });
     
-          //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
           
-          decryptedString = decryptedString.toString(CryptoJS.enc.Latin1);
+        decryptedString = decryptedString.toString(CryptoJS.enc.Latin1);
           
-          //decryptedString = decryptedString.toString();
-          //decryptedString = decryptedString.toString(CryptoJS.enc.Utf16);
           
-          //decryptedString = CryptoJS.enc.Utf8.parse(decryptedString);
+        return decryptedString;
           
-          return decryptedString;
-          
-        }
+      }
         
 
 
-        static EncryptEntry(entry) {
-            entry.notes = Encryption.EncryptMessage(entry.notes).toString();
-            entry.password = Encryption.EncryptMessage(entry.password).toString();
-            entry.username = Encryption.EncryptMessage(entry.username).toString();
-            entry.title = Encryption.EncryptMessage(entry.title).toString();
-            entry.url = Encryption.EncryptMessage(entry.url).toString();
+        static encryptEntry(entry) {
+            entry.notes = Encryption.encryptMessage(entry.notes).toString();
+            entry.password = Encryption.encryptMessage(entry.password).toString();
+            entry.username = Encryption.encryptMessage(entry.username).toString();
+            entry.title = Encryption.encryptMessage(entry.title).toString();
+            entry.url = Encryption.encryptMessage(entry.url).toString();
         
             return entry;
         }
         
       
-        static DecryptEntry(entry) {
-            entry.notes = Encryption.DecryptMessage(entry.notes);
-            entry.password = Encryption.DecryptMessage(entry.password);
-            entry.username = Encryption.DecryptMessage(entry.username);
-            entry.title = Encryption.DecryptMessage(entry.title);
-            entry.url = Encryption.DecryptMessage(entry.url);
+        static decryptEntry(entry) {
+            entry.notes = Encryption.decryptMessage(entry.notes);
+            entry.password = Encryption.decryptMessage(entry.password);
+            entry.username = Encryption.decryptMessage(entry.username);
+            entry.title = Encryption.decryptMessage(entry.title);
+            entry.url = Encryption.decryptMessage(entry.url);
         
             return entry;
         }
         
       
-        static EncryptEntries(entries) {
+        static encryptEntries(entries) {
             for (const entry of entries) {
-                entry.notes = Encryption.EncryptMessage(entry.notes);
-                entry.password = Encryption.EncryptMessage(entry.password);
-                entry.username = Encryption.EncryptMessage(entry.username);
-                entry.title = Encryption.EncryptMessage(entry.title);
-                entry.url = Encryption.EncryptMessage(entry.url);
+                entry.notes = Encryption.encryptMessage(entry.notes);
+                entry.password = Encryption.encryptMessage(entry.password);
+                entry.username = Encryption.encryptMessage(entry.username);
+                entry.title = Encryption.encryptMessage(entry.title);
+                entry.url = Encryption.encryptMessage(entry.url);
             }
         
             return entries;
         }
         
-        static DecryptEntries(entries) {
+        static decryptEntries(entries) {
             for (const entry of entries) {
-                entry.notes = Encryption.DecryptMessage(entry.notes);
-                entry.password = Encryption.DecryptMessage(entry.password);
-                entry.username = Encryption.DecryptMessage(entry.username);
-                entry.title = Encryption.DecryptMessage(entry.title);
-                entry.url = Encryption.DecryptMessage(entry.url);
+                entry.notes = Encryption.decryptMessage(entry.notes);
+                entry.password = Encryption.decryptMessage(entry.password);
+                entry.username = Encryption.decryptMessage(entry.username);
+                entry.title = Encryption.decryptMessage(entry.title);
+                entry.url = Encryption.decryptMessage(entry.url);
             }
         
             return entries;

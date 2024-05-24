@@ -1,4 +1,3 @@
-//import { enc } from "crypto-js";
 import { EntryApi } from "../Class/EntryApi.js";
 import { EntryDTO } from "../Class/EntryDTO.js";
 import { EntryModel } from "../Class/EntryModel.js";
@@ -25,7 +24,7 @@ export class UserApi extends LoginApi {
 
     
     
-    static GetInstance() {
+    static getInstance() {
       
       if (UserApi.instance == null) {
         
@@ -37,7 +36,6 @@ export class UserApi extends LoginApi {
     
     async createUser(userDto) {
 
-      // duplicate Entries for Users
       userDto.id = null;
 
       let str = this.connectionString;
@@ -68,34 +66,17 @@ export class UserApi extends LoginApi {
 
     }
 
-/*
-    getUserByUsernameAndMasterKey(userDto) {
-      userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
-    
-      const response = this.getHttpClient().post('/users/getUserByUsernameAndMasterKey', {
-        body: JSON.stringify(userDto)
-      });
-    
-      if (response.statusCode == 200) {
-        return response.json();
-      }
-    
-      return null;
-    }
-    */
     
     static async getUserById(id) {
 
       let user = await LoginApi.getRequest("http://localhost:8080/users/" + id);
-      //user = user.then(user);
+
       
       return user;
     }
     
 }
 
-//module.exports = UserApi;
-    
     
     
     
