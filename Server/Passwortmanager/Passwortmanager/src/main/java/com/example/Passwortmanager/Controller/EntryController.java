@@ -19,6 +19,7 @@ import java.util.UUID;
 @CrossOrigin(origins="http://localhost:3001")
 @RestController
 @RequestMapping("/entries")
+
 public class EntryController {
 
     private final EntryService entryService;
@@ -29,7 +30,6 @@ public class EntryController {
         this.entryService = entryService;
         this.userService = userService;
     }
-    
 
     @PostMapping("/addEntry/{userId}")
     public ResponseEntity<EntryModel> addEntry(@PathVariable("userId") String userId, @RequestBody EntryDTO entryDTO) {
@@ -55,6 +55,7 @@ public class EntryController {
 
 
 
+
     @PostMapping("/delete/{id}")
     public ResponseEntity<Void> deleteEntry(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
 
@@ -73,9 +74,9 @@ public class EntryController {
     }
 
 
+
     @PostMapping("/editEntry/{id}")
     public ResponseEntity<Void> editEntry(@PathVariable("id") String id, @RequestBody EntryDTO entryDto) {
-
 
         Optional<UserModel> userOptional  = userService.getUserById(id);
         
@@ -89,9 +90,11 @@ public class EntryController {
                 .filter(entry -> entry.getId().equals(entryDto.getId()))
                 .findFirst();
 
+
         if (entryOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
 
         EntryModel entry = entryOptional.get();
 

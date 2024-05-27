@@ -98,22 +98,13 @@ namespace PasswortmanagerWPF
             userDto.masterKey = EncodeMasterKey(userDto.masterKey);
 
             var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
+
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
 
 
-
-        public async Task<UserModel> GetUserByUsernameAndMasterKey(UserDTO userDto)
-        {
-
-            var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/getUserByUsernameAndMasterKey", userDto);
-            response.EnsureSuccessStatusCode();
-
-            // Antwort des Servers lesen und in ein UserModel-Objekt deserialisieren
-            return await response.Content.ReadAsAsync<UserModel>();
-        }
 
 
 

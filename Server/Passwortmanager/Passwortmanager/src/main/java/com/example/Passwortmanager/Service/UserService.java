@@ -10,20 +10,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-//import org.springframework.security.authentication.BadCredentialsException;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import java.security.Key;
 
 import com.example.Passwortmanager.Exception.UserNotFoundException;
@@ -47,44 +47,12 @@ public class UserService {
         this.entryRepository = entryRepository;
     }
 
-/*
-    public UserModel updateUser(UserModel updatedUser, EntryDTO entryDTO) {
-
-        Optional<UserModel> existingUserOptional = userRepository.findById(updatedUser.getId());
-
-        if (existingUserOptional.isEmpty()) {
-            throw new UserNotFoundException("User with ID " + updatedUser.getId() + " not found");
-        }
-
-        // Benutzer aus der Optional-Instanz abrufen
-        UserModel existingUser = existingUserOptional.get();
-
-        // Die Felder des vorhandenen Benutzers mit den aktualisierten Werten aktualisieren
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setMasterKey(updatedUser.getMasterKey());
-        existingUser.addEntry(entryDTO.toEntryModel());
-
-        return userRepository.save(existingUser);
-    }
-*/
-
 
 
 
     public UserModel updateUser(UserModel userModel, Optional<EntryModel> entryModel) {
 
         Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
-
-
-/*
-        if(entryModel != null)
-        {
-            Optional<EntryModel> entry = entryRepository.findById(entryModel.get().getId());
-
-            if (entry.isPresent()) {
-                entry.get().setId(ObjectId.get().toString());
-            }
-        }*/
 
 
         // same id
@@ -100,16 +68,9 @@ public class UserService {
             }
         }
 
-
-
-
-        
-
         if (existingUser.isPresent()) {
             List<EntryModel> entries = userModel.getEntries();
             existingUser.get().setEntries(entries);
-
-            //entryRepository.save(entries);
 
             return userRepository.save(existingUser.get());
         } else {
@@ -143,33 +104,23 @@ public class UserService {
 
 
     public UserModel authenticateUserAsync(UserDTO userDto) {
+
         // Find user by username
         Query query = new Query(Criteria.where("username").is(userDto.getUsername()));
         UserModel user = mongoTemplate.findOne(query, UserModel.class);
-        
+
+
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
 
-
         // Check password
         if (!compareHashedPasswords(userDto.getMasterKey(), user.getMasterKey())) {
-            //throw new BadCredentialsException("Invalid credentials");
+            throw new BadCredentialsException("Invalid credentials");
         }
 
 
 
-
-        // Generate JWT token
-        String token = Jwts.builder()
-                .setSubject(user.getId())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 999999999))
-                .signWith(SignatureAlgorithm.HS512, getSecretKey())
-                .compact();
-
-        // Return user with token
-        user.setToken(token);
         return user;
     }
 

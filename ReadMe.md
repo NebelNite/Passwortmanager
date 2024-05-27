@@ -6,6 +6,7 @@
   - [Inhaltsverzeichnis](#inhaltsverzeichnis)
   - [Einführung](#einführung)
     - [Zweck des Passwortmanagers](#zweck-des-passwortmanagers)
+    - [Motivation](#motivation)
     - [Bestandteile](#bestandteile)
   - [Softwarestruktur](#softwarestruktur)
     - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
@@ -19,7 +20,7 @@
         - [**UserController** (`/users`):](#usercontroller-users)
         - [Create](#create)
         - [Authenticate](#authenticate)
-        - [id](#id)
+        - [Id](#id)
         - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey)
         - [**EntryController** (`/entries`):](#entrycontroller-entries)
         - [addEntry](#addentry)
@@ -29,32 +30,34 @@
     - [Datenbank](#datenbank)
       - [Benutzer (UserModel)](#benutzer-usermodel)
       - [Eintrag (EntryModel)](#eintrag-entrymodel)
-  - [Clients](#clients)
-    - [Wichtige Klassen](#wichtige-klassen)
-      - [API](#api-1)
-      - [Models & DTOs](#models--dtos)
-      - [Encryption](#encryption)
-  - [Diagramm](#diagramm)
-    - [WPF-Application](#wpf-application)
-      - [Wichtige Methoden](#wichtige-methoden)
-        - [UserApi](#userapi)
-          - [CreateUserAsync:](#createuserasync)
-          - [AuthenticateUserAsync](#authenticateuserasync)
-          - [GetUserById](#getuserbyid)
-        - [EntryApi](#entryapi)
-          - [CreateEntry](#createentry)
-          - [EditEntry](#editentry-1)
-          - [DeleteEntry](#deleteentry-1)
-    - [Web-Application](#web-application)
-      - [Einführung](#einführung)
-      - [Technologien](#technologien)
-      - [Probleme](#probleme)
-      - [NodeJS Config](#nodejs-config)
-      - [SpringBoot Config](#springboot-config)
+- [Clients](#clients)
+  - [Wichtige Klassen](#wichtige-klassen)
+    - [API](#api-1)
+    - [Models \& DTOs](#models--dtos)
+    - [Encryption](#encryption)
+    - [Diagramm](#diagramm)
+  - [WPF-Application](#wpf-application)
+    - [Wichtige Methoden](#wichtige-methoden)
+      - [UserApi](#userapi)
+        - [CreateUserAsync:](#createuserasync)
+        - [AuthenticateUserAsync](#authenticateuserasync)
+        - [GetUserById](#getuserbyid)
+      - [EntryApi](#entryapi)
+        - [CreateEntry](#createentry)
+        - [EditEntry](#editentry-1)
+        - [DeleteEntry](#deleteentry-1)
+  - [Web-Application](#web-application)
+    - [Einführung](#einführung-1)
+    - [Technologien](#technologien-1)
+    - [Probleme](#probleme)
+    - [NodeJS Config](#nodejs-config)
+    - [SpringBoot Config](#springboot-config)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
     - [Zusammenfassung](#zusammenfassung)
-    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
-    - [Passwortrichtlinien](#passwortrichtlinien)
+    - [Ausblick](#ausblick)
+      - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
+      - [Passwortrichtlinien](#passwortrichtlinien)
+      - [Autofill](#autofill)
 
 
 
@@ -63,6 +66,9 @@
 ### Zweck des Passwortmanagers
 
 Der Zweck des Passwortmanagers besteht darin, sensible Zugangsdaten wie Benutzernamen, Passwörter und andere vertrauliche Informationen sicher zu speichern und zu verwalten. Dies ermöglicht es Benutzern, sichere Passwörter zu generieren, ohne sich die Kennwörter merken zu müssen.
+
+### Motivation
+Die Entwicklung eines Passwortmanagers halte ich persönlich für interessant, da ich selbst regelmäßig einen Passwortmanager verwende. Daher ergab sich im Rahmen dieses Projekts die Möglichkeit sich mehr mit diesem Typ von Projekt auseinanderzusetzen.
 
 ### Bestandteile
 
@@ -247,7 +253,6 @@ Der Actuator kennt dabei folgende Zustände, die dann über die Route abrufbar s
   - `UNKNOWN`
   
   
-
 ### Datenbank  
 Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 
@@ -306,6 +311,114 @@ Diese Klasse enthält Methoden deren einzige Aufgabe darin besteht, sensible Dat
 
 ```
 - Encryption.js
+```
+
+### Diagramm
+
+
+```mermaid
+classDiagram
+    class Encryption {
+        +string Encrypt(string data)
+        +string Decrypt(string data)
+    }
+
+    class EntryApi {
+        +List<EntryDTO> GetAllEntries()
+        +EntryDTO GetEntryById(int id)
+        +void AddEntry(EntryDTO entry)
+        +void UpdateEntry(EntryDTO entry)
+        +void DeleteEntry(int id)
+    }
+
+    class EntryDTO {
+        +int Id
+        +string Title
+        +string Username
+        +string Password
+        +string Url
+        +string Notes
+    }
+
+    class EntryModel {
+        +int Id
+        +string Title
+        +string Username
+        +string Password
+        +string Url
+        +string Notes
+        +void EncryptData()
+        +void DecryptData()
+    }
+
+    class LoginApi {
+        +bool Login(string username, string password)
+        +void Logout()
+    }
+
+    class UserApi {
+        +UserDTO GetUserById(int id)
+        +void AddUser(UserDTO user)
+        +void UpdateUser(UserDTO user)
+        +void DeleteUser(int id)
+    }
+
+    class UserDTO {
+        +int Id
+        +string Username
+        +string Password
+        +string Email
+    }
+
+    class UserModel {
+        +int Id
+        +string Username
+        +string Password
+        +string Email
+        +void EncryptData()
+        +void DecryptData()
+    }
+
+    class EntryWindow {
+        +void InitializeComponent()
+        +void LoadEntries()
+        +void AddEntry()
+        +void EditEntry()
+        +void DeleteEntry()
+    }
+
+    class LoginWindow {
+        +void InitializeComponent()
+        +void Login()
+        +void Logout()
+    }
+
+    class MainWindow {
+        +void InitializeComponent()
+        +void OpenEntryWindow()
+        +void OpenPasswordGeneratorWindow()
+    }
+
+    class PasswordGeneratorWindow {
+        +void InitializeComponent()
+        +string GeneratePassword(int length)
+    }
+
+    class PasswordInputWindow {
+        +void InitializeComponent()
+        +void AcceptPassword()
+        +void Cancel()
+    }
+
+    EntryApi --> EntryDTO
+    EntryModel --> EntryDTO
+    UserApi --> UserDTO
+    UserModel --> UserDTO
+    EntryWindow --> EntryApi
+    LoginWindow --> LoginApi
+    MainWindow --> EntryWindow
+    MainWindow --> PasswordGeneratorWindow
+    PasswordInputWindow --> EntryWindow
 ```
 
 
@@ -564,3 +677,6 @@ Ebenso auch die Implementierung der Zwei-Faktor-Authentifizierung um selbst im F
 
 #### Passwortrichtlinien
 Eine weitere Möglichkeit zur Stärkung der Sicherheit des Passwortmanagers besteht in der Implementierung einer automatischen Überprüfung der Passwortstärke. Durch die Festlegung von Richtlinien für die Erstellung von Passwörtern können Benutzer dazu motiviert werden, starke und einzigartige Passwörter zu wählen, die schwer zu erraten oder zu knacken sind. 
+
+#### Autofill
+Eine nützliche Erweiterung wäre die Implementierung einer Autofill-Funktion, die es ermöglicht, gespeicherte Zugangsdaten automatisch in Anmeldeformulare einzutragen. 

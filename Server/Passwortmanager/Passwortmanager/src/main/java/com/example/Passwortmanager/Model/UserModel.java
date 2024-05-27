@@ -1,5 +1,7 @@
     package com.example.Passwortmanager.Model;
 
+    import lombok.Getter;
+    import lombok.Setter;
     import org.springframework.data.mongodb.core.mapping.Document;
     import org.springframework.data.annotation.Id;
     import org.springframework.data.mongodb.core.mapping.Field;
@@ -19,9 +21,9 @@
         private List<EntryModel> entries;
         @Field("masterKey")
         private String masterKey;
-
-        private String token;
         
+        
+
 
         public UserModel(String id, String username, List<EntryModel> entries, String masterKey) {
             this.id = id;
@@ -33,9 +35,6 @@
 
 
 
-        public void setToken(String token) {
-            this.token = token;
-        }
 
         public void setUsername(String username) {
             this.username = username;

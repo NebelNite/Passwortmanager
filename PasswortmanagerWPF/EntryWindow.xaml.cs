@@ -36,6 +36,7 @@ namespace PasswortmanagerWPF
         {
             InitializeComponent();
 
+
             titleTextBox.Text = entry.title;
             usernameTextBox.Text = entry.username;
             urlTextBox.Text = entry.url;

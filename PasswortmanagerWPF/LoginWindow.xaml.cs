@@ -60,7 +60,7 @@ namespace PasswortmanagerWPF
 
                 userDTO.masterKey = Encryption.EncryptMessage(masterkey);
                 userDTO.username = Encryption.EncryptMessage(username);
-                
+
 
                 try
                 {
@@ -170,6 +170,7 @@ namespace PasswortmanagerWPF
 
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();
+
                 this.Close();
             }
             catch (Exception ex)

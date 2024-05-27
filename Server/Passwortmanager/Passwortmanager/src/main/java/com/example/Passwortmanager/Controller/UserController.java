@@ -36,14 +36,12 @@ public class UserController {
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-
-
+    
     @PostMapping("/authenticate")
     public UserModel authenticateUser(@RequestBody UserDTO userDto) {
 
         UserModel user = userService.authenticateUserAsync(userDto);
         return user;
-        //return userService.authenticateUserAsync(userDto);
     }
 
 
@@ -57,6 +55,8 @@ public class UserController {
 
         UserModel user = userOptional.get();
         UserDTO userDto = new UserDTO(user);
+
+
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
     
