@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -49,7 +50,7 @@ public class UserService {
 
 
 
-
+    @Async
     public UserModel updateUser(UserModel userModel, Optional<EntryModel> entryModel) {
 
         Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
@@ -78,10 +79,9 @@ public class UserService {
         }
 
     }
-    
 
+    @Async
     public UserModel createUser(UserModel user) {
-
         Optional<UserModel> existingUser = userRepository.findByUsername(user.getUsername());
 
         if (existingUser.isPresent()) {
@@ -91,19 +91,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Async
     public Optional<UserModel> getUserById(String id) {
         return userRepository.findById(id);
     }
 
-    public Optional<UserModel> getUserByUsernameAndMasterKey(String username, String masterKey) {
-        return userRepository.findByUsernameAndMasterKey(username, masterKey);
-    }
 
 
-
-
-
-
+    @Async
     public UserModel authenticateUserAsync(UserDTO userDto) {
 
         // Find user by username
@@ -125,7 +120,7 @@ public class UserService {
         return user;
     }
 
-
+    @Async
     public boolean compareHashedPasswords(String hashedPassword1, String hashedPassword2) {
         if (hashedPassword1 == null || hashedPassword2 == null) {
             throw new IllegalArgumentException("Both hashed passwords must not be null");
@@ -156,10 +151,6 @@ public class UserService {
     }
 
 
-    private Key getSecretKey() {
-        String secret = "myKey";
-        return new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
-    }
 
 
 }

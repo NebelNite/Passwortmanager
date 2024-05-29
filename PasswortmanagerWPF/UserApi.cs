@@ -121,10 +121,10 @@ namespace PasswortmanagerWPF
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error fetching user", ex);
+                throw new ApplicationException("User not found", ex);
             }
         }
-
+        
 
 
     }

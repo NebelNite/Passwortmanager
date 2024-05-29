@@ -265,17 +265,6 @@ graph TD;
     C -- Nein --> E[Fehlermeldung anzeigen]
 ```
 
-##### getUserByUsernameAndMasterKey
-- `/getUserByUsernameAndMasterKey`: Ein POST-Endpunkt, der verwendet wird, um einen Benutzer anhand seines Benutzernamens und seines Master-Passworts abzurufen. Der Client sendet Benutzerdaten an diesen Endpunkt, und der Server gibt den entsprechenden Benutzer zurück, falls vorhanden.
-
-```mermaid
-graph TD;
-    A[Benutzer] -->|Sendet Anfrage mit Benutzername und Master-Key| B[Passwortmanager]
-    B -->|Sucht nach Benutzer in der Datenbank| C{Benutzer gefunden?}
-    C -- Ja --> D[Benutzerdaten zurückgeben]
-    C -- Nein --> E[Fehlermeldung anzeigen]
-```
-
 ##### **EntryController** (`/entries`):
 
 ##### addEntry
@@ -287,7 +276,7 @@ graph TD;
     A[Benutzer] -->|Erstellt neuen Eintrag| B[Passwortmanager]
     B -->|Speichert Eintrag in der Datenbank| C{Speichern erfolgreich?}
     C -- Ja --> D[Eintrag hinzugefügt]
-    C -- Nein --> E[Eintrag nicht hinzugefügt]
+    C -- Nein --> E[Fehlermeldung anzeigen]
     
 ```
 
@@ -299,7 +288,7 @@ graph TD;
     A[Benutzer] -->|Wählt Eintrag zum Löschen aus| B[Passwortmanager]
     B -->|Löscht Eintrag aus der Datenbank| C{Löschen erfolgreich?}
     C -- Ja --> D[Eintrag gelöscht]
-    C -- Nein --> E[Eintrag besteht weiterhin in der Datenbank]
+    C -- Nein --> E[Fehlermeldung anzeigen]
 ```
 
 ##### editEntry
@@ -311,7 +300,7 @@ graph TD;
     B -->|Zeigt Formular zur Bearbeitung an| C[Benutzer aktualisiert Eintrag]
     C -->|Speichert aktualisierte Eintrag in der Datenbank| D{Aktualisierung erfolgreich?}
     D -- Ja --> E[Eintrag aktualisiert]
-    D -- Nein --> F[Eintrag bleibt unverändert]
+    D -- Nein --> F[Fehlermeldung anzeigen]
 ```
 
 #### Actuator

@@ -107,7 +107,7 @@ namespace PasswortmanagerWPF
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Creating/Editing Entry failed!");
+                MessageBox.Show("Editing Entry failed!");
             }
 
         }
