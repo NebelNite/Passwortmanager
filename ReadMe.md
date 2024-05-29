@@ -106,7 +106,7 @@ graph TD;
         M --> O[LoginApi.js]
         M --> P[EntryApi.js]
         M --> Q[UserApi.js]
-        O -->|Sendet verschlüsselte Anmeldedaten| A
+        O -->|Sendet/Empfängt verschlüsselte Anmeldedaten| A
         P -->|Ruft Methoden von| O
         Q -->|Ruft Methoden von| O
     end
@@ -117,9 +117,10 @@ graph TD;
         R --> T[LoginApi.cs]
         R --> U[EntryApi.cs]
         R --> V[UserApi.cs]
-        T -->|Sendet verschlüsselte Anmeldedaten| A
+        T -->|Basis für API| U
+        T -->|Basis für API| V
         U -->|Sendet/Empfängt verschlüsselte Eintragsdaten| A
-        V -->|Sendet verschlüsselte Benutzerdaten| A
+        V -->|Sendet/Empfängt verschlüsselte Benutzerdaten| A
     end
 
     A -->|Speichert/Abruft verschlüsselte Daten| J
@@ -365,7 +366,7 @@ erDiagram
     }
 
     USER ||--o{ ENTRY : contains
-
+    
 ```
 
 
