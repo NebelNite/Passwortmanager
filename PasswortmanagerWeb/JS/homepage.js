@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded',async () => {
     const exportButton = document.getElementById('export');
     const importButton = document.getElementById('import');
     const lockButton = document.getElementById('lock');
-    const exitButton = document.getElementById('exit');
 
     const addEntryButton = document.getElementById('addEntry');
     const editEntryButton = document.getElementById('editEntry');
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded',async () => {
     exportButton.addEventListener('click', exportFunction);
     importButton.addEventListener('click', importFunction);
     lockButton.addEventListener('click', lockFunction);
-    exitButton.addEventListener('click', exitFunction);
 
     addEntryButton.addEventListener('click', addEntry);
     editEntryButton.addEventListener('click', editEntry);
@@ -104,6 +102,8 @@ document.addEventListener('DOMContentLoaded',async () => {
                 entry.password = ''
           }
           
+
+
           const tdTitle = document.createElement('td');
           tdTitle.textContent = entry.title;
           tdTitle.style.fontSize = fontSize;
@@ -200,11 +200,71 @@ function exportFunction() {
 
 
 
+function generateNewId() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+}
 
 
-function importFunction() {
+async function importFunction() {
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'application/json';
+  fileInput.onchange = async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
 
-  console.log('Importing...');
+      var left = window.screenX + (window.outerWidth - 800) / 2;
+      var top = window.screenY - 400;
+      var width = 320;
+      var height = 150;
+
+      const features = `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`;
+
+      const newWindow = window.open("https://localhost:3001/passwordInput", "New Window", features);
+
+      if (newWindow) {
+          newWindow.onbeforeunload = function() {
+              const enteredPassword = newWindow.document.getElementById("password").value;
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                  const encryptedData = e.target.result;
+                  try {
+
+                      const encryptedUserJson = Encryption.decryptMessage(encryptedData, enteredPassword);
+                      let encryptedUser = JSON.parse(encryptedUserJson);
+
+                      let entries = Encryption.decryptEntries(encryptedUser.entries);
+
+                      // Check for duplicate IDs and assign new IDs where necessary
+                      let existingIds = new Set(UserApi.user.entries.map(entry => entry.id));
+
+                      entries.forEach(async entry => {
+                          while (existingIds.has(entry.id)) {
+                              entry.id = generateNewId();
+                          }
+                          existingIds.add(entry.id);
+                      });
+
+                      entries.forEach(async entry => {
+                        await EntryApi.getInstance().createEntry(Encryption.encryptEntry(entry));
+                    });
+
+                      fillTable();
+
+                  } catch (error) {
+                      alert("Failed to decrypt data. Ensure the password is correct.");
+                  }
+              };
+              reader.readAsText(file);
+          };
+      } else {
+          alert("Please allow pop-ups for this website.");
+      }
+  };
+  fileInput.click();
 }
 
 function lockFunction() {
@@ -212,10 +272,6 @@ function lockFunction() {
   window.location.href = '../login'
 }
 
-function exitFunction() {
-
-  console.log('Exiting...');
-}
 
 
 

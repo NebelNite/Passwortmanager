@@ -11,7 +11,6 @@ export class Encryption{
 
     static encryptMessage(message, fileKey = null) {
 
-        
         let encKey = null;
     
         if(fileKey!=null)
@@ -124,5 +123,22 @@ export class Encryption{
         
             return entries;
         }
+
+
+  
+      static decryptUser(user) {
+        
+          user.username = Encryption.decryptMessage(user.username);
+
+          user.entries.forEach(entry => {
+            entry.notes = Encryption.decryptMessage(entry.notes);
+            entry.title = Encryption.decryptMessage(entry.title);
+            entry.password = Encryption.decryptMessage(entry.password);
+            entry.username = Encryption.decryptMessage(entry.username);
+            entry.url = Encryption.decryptMessage(entry.url);
+          });
+
+          return user;
+      }
 
 }
