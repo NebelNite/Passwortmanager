@@ -169,19 +169,18 @@ Zusätzlich zur AES-Verschlüsselung wird der Masterkey, der für den Zugriff de
 - **Maven**: Build- und Abhängigkeitsmanagement-Tool.
 
 #### Web Client
-
+- **HTML, CSS, JavaScript**: Technologien zur Strukturierung, Gestaltung und Programmierung der Webanwendung.
 - **Node.js**: JavaScript-Laufzeitumgebung zur Ausführung von serverseitigem Code.
 - **Express**: Webframework für Node.js, das zum Erstellen des RESTful API genutzt wird.
 - **Axios**: HTTP-Client zum Senden von HTTP-Anfragen.
 - **cors**: Middleware für Cross-Origin Resource Sharing, um die Kommunikation zwischen Frontend und Backend zu ermöglichen.
 - **CryptoJS**: Bibliothek für Kryptographie, um Daten zu verschlüsseln und zu entschlüsseln.
-- **express-session**: Sitzungsmanagement zur Verwaltung von Benutzersitzungen.
-- **nodemon**: Werkzeug zur automatischen Neustart von Node.js-Anwendungen bei Dateiänderungen.
+- **express-session**: Middleware zur Verwaltung von Benutzersitzungen.
+- **Nodemon**: Werkzeug zur automatischen Neustart von Node.js-Anwendungen bei Dateiänderungen.
 
 #### Desktop Client
 
-- **WPF (Windows Presentation Foundation)**: Framework zur Erstellung von Desktop-Anwendungen für Windows.
-- **C#**: Programmiersprache zur Entwicklung des Desktop-Clients.
+- **WPF und C#**: Framework und Programmiersprache zur Erstellung von Desktop-Anwendungen für Windows.
 - **Newtonsoft.Json**: JSON-Framework für .NET zur Serialisierung und Deserialisierung von JSON-Daten.
 - **PasswordGenerator**: Bibliothek zur Erstellung von sicheren Passwörtern.
 - **Credential Management**: Verwendet zur sicheren Verwaltung der AES-Keys. Diese Komponente speichert und verwaltet den AES-Keys eines Users unter seinem Username sicher und verschlüsselt.
