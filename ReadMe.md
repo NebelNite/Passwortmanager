@@ -55,7 +55,7 @@
   - [Einführung](#einführung-1)
   - [NodeJS](#nodejs)
   - [Probleme](#probleme)
-  - [NodeJS Config](#nodejs-config)
+  - [CORS Config](#cors-config)
   - [SpringBoot Config](#springboot-config)
 - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
   - [Zusammenfassung](#zusammenfassung)
@@ -183,8 +183,6 @@ Zusätzlich zur AES-Verschlüsselung wird der Masterkey, der für den Zugriff de
 - **WPF (Windows Presentation Foundation)**: Framework zur Erstellung von Desktop-Anwendungen für Windows.
 - **C#**: Programmiersprache zur Entwicklung des Desktop-Clients.
 - **Newtonsoft.Json**: JSON-Framework für .NET zur Serialisierung und Deserialisierung von JSON-Daten.
-- **Microsoft.Extensions.Configuration**: Konfigurationsverwaltung für .NET-Anwendungen.
-- **Microsoft.Extensions.DependencyInjection**: Abhängigkeitsinjektion für .NET-Anwendungen.
 - **PasswordGenerator**: Bibliothek zur Erstellung von sicheren Passwörtern.
 - **Credential Management**: Verwendet zur sicheren Verwaltung der AES-Keys. Diese Komponente speichert und verwaltet den AES-Keys eines Users unter seinem Username sicher und verschlüsselt.
 
@@ -860,7 +858,7 @@ Die Web-Anwendung wird mithilfe von `Node.js` entwickelt, was die  die Ausführu
 Die CORS-Einschränkung des Browsers kann dazu führen, dass Anfragen zwischen verschiedenen Ursprüngen blockiert werden. Ohne eine entsprechende Konfiguration funktioniert die Kommunikation zwischen dem Web-Client und dem Server nicht ordnungsgemäß.
 
 
-### NodeJS Config
+### CORS Config
 
 Um CORS-Probleme zu lösen, wird eine Middleware in der Node.js-Anwendung verwendet. Diese Middleware fügt den HTTP-Antworten die erforderlichen CORS-Header hinzu, um Anfragen von einem bestimmten Ursprung zu akzeptieren. In der Konfiguration wird festgelegt, von welchem Ursprung Anfragen akzeptiert werden sollen, welche Methoden erlaubt sind und welche Header verwendet werden dürfen.
 
