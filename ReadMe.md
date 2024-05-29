@@ -280,6 +280,7 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 ### API
 Diese Klassen enthalten alle Methoden, die mit dem Spring Boot Server kommunizieren. Die Beziehungen zwischen diesen Klassen ist im Diagramm dargestellt.
 
+
 ```
 - LoginApi.js
 - EntryApi.js
@@ -301,128 +302,194 @@ classDiagram
 
 ### Models & DTOs
 Diese Klassen definieren die Struktur der Benutzerdaten. Die Models dienen der internen Verarbeitung, während die DTOs verwendet werden, um Daten mit dem Server auszutauschen.
+
 ```
 - UserModel.js / UserDTO.js
 - EntryModel.js / EntryDTO.js
 ```
 
 ### Encryption
-Diese Klasse enthält Methoden deren einzige Aufgabe darin besteht, sensible Daten zu verschlüsseln und entschlüsseln.
+Diese abstrakte Klasse enthält statische Methoden deren einzige Aufgabe darin besteht, sensible Daten zu verschlüsseln und entschlüsseln.
 
 ```
 - Encryption.js
 ```
 
-### Diagramm
+
+## <u>WPF-Application</u>
+
+### Klassendiagram
+In diesem Abschnitt ist das Klassendiagramm für die WPF-Anwendung des Passwortmanagers zu sehen. Das Diagramm visualisiert die Struktur der Anwendung, sowie deren Beziehungen untereinander.
+Die Anwendung ist in fünf Hauptkategorien unterteilt: Model, DTO, API, Window und Encryption.
+
 
 
 ```mermaid
-classDiagram
-    class Encryption {
-        +string Encrypt(string data)
-        +string Decrypt(string data)
-    }
 
-    class EntryApi {
-        +List<EntryDTO> GetAllEntries()
-        +EntryDTO GetEntryById(int id)
-        +void AddEntry(EntryDTO entry)
-        +void UpdateEntry(EntryDTO entry)
-        +void DeleteEntry(int id)
+classDiagram
+
+    %% Category: Models
+    class UserModel {
+        +string id
+        +string username
+        +List~EntryModel~ entries
+        +string masterKey
     }
+    UserModel --> ModelCategory
 
     class EntryDTO {
-        +int Id
-        +string Title
-        +string Username
-        +string Password
-        +string Url
-        +string Notes
+        +string id
+        +string title
+        +string username
+        +string password
+        +string url
+        +string notes
     }
+    EntryDTO --> DTOCategory
 
     class EntryModel {
-        +int Id
-        +string Title
-        +string Username
-        +string Password
-        +string Url
-        +string Notes
-        +void EncryptData()
-        +void DecryptData()
+        +string id
+        +string title
+        +string username
+        +string password
+        +string url
+        +string notes
+        +string ToString()
     }
-
-    class LoginApi {
-        +bool Login(string username, string password)
-        +void Logout()
-    }
-
-    class UserApi {
-        +UserDTO GetUserById(int id)
-        +void AddUser(UserDTO user)
-        +void UpdateUser(UserDTO user)
-        +void DeleteUser(int id)
-    }
+    EntryModel --> ModelCategory
 
     class UserDTO {
-        +int Id
-        +string Username
-        +string Password
-        +string Email
+        +string id
+        +string username
+        +List~EntryModel~ entries
+        +string masterKey
     }
+    UserDTO --> DTOCategory
 
-    class UserModel {
-        +int Id
-        +string Username
-        +string Password
-        +string Email
-        +void EncryptData()
-        +void DecryptData()
+    %% Category: API
+    class UserApi {
+        +Task~UserModel~ CreateUserAsync(UserDTO userDto)
+        +string EncodeMasterKey(string secret)
+        +Task~UserModel~ AuthenticateUserAsync(UserDTO userDto)
+        +Task~UserModel~ GetUserById(string id)
     }
+    UserApi --> LoginApi
+    UserApi --> UserModel
+    UserApi --> UserDTO
+    UserApi --> APICategory
 
-    class EntryWindow {
-        +void InitializeComponent()
-        +void LoadEntries()
-        +void AddEntry()
-        +void EditEntry()
-        +void DeleteEntry()
+    class EntryApi {
+        +void DeleteEntry(EntryModel selectedEntry)
+        +void EditEntry(EntryDTO entryDto)
+        +void CreateEntry(EntryDTO entryDto)
     }
+    EntryApi --> LoginApi
+    EntryApi --> EntryModel
+    EntryApi --> EntryDTO
+    EntryApi --> APICategory
 
-    class LoginWindow {
-        +void InitializeComponent()
-        +void Login()
-        +void Logout()
-    }
 
-    class MainWindow {
-        +void InitializeComponent()
-        +void OpenEntryWindow()
-        +void OpenPasswordGeneratorWindow()
+
+    class LoginApi {
+        -HttpClient _httpClient
+        -string _connectionString
+        +HttpClient GetHttpClient()
+        +string GetConnectionString()
     }
+    LoginApi <|-- UserApi
+    LoginApi <|-- EntryApi
+    LoginApi --> APICategory
+
+    %% Category: Encryption
+    class Encryption {
+        +static EntryDTO EncryptEntry(EntryDTO entry)
+        +static EntryDTO DecryptEntry(EntryDTO entry)
+        +static List~EntryModel~ EncryptEntries(List~EntryModel~ entries)
+        +static List~EntryModel~ DecryptEntries(List~EntryModel~ entries)
+        +static string EncryptMessage(string message, byte[] fileKey=null)
+        +static string DecryptMessage(string encryptedMessage, byte[] fileKey=null)
+        +static object EncryptUser(object user)
+        +static object DecryptUser(object user)
+    }
+    
+    Encryption --> EncryptionCategory
+
+    %% Category: Windows
+    class PasswordInputWindow {
+        +event EventHandler~Tuple~string, string~~ FileInput
+        -string jsonString
+        +PasswordInputWindow(string jsonString="")
+        +void ConfirmButton_Click(object sender, RoutedEventArgs e)
+    }
+    PasswordInputWindow --> WindowCategory
 
     class PasswordGeneratorWindow {
-        +void InitializeComponent()
-        +string GeneratePassword(int length)
+        +event EventHandler~string~ PasswordGenerated
+        +PasswordGeneratorWindow()
+        +string GeneratePassword()
+        +void ConfirmButton_Click(object sender, RoutedEventArgs e)
     }
+    PasswordGeneratorWindow --> WindowCategory
 
-    class PasswordInputWindow {
-        +void InitializeComponent()
-        +void AcceptPassword()
-        +void Cancel()
+    class MainWindow {
+        +ObservableCollection~EntryModel~ entries
+        +EntryModel selectedEntry
+        +MainWindow(UserModel user)
+        +void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        +void ExportEntries_Click(object sender, EventArgs e)
+        +void PasswordInputWindow_FileInput(object sender, Tuple~string, string~ data)
+        +void ImportEntries_Click(object sender, EventArgs e)
+        +void DeleteEntry_Click(object sender, EventArgs e)
+        +void LockManager_Click(object sender, EventArgs e)
+        +void EntryWindow_EntryCreated(object sender, UserModel userModel)
+        +void AddEntry_Click(object sender, EventArgs e)
+        +void EditEntry_Click(object sender, EventArgs e)
+        +void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        +void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        +DataGridCell GetCell(object sender, MouseButtonEventArgs e)
     }
+    MainWindow --> WindowCategory
 
-    EntryApi --> EntryDTO
-    EntryModel --> EntryDTO
-    UserApi --> UserDTO
-    UserModel --> UserDTO
-    EntryWindow --> EntryApi
-    LoginWindow --> LoginApi
-    MainWindow --> EntryWindow
-    MainWindow --> PasswordGeneratorWindow
-    PasswordInputWindow --> EntryWindow
+    class EntryWindow {
+        -bool edit
+        +EntryWindow()
+        +EntryWindow(EntryModel entry)
+        +void EntryWindow_Loaded(object sender, RoutedEventArgs e)
+        +void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        +void GeneratePassword_Click(object sender, RoutedEventArgs e)
+        +void PasswordGeneratorWindow_PasswordGenerated(object sender, string password)
+        +void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
+    }
+    EntryWindow --> WindowCategory
+    EntryWindow --> EntryModel
+    EntryWindow --> EntryDTO
+
+    class LoginWindow {
+        +LoginWindow()
+        +void SignUpButton_Click(object sender, RoutedEventArgs e)
+        +void SetAesKeyForUser(string username)
+        +byte[] GetAesKeyForUser(string username)
+        +bool AesKeyExistsForUser(string username)
+        +void SignInButton_Click(object sender, RoutedEventArgs e)
+        +string IsValidPassword(string masterkey)
+        +void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        +void TextBox_LostFocus(object sender, RoutedEventArgs e)
+    }
+    LoginWindow --> WindowCategory
+    LoginWindow --> UserDTO
+    LoginWindow --> UserApi
+
+
 ```
 
+#### Kategorien
 
-## <u>WPF-Application</u>
+**Windows**: Diese Kategorie umfasst die Fensterklassen, die die Benutzeroberfläche der Anwendung darstellen und Benutzerinteraktionen verwalten.
+- `MainWindow` ist das Hauptfenster der Anwendung und verwaltet Benutzerinteraktionen und Anwendungslogik, wie z.B. das Laden von Benutzerdaten, Exportieren und Importieren von Einträgen, sowie die Handhabung von Benutzerinteraktionen.
+- `EntryWindow` ermöglicht die Erstellung und Bearbeitung von Einträgen.
+- `LoginWindow` verwaltet die Benutzeranmeldung und -registrierung und bietet Methoden zur Verwaltung von AES-Schlüsseln und Passwortvalidierung.
+- `PasswordInputWindow` und `PasswordGeneratorWindow` bieten spezifische Funktionalitäten zur Passwortverwaltung, einschließlich der Eingabe und Generierung von Passwörtern.
+
 
 
 ### Wichtige Methoden
@@ -680,3 +747,5 @@ Eine weitere Möglichkeit zur Stärkung der Sicherheit des Passwortmanagers best
 
 #### Autofill
 Eine nützliche Erweiterung wäre die Implementierung einer Autofill-Funktion, die es ermöglicht, gespeicherte Zugangsdaten automatisch in Anmeldeformulare einzutragen. 
+
+

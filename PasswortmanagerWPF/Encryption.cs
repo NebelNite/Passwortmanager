@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PasswortmanagerWPF
 {
-    internal class Encryption
+    internal abstract class Encryption
     {
 
 
