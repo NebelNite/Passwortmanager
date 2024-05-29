@@ -138,9 +138,8 @@ namespace PasswortmanagerWPF
                     entryDTO.title = entry.title;
 
                     UserApi.user.entries.Add(entry);
-                    EntryApi.GetInstance().CreateEntry(entryDTO);
+                    await EntryApi.GetInstance().CreateEntry(entryDTO);
 
-                    //EntryApi.GetInstance().createEntry(entryDTO);
                 }
 
                 string id = UserApi.user.id;
@@ -149,12 +148,6 @@ namespace PasswortmanagerWPF
 
                 currentEntries = Encryption.DecryptEntries(UserApi.user.entries);
 
-                /*
-                foreach(EntryModel entry in importedUser.entries)
-                {
-                    EntryApi.GetInstance().createEntry(entryDTO);
-                }
-                */
 
 
 
@@ -167,8 +160,6 @@ namespace PasswortmanagerWPF
             else
             {
 
-                //UserModel decryptedUser = (UserModel)UserApi.DecryptUser(UserApi.user);
-                //UserModel decryptedUser = (UserModel)UserApi.user;
 
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {
@@ -189,12 +180,6 @@ namespace PasswortmanagerWPF
                 jsonString = Encryption.EncryptMessage(jsonString, passwordBytes);
 
 
-                /*
-                password = "password";
-                passwordBytes = Encoding.UTF8.GetBytes(password);
-                passwordBytes = fillKey(passwordBytes);
-                jsonString = UserApi.DecryptMessage(jsonString, passwordBytes);
-                */
 
 
                 File.WriteAllText("Exports/entries(" + UserApi.user.id + ").json", jsonString);
@@ -238,9 +223,9 @@ namespace PasswortmanagerWPF
 
         }
 
-        private void DeleteEntry_Click(object sender, EventArgs e)
+        private async void DeleteEntry_Click(object sender, EventArgs e)
         {
-            EntryApi.GetInstance().DeleteEntry(selectedEntry);
+            await EntryApi.GetInstance().DeleteEntry(selectedEntry);
 
             EntryApi.GetInstance().EntryCreated += EntryWindow_EntryCreated;
 

@@ -323,6 +323,7 @@ Der Actuator kennt dabei folgende Zustände, die dann über die Route abrufbar s
   - `UNKNOWN`
   
   
+  
 ### Datenbank  
 Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 
@@ -366,7 +367,7 @@ erDiagram
     }
 
     USER ||--o{ ENTRY : contains
-    
+
 ```
 
 
@@ -395,7 +396,7 @@ classDiagram
 
     LoginApi <|-- EntryApi
     LoginApi <|-- UserApi
-```
+``` 
 
 ### Models & DTOs
 Diese Klassen definieren die Struktur der Benutzerdaten. Die Models dienen der internen Verarbeitung, während die DTOs verwendet werden, um Daten mit dem Server auszutauschen.
@@ -578,7 +579,7 @@ classDiagram
 
 ```
 
-#### Kategorien
+#### weitere Kategorien
 
 **Windows**: Diese Kategorie umfasst die Fensterklassen, die die Benutzeroberfläche der Anwendung darstellen und Benutzerinteraktionen verwalten.
 - `MainWindow` ist das Hauptfenster der Anwendung und verwaltet Benutzerinteraktionen und Anwendungslogik, wie z.B. das Laden von Benutzerdaten, Exportieren und Importieren von Einträgen, sowie die Handhabung von Benutzerinteraktionen.

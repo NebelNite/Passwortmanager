@@ -2,7 +2,8 @@
 export class LoginApi {
     
   static connectionString;
-  
+  static instance;
+
     constructor(connectionString) {
       this.connectionString = connectionString;
     }
@@ -12,9 +13,18 @@ export class LoginApi {
         return this.connectionString;
     }
 
+    static getInstance() {
+      
+      if (LoginApi.instance == null) {
+        
+        LoginApi.instance = new LoginApi('http://localhost:8080');
+      }
+
+      return LoginApi.instance;
+    }
 
     
-  static async getRequest(url) {
+  async getRequest(url) {
       
     const jsonData = JSON.stringify({ url });
 
@@ -37,7 +47,7 @@ export class LoginApi {
   }
     
     
-  static async postRequest(url, data) {
+  async postRequest(url, data) {
 
     const jsonData = JSON.stringify({data, url});
 

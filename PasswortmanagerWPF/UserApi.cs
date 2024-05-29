@@ -56,7 +56,7 @@ namespace PasswortmanagerWPF
 
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
-            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
+            userDto.masterKey = await instance.EncodeMasterKey(userDto.masterKey);
 
             HttpResponseMessage response = null;
 
@@ -80,7 +80,7 @@ namespace PasswortmanagerWPF
         }
 
 
-        public string EncodeMasterKey(string secret)
+        public async Task<string> EncodeMasterKey(string secret)
         {
             using (SHA512 sha512 = SHA512.Create())
             {
@@ -94,29 +94,35 @@ namespace PasswortmanagerWPF
 
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
-
-            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
-
+            
+            userDto.masterKey = await instance.EncodeMasterKey(userDto.masterKey);
             var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
-
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<UserModel>(await response.Content.ReadAsStringAsync());
         }
-
-
+        
 
 
 
         public async Task<UserModel> GetUserById(string id)
         {
+            try
+            {
+                var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
 
-            var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
+                response.EnsureSuccessStatusCode();
 
-            response.EnsureSuccessStatusCode();
-
-
-            return await response.Content.ReadAsAsync<UserModel>();
+                return await response.Content.ReadAsAsync<UserModel>();
+            }
+            catch (HttpRequestException httpEx)
+            {
+                throw new ApplicationException("Network error while fetching user", httpEx);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error fetching user", ex);
+            }
         }
 
 

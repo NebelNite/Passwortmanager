@@ -75,14 +75,14 @@ app.get('/Images/leftBack.png', (req, res) => {
 });
 
 
-app.post('/postToServer', (req, res) => {
+app.post('/postToServer',async (req, res) => {
     
     const obj = req.body;
 
     const data = obj.data;
     const url = obj.url;
 
-    axios.post(url, data)
+    await axios.post(url, data)
     .then(response => {
         console.log("Server:Response: "+ response.data);
         res.json({ message: response.data });
@@ -96,11 +96,11 @@ app.post('/postToServer', (req, res) => {
 });
 
 
-app.post('/getToServer', (req, res) => {
+app.post('/getToServer',async (req, res) => {
     
     const springUrl = req.body.url;
     
-    axios.get(springUrl, {})
+    await axios.get(springUrl, {})
     .then(response => {
       console.log("Server:Response: " + response);
       res.json({ message: response.data });

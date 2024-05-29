@@ -27,23 +27,8 @@ public class UserDTO {
         this.masterKey = userModel.getMasterKey();
     }
 
-    public UserDTO(String id, String username, List<EntryDTO> entries, String masterKey) {
-        this.id = id;
-        this.username = username;
-        this.entries = entries;
-        this.masterKey = masterKey;
-    }
 
-    public UserDTO(String username, String masterKey) {
-        this.username = username;
-        this.masterKey = masterKey;
-    }
-
-    public UserDTO(String username, List<EntryDTO> entries, String masterKey) {
-        this.username = username;
-        this.entries = entries;
-        this.masterKey = masterKey;
-    }
+    
 
     public UserModel toUserModel() {
         List<EntryModel> entries = new ArrayList<>();

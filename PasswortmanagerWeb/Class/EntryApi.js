@@ -33,10 +33,10 @@ export class EntryApi extends LoginApi {
             userDTO.entries = user.entries;
   
             
-            await LoginApi.postRequest(this.connectionString + "/entries/delete/" + selectedEntry.id, userDTO);
+            await LoginApi.getInstance().postRequest(this.connectionString + "/entries/delete/" + selectedEntry.id, userDTO);
             
-            UserApi.user = await UserApi.getUserById(UserApi.user.id);
-
+            UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
+            
 
         } catch (ex) {
             console.log(ex)
@@ -54,9 +54,9 @@ export class EntryApi extends LoginApi {
           entryDto = Encryption.encryptEntry(entryDto);
   
           
-          await LoginApi.postRequest(this.connectionString + "/entries/editEntry/" + userDTO.id, entryDto);
+          await LoginApi.getInstance().postRequest(this.connectionString + "/entries/editEntry/" + userDTO.id, entryDto);
           
-          UserApi.user = await UserApi.getUserById(UserApi.user.id);
+          UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
 
       } catch (ex) {
           console.log(ex)
@@ -74,12 +74,11 @@ export class EntryApi extends LoginApi {
           userDTO.masterKey = user.masterKey;
           userDTO.entries = user.entries;
 
-          
-          const userApi = UserApi.getInstance();
+        
 
-          await LoginApi.postRequest(this.connectionString + "/entries/addEntry/"+ user.id, entryDto);
+          await LoginApi.getInstance().postRequest(this.connectionString + "/entries/addEntry/"+ user.id, entryDto);
 
-          UserApi.user = await UserApi.getUserById(UserApi.user.id);
+          UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
 
           
       } catch (ex) {

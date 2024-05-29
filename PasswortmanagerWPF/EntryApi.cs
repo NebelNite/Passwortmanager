@@ -48,7 +48,7 @@ namespace PasswortmanagerWPF
 
 
 
-        public async void DeleteEntry(EntryModel selectedEntry)
+        public async Task DeleteEntry(EntryModel selectedEntry)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace PasswortmanagerWPF
 
 
 
-        public async void EditEntry(EntryDTO entryDto)
+        public async Task EditEntry(EntryDTO entryDto)
         {
 
             try
@@ -114,7 +114,7 @@ namespace PasswortmanagerWPF
 
 
 
-        public async void CreateEntry(EntryDTO entryDto)
+        public async Task CreateEntry(EntryDTO entryDto)
         {
             try
             {

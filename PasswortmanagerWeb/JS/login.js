@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   
-  function signUpButtonClick(event) {
+  async function signUpButtonClick(event) {
 
     
     const username = document.getElementById("usernameInput").value;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
 
 
-    UserApi.getInstance().createUser(userDTO)
+    await UserApi.getInstance().createUser(userDTO)
       .then(() => {
         console.log("SignUp successful!");
       })

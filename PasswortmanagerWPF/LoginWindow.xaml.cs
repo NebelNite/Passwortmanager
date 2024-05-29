@@ -36,7 +36,7 @@ namespace PasswortmanagerWPF
 
 
 
-        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        private async void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
 
             string username = SignUpUsername.Text;
@@ -65,7 +65,7 @@ namespace PasswortmanagerWPF
                 try
                 {
 
-                    userApi.CreateUserAsync(userDTO);
+                    await UserApi.GetInstance().CreateUserAsync(userDTO);
 
 
                 }
@@ -166,7 +166,7 @@ namespace PasswortmanagerWPF
 
 
                 UserModel user = await UserApi.GetInstance().AuthenticateUserAsync(userDTO);
-
+                
 
                 MainWindow mainWindow = new MainWindow(user);
                 mainWindow.Show();

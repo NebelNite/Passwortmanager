@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     UserApi.user = await JSON.parse(sessionStorage.getItem('user'));
     UserApi.aesKey = getAesKeyForUser(UserApi.user.username);
 
-    UserApi.user = await UserApi.getUserById(UserApi.user.id);
+    UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
     
     
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
         let fontSize = '18px';
 
-        let user  = await UserApi.getUserById(UserApi.user.id);
+        let user  = await UserApi.getInstance().getUserById(UserApi.user.id);
         const entries = user.entries;
 
         
@@ -399,7 +399,7 @@ Survey.StylesManager.applyTheme("bootstrap");
 $("#surveyElement").Survey({
     model: surveyModel,
 
-    onComplete: function (survey, options) {
+    onComplete: async function (survey, options) {
       const userInput = survey.data;
       let entryDTO = new EntryDTO();
       
@@ -418,7 +418,7 @@ $("#surveyElement").Survey({
 
 
         
-        EntryApi.getInstance().createEntry(Encryption.encryptEntry(entryDTO))
+        await EntryApi.getInstance().createEntry(Encryption.encryptEntry(entryDTO))
         .then(() => {
           fillTable();
         })
@@ -431,7 +431,7 @@ $("#surveyElement").Survey({
       }
       else{
 
-        EntryApi.getInstance().editEntry(entryDTO)
+        await EntryApi.getInstance().editEntry(entryDTO)
         .then(() => {
           fillTable();
         })
@@ -503,9 +503,9 @@ function editEntry() {
 }
 
 
-function deleteEntry() {
+async function deleteEntry() {
 
-  EntryApi.getInstance().deleteEntry(selectedEntry)
+  await EntryApi.getInstance().deleteEntry(selectedEntry)
   .then(() => {
     fillTable();
   })
@@ -513,31 +513,9 @@ function deleteEntry() {
     console.error('Error deleting entry:', error);
   });
   
-/*
-  EntryApi.GetInstance().deleteEntry(entry);
 
-  fillTable();*/
 }
-/*
-    function toggleEntryMenu() {
-      var entryMenu = document.getElementById('entry-menu');
-      if (entryMenu.style.display === 'block') {
-          entryMenu.style.display = 'none';
-      } else {
-          entryMenu.style.display = 'block';
-      }
-  }
 
-  function toggleFileMenu() {
-    var fileMenu = document.getElementById('file-menu');
-    if (fileMenu.style.display === 'block') {
-        fileMenu.style.display = 'none';
-    } else {
-        fileMenu.style.display = 'block';
-    }
-}
-  
-*/
 
     
     
