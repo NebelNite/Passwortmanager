@@ -50,7 +50,6 @@ public class UserService {
 
 
 
-    @Async
     public UserModel updateUser(UserModel userModel, Optional<EntryModel> entryModel) {
 
         Optional<UserModel> existingUser = userRepository.findById(userModel.getId());
@@ -80,7 +79,6 @@ public class UserService {
 
     }
 
-    @Async
     public UserModel createUser(UserModel user) {
         Optional<UserModel> existingUser = userRepository.findByUsername(user.getUsername());
 
@@ -98,7 +96,6 @@ public class UserService {
 
 
 
-    @Async
     public UserModel authenticateUserAsync(UserDTO userDto) {
 
         // Find user by username
@@ -120,7 +117,7 @@ public class UserService {
         return user;
     }
 
-    @Async
+
     public boolean compareHashedPasswords(String hashedPassword1, String hashedPassword2) {
         if (hashedPassword1 == null || hashedPassword2 == null) {
             throw new IllegalArgumentException("Both hashed passwords must not be null");

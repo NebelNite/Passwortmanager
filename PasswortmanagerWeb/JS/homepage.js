@@ -16,16 +16,18 @@ document.addEventListener('DOMContentLoaded',async () => {
 
     UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
     
-    
 
     const app = document.getElementById('app');
     const dataGrid = document.getElementById('data-grid');
     const menuItems = document.querySelectorAll('#menu li');
     const contextMenu = document.getElementById('context-menu');
     
+    const addEntryBtn = document.getElementById('addEntry');
     const editEntryBtn = document.getElementById('editEntry');
     const deleteEntryBtn = document.getElementById('deleteEntry');
-    const addEntryBtn = document.getElementById('addEntry');
+
+    const editEntryBtnContext = document.getElementById('context-editEntry');
+    const deleteEntryBtnContext = document.getElementById('context-deleteEntry');
 
     const entryButton = document.getElementById('entry-button');
     const fileButton = document.getElementById('file-button');
@@ -51,6 +53,8 @@ document.addEventListener('DOMContentLoaded',async () => {
     editEntryButton.addEventListener('click', editEntry);
     deleteEntryButton.addEventListener('click', deleteEntry);
 
+    deleteEntryBtnContext.addEventListener('click', deleteEntry);
+    editEntryBtnContext.addEventListener('click', editEntry);
 
     let addEntryClicked = false;
 
@@ -289,24 +293,7 @@ document.body.appendChild(contextMenu);
 contextMenu.style.left = `${event.clientX}px`;
 contextMenu.style.top = `${event.clientY}px`;
  
-// Add a click event listener to each context menu item
-const menuItems = contextMenu.querySelectorAll('li');
 
-menuItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    // Handle the click event
-    if (item.textContent === 'Generate Password') {
-      let generatedPassword = generatePassword();
-      
-      //passwordInput.value = generatedPassword;
-     
-    }
- 
-    // Remove the context menu
-    contextMenu.remove();
-  });
-});
- 
 // Prevent the right-click from selecting text
   document.body.addEventListener('mousedown', (event) => {
     if (event.button === 2) {
@@ -389,7 +376,8 @@ async function createSurveyAndEntry(entry)
       surveyModel.currentPage.getQuestionByName("username").value = entry.username;
       surveyModel.currentPage.getQuestionByName("password").value = entry.password;
       surveyModel.currentPage.getQuestionByName("url").value = entry.url;
-      surveyModel.currentPage.getQuestionByName("notes").value = entry.note
+      surveyModel.currentPage.getQuestionByName("notes").value = entry.notes;
+      
   }
 
 Survey.StylesManager.applyTheme("bootstrap");
@@ -413,11 +401,8 @@ $("#surveyElement").Survey({
 
       if(addEntryClicked)
       {
-        let newId = generateGuid();
-        entryDTO.id = newId;
+        entryDTO.id = generateGuid();
 
-
-        
         await EntryApi.getInstance().createEntry(Encryption.encryptEntry(entryDTO))
         .then(() => {
           fillTable();
@@ -495,10 +480,10 @@ $("#surveyElement").Survey({
 
 
 
-function editEntry() {
+async function editEntry() {
 
 
-  createSurveyAndEntry(selectedEntry);
+  await createSurveyAndEntry(selectedEntry);
   
 }
 
@@ -536,123 +521,12 @@ function getAesKeyForUser(username) {
   }
     
     
-    
-entryButton.addEventListener('click', function () {
 
-    //event.stopPropagation();
-    
-    entryMenu.classList.toggle('hidden');
-    
-    /*
-    if (!fileMenu.classList.contains('hidden')) {
-      fileMenu.classList.add('hidden');
-    }*/
-
-});
-
-
-
-fileButton.addEventListener('click', function () {
-  fileMenu.classList.toggle('hidden');
-
-  /*
-  if (!entryMenu.classList.contains('hidden')) {
-    entryMenu.classList.add('hidden');
-  }*/
-});
 
 
 
 
     
-
-
-        // Zeige das ContextMenu an der Mausposition an
-      const showContextMenu = (event, menuId) => {
-            
-            event.preventDefault();
-            const contextMenu = document.getElementById(menuId);
-
-            if (contextMenu.style.display === 'block') {
-              contextMenu.style.display = 'none';
-              return;
-            }
-            selectedEntry = event.target.closest('tr').entry;
-
-            contextMenu.style.display = 'block';
-            contextMenu.style.left = `${event.clientX}px`;
-            contextMenu.style.top = `${event.clientY}px`;
-        };
-        
-        const hideContextMenu = () => {
-            const contextMenus = document.querySelectorAll('.context-menu');
-            contextMenus.forEach(menu => menu.style.display = 'none');
-        };
-        
-        // Füge einen Listener für Klicks auf den DataGrid hinzu
-        dataGrid.addEventListener('contextmenu', event => showContextMenu(event, 'entry-menu'));
-        dataGrid.addEventListener('click', hideContextMenu);
-        
-
-        // Füge einen Listener für Klicks auf die Menüelemente hinzu
-        menuItems.forEach(item => item.addEventListener('click', hideContextMenu));
-        
-
-        const table = dataGrid.querySelector('table');
-        const tbody = table.querySelector('tbody');
-        /*
-        for (let i = 0; i < dataItems.length; i++) {
-            const item = dataItems[i];
-
-            const tr = document.createElement('tr');
-
-            for (const key in item) {
-                const td = document.createElement('td');
-                td.textContent = item[key];
-                tr.appendChild(td);
-            }
-
-            tbody.appendChild(tr);
-        }*/
-        
-
-        // Füge Daten an den DataGrid an
-        // table.dataset.dataSource = JSON.stringify(dataGridSource);
-        
-/*
-        // Behandle die Sortierung
-        const ths = table.querySelectorAll('thead th');
-        ths.forEach(th => th.addEventListener('click', () => {
-            const order = th.dataset.order === 'asc' ? 'desc' : 'asc';
-            th.dataset.order = order;
-
-            const sortedDataItems = Array.from(dataItems).sort((a, b) => {
-                if (order === 'asc') {
-                    return a[th.textContent.toLowerCase()] > b[th.textContent.toLowerCase()] ? 1 : -1;
-                } else {
-                    return a[th.textContent.toLowerCase()] < b[th.textContent.toLowerCase()] ? 1 : -1;
-                }
-            });
-
-            // Lösche die aktuellen Zeilen
-            tbody.innerHTML = '';
-
-            // Füge die sortierten Daten an den DataGrid an
-            for (let i = 0; i < sortedDataItems.length; i++) {
-                const item = sortedDataItems[i];
-
-                const tr = document.createElement('tr');
-
-                for (const key in item) {
-                    const td = document.createElement('td');
-                    td.textContent = item[key];
-                    tr.appendChild(td);
-                }
-
-                tbody.appendChild(tr);
-            }
-        }));*/
-    });
 
     
     function getAesKeyForUser(username) {
@@ -666,6 +540,64 @@ fileButton.addEventListener('click', function () {
     
     
       }
+
+
+
+
+      // Dropdown Menu Event Handling
+function toggleMenu(menu) {
+  menu.classList.toggle('hidden');
+}
+
+function hideMenu(menu) {
+  if (!menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
+  }
+}
+
+function hideAllMenus() {
+  const menus = document.querySelectorAll('.context-menu, .dropdown-menu');
+  menus.forEach(menu => menu.classList.add('hidden'));
+}
+
+entryButton.addEventListener('click', (event) => {
+  event.stopPropagation();
+  toggleMenu(entryMenu);
+  hideMenu(fileMenu);
+});
+
+fileButton.addEventListener('click', (event) => {
+  event.stopPropagation();
+  toggleMenu(fileMenu);
+  hideMenu(entryMenu);
+});
+
+document.addEventListener('click', hideAllMenus);
+menuItems.forEach(item => item.addEventListener('click', hideAllMenus));
+
+// Context Menu Event Handling
+dataGrid.addEventListener('contextmenu', (event) => {
+  event.preventDefault();
+  if (contextMenu.style.display === 'block') {
+    contextMenu.style.display = 'none';
+  } else {
+    hideAllMenus();
+    contextMenu.style.display = 'block';
+    contextMenu.style.left = `${event.clientX}px`;
+    contextMenu.style.top = `${event.clientY}px`;
+  }
+  selectedEntry = event.target.closest('tr')?.entry;
+});
+
+document.addEventListener('click', () => {
+  contextMenu.style.display = 'none';
+});
+
+
+
+
+
+    })
 
 
 

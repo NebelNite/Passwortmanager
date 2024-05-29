@@ -26,36 +26,34 @@ body {
 }
 
 #left-content {
-
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    overflow: auto;
-    z-index: 0;
-    height: 100%;
-    bottom: 0px;
-
-    opacity: 1;
-    overflow: hidden;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 
 #leftBackgroundImg{
 
-    background-repeat: no-repeat;
-    position: absolute;
-    left: -5%;
-    top: 38%;
-
-    height: 130%;
-    width: 40%;
-    transform: translateX(-27%) translateY(-25%);
-    position: 10% 50%;
-
-    
+  width: 100%;
+  height: 100%;
     background-image: url("../Images/leftBack.png");
     object-fit: cover;
 }
+
+@media (max-width: 768px) {
+  #left-content {
+      width: 100%;
+  }
+
+  #leftBackgroundImg {
+      width: 100%;
+      height: auto;
+  }
+}
+
 
 @media (max-height: 600px) {
   #leftBackgroundImg {

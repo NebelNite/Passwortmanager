@@ -27,7 +27,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+
     @PostMapping("/create")
     public ResponseEntity<UserModel> createUser(@RequestBody UserDTO userDto) {
 
@@ -56,7 +56,7 @@ public class UserController {
         UserModel user = userOptional.get();
         UserDTO userDto = new UserDTO(user);
 
-
+        
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
     

@@ -49,7 +49,6 @@ export class EntryApi extends LoginApi {
           const userDTO = new UserDTO();
           userDTO.id = user.id;
   
-          const userApi = UserApi.getInstance();
 
           entryDto = Encryption.encryptEntry(entryDto);
   
@@ -57,7 +56,7 @@ export class EntryApi extends LoginApi {
           await LoginApi.getInstance().postRequest(this.connectionString + "/entries/editEntry/" + userDTO.id, entryDto);
           
           UserApi.user = await UserApi.getInstance().getUserById(UserApi.user.id);
-
+          
       } catch (ex) {
           console.log(ex)
       }

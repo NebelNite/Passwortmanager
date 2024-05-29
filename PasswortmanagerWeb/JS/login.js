@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     userDTO.id = null;
       
-
-
+    
     await UserApi.getInstance().createUser(userDTO)
       .then(() => {
         console.log("SignUp successful!");
