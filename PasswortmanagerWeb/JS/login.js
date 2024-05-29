@@ -98,8 +98,8 @@ function getAesKeyForUser(username) {
     let masterKey = document.getElementById("usernameInput").value;
     let username = document.getElementById("masterKeyInput").value;
 
-    userDTO.masterKey= document.getElementById("usernameInput").value;
-    userDTO.username = document.getElementById("masterKeyInput").value;
+    userDTO.masterKey= masterKey
+    userDTO.username = username
     
     UserApi.aesKey = getAesKeyForUser(userDTO.username);
 
@@ -120,7 +120,9 @@ function getAesKeyForUser(username) {
       window.location.href = '../homepage';
 
     }
-
+    else {
+      alert("Authentication failed. Please check your credentials and try again.");
+  }
 
   }
   

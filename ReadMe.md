@@ -87,10 +87,44 @@ Das Projekt besteht aus folgenden Hauptkomponenten:
 
 ```mermaid
 graph TD;
-    B[API]
-    B -->| Speichert/Ruft ab| C[Datenbank]
-    E[Web-Client] -->|Kommuniziert mit| B
-    F[WPF-Client] -->|Kommuniziert mit| B
+    subgraph Server
+        A[Spring Boot Application]
+        A -->|Verarbeitet| G[Benutzerauthentifizierung]
+        A -->|Verarbeitet| H[Passwortverwaltung]
+        A -->|Verarbeitet| I[Datenspeicherung]
+        G -->|Verwendet| K[Spring Security]
+        H -->|Verwendet| L[Spring Data MongoDB]
+    end
+
+    subgraph MongoDB
+        J[(MongoDB-Datenbank)]
+    end
+
+    subgraph Web Client
+        M[HTML/CSS/JS]
+        M --> N[Encryption.js]
+        M --> O[LoginApi.js]
+        M --> P[EntryApi.js]
+        M --> Q[UserApi.js]
+        O -->|Sendet verschlüsselte Anmeldedaten| A
+        P -->|Ruft Methoden von| O
+        Q -->|Ruft Methoden von| O
+    end
+
+    subgraph WPF Client
+        R[C#/WPF]
+        R --> S[Encryption.cs]
+        R --> T[LoginApi.cs]
+        R --> U[EntryApi.cs]
+        R --> V[UserApi.cs]
+        T -->|Sendet verschlüsselte Anmeldedaten| A
+        U -->|Sendet/Empfängt verschlüsselte Eintragsdaten| A
+        V -->|Sendet verschlüsselte Benutzerdaten| A
+    end
+
+    A -->|Speichert/Abruft verschlüsselte Daten| J
+    M -->|Kommuniziert mit| A
+    R -->|Kommuniziert mit| A
 
 
 ```
@@ -117,11 +151,43 @@ Zusätzlich zur AES-Verschlüsselung wird der Masterkey, der für den Zugriff de
 
 ### Technologien
 
+#### Backend
+
 - **Spring Framework**: Verwendet für die Erstellung des RESTful Web Services und die Implementierung der Backend-Logik.
 - **Spring Boot**: Verwendet für die schnelle Entwicklung von Spring-Anwendungen und die Automatisierung des Konfigurationsprozesses.
+- **Spring Data JPA**: Datenzugriffsschicht zur einfachen Integration von JPA (Java Persistence API).
+- **Spring Security**: Sicherheitsschicht zur Authentifizierung und Autorisierung.
 - **MongoDB**: Als NoSQL-Datenbank verwendet, um die Benutzer- und Eintragsdaten persistent zu speichern.
+
 - **Java**: Verwendet als Programmiersprache für die Entwicklung der Serveranwendung.
+- **Maven**: Build- und Abhängigkeitsmanagement-Tool.
+
+#### Web Client
+
+- **Node.js**: JavaScript-Laufzeitumgebung zur Ausführung von serverseitigem Code.
+- **Express**: Webframework für Node.js, das zum Erstellen des RESTful API genutzt wird.
+- **Axios**: HTTP-Client zum Senden von HTTP-Anfragen.
+- **cors**: Middleware für Cross-Origin Resource Sharing, um die Kommunikation zwischen Frontend und Backend zu ermöglichen.
+- **CryptoJS**: Bibliothek für Kryptographie, um Daten zu verschlüsseln und zu entschlüsseln.
+- **express-session**: Sitzungsmanagement zur Verwaltung von Benutzersitzungen.
+- **nodemon**: Werkzeug zur automatischen Neustart von Node.js-Anwendungen bei Dateiänderungen.
+
+#### Desktop Client
+
+- **WPF (Windows Presentation Foundation)**: Framework zur Erstellung von Desktop-Anwendungen für Windows.
+- **C#**: Programmiersprache zur Entwicklung des Desktop-Clients.
+- **Newtonsoft.Json**: JSON-Framework für .NET zur Serialisierung und Deserialisierung von JSON-Daten.
+- **Microsoft.Extensions.Configuration**: Konfigurationsverwaltung für .NET-Anwendungen.
+- **Microsoft.Extensions.DependencyInjection**: Abhängigkeitsinjektion für .NET-Anwendungen.
+- **PasswordGenerator**: Bibliothek zur Erstellung von sicheren Passwörtern.
+- **Credential Management**: Verwendet zur sicheren Verwaltung der AES-Keys. Diese Komponente speichert und verwaltet den AES-Keys eines Users unter seinem Username sicher und verschlüsselt.
+
+
+#### Dokumentation
+
 - **Markdown**: Zur Dokumentation und Formatierung der Projektdokumentation verwendet.
+- **Mermaid**: Bibliothek zur Erstellung und Darstellung von Diagrammen und Grafiken innerhalb der Markdown-Dokumentation.
+
 
 
 ## <u>Installation</u>
@@ -177,6 +243,7 @@ graph TD;
 - `/authenticate`: Ein POST-Endpunkt, der für die Benutzeranmeldung verwendet wird. Der Client sendet Anmeldeinformationen an diesen Endpunkt, und der Server überprüft die Gültigkeit dieser Informationen. Wenn die Anmeldeinformationen korrekt sind und in der DB enthalten sind, wird der Benutzer angemeldet und erhält Zugriff auf die Daten.
 
 ```mermaid
+
 graph TD;
     A[Benutzer] -->|Gibt Benutzername und Master-Key ein| B[Passwortmanager]
     B -->|Überprüft Anmeldeinformationen| C{Anmeldeinformationen korrekt?}
@@ -214,11 +281,13 @@ graph TD;
 - `/addEntry/{userId}`: Ein POST-Endpunkt, der verwendet wird, um einen neuen Eintrag für einen bestimmten Benutzer hinzuzufügen. Der Client sendet Eintragsdaten an diesen Endpunkt, und der Server fügt dann den Eintrag zur Liste der Einträge des Benutzers hinzu.
   
 ```mermaid
+
 graph TD;
     A[Benutzer] -->|Erstellt neuen Eintrag| B[Passwortmanager]
     B -->|Speichert Eintrag in der Datenbank| C{Speichern erfolgreich?}
     C -- Ja --> D[Eintrag hinzugefügt]
     C -- Nein --> E[Eintrag nicht hinzugefügt]
+    
 ```
 
 ##### deleteEntry
@@ -271,6 +340,33 @@ Die Anwendung verwendet MongoDB als Datenbank und speichert folgende Klassen:
 - **password**: Das Passwort für den Eintrag.
 - **url**: Die URL, die mit diesem Eintrag verknüpft ist.
 - **notes**: Zusätzliche Notizen oder Informationen zu diesem Eintrag.
+
+#### ER-Diagramm
+
+Dieses ER-Diagramm zeigt die Datenbankstruktur des Passwortmanagers. Es gibt zwei Entitäten: Benutzer (USER) und Eintrag (ENTRY). Jeder Benutzer kann mehrere Einträge haben, aber jeder Eintrag gehört nur zu einem Benutzer.
+
+```mermaid
+
+erDiagram
+    USER {
+        String id
+        String username
+        String masterKey
+    }
+    
+    ENTRY {
+        String id
+        String title
+        String username
+        String password
+        String notes
+        String url
+        String userId
+    }
+
+    USER ||--o{ ENTRY : contains
+
+```
 
 
 # Clients
@@ -398,7 +494,7 @@ classDiagram
     LoginApi <|-- UserApi
     LoginApi <|-- EntryApi
     LoginApi --> APICategory
-
+    
     %% Category: Encryption
     class Encryption {
         +static EntryDTO EncryptEntry(EntryDTO entry)
@@ -489,6 +585,75 @@ classDiagram
 - `LoginWindow` verwaltet die Benutzeranmeldung und -registrierung und bietet Methoden zur Verwaltung von AES-Schlüsseln und Passwortvalidierung.
 - `PasswordInputWindow` und `PasswordGeneratorWindow` bieten spezifische Funktionalitäten zur Passwortverwaltung, einschließlich der Eingabe und Generierung von Passwörtern.
 
+
+#### Aktivitätsdiagramm
+
+Dieses Aktivitätsdiagramm beschreibt den Ablauf des Passwortmanagers. Ein Benutzer öffnet die Anwendung und kann sich entweder registrieren oder anmelden. Bei der Registrierung werden Benutzerdaten verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Nach erfolgreicher Registrierung erfolgt die Anmeldung durch Übermittlung und Validierung der Anmeldedaten. Nach der Anmeldung kann der Benutzer Passwörter verwalten, indem er Einträge erstellt, bearbeitet oder löscht. Die Daten werden verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Die Aktivität endet mit dem Schließen der Anwendung oder dem Ausloggen.
+
+
+
+``` mermaid
+graph TD;
+    Start -->|Benutzer öffnet Anwendung| Open[Anwendung geöffnet]
+
+    subgraph Registrierung
+        Open -->|Benutzer navigiert zur Registrierungsseite| RegNavigate[Registrierungsseite geöffnet]
+        RegNavigate -->|Benutzer gibt Registrierungsdaten ein| RegInput[Registrierungsdaten eingegeben]
+        RegInput -->|Daten werden verschlüsselt| RegEncrypt[Daten verschlüsselt]
+        RegEncrypt -->|Verschlüsselte Daten werden an Server gesendet| RegSend[Gesendete Daten]
+        RegSend -->|Server validiert Registrierungsdaten| RegValidate[Server validiert Daten]
+        RegValidate -->|Benutzerdaten werden in der Datenbank gespeichert| RegStore[Benutzerdaten gespeichert]
+        RegStore -->|Erfolgsmeldung an Benutzer| RegSuccess[Registrierung erfolgreich]
+    end
+
+    subgraph Anmeldung
+        Open -->|Benutzer navigiert zur Anmeldeseite| LoginNavigate[Anmeldeseite geöffnet]
+        LoginNavigate -->|Benutzer gibt Anmeldedaten ein| LoginInput[Anmeldedaten eingegeben]
+        LoginInput -->|Daten werden verschlüsselt| LoginEncrypt[Daten verschlüsselt]
+        LoginEncrypt -->|Verschlüsselte Daten werden an Server gesendet| LoginSend[Gesendete Daten]
+        LoginSend -->|Server validiert Anmeldedaten| LoginValidate[Server validiert Daten]
+        LoginValidate -->| Erfolgreiche Anmeldung| LoginSuccess[Anmeldung erfolgreich]
+    end
+
+    subgraph Passwortverwaltung
+        LoginSuccess -->|Benutzer navigiert zur Eintragsseite| EntryNavigate[Eintragsseite geöffnet]
+        EntryNavigate -->|Benutzer erstellt neuen Eintrag| CreateEntry[Neuer Eintrag]
+        CreateEntry -->|Benutzer gibt Eintragsdaten ein| EntryInput[Eintragsdaten eingegeben]
+        EntryInput -->|Daten werden verschlüsselt| EntryEncrypt[Daten verschlüsselt]
+        EntryEncrypt -->|Verschlüsselte Daten werden an Server gesendet| EntrySend[Gesendete Daten]
+        EntrySend -->|Server validiert Eintragsdaten| EntryValidate[Server validiert Daten]
+        EntryValidate -->|Eintrag wird in der Datenbank gespeichert| EntryStore[Eintrag gespeichert]
+        EntryStore -->| Eintrag erfolgreich erstellt | EntrySuccess[Eintrag erfolgreich erstellt]
+
+        EntrySuccess -->|Benutzer lädt Einträge| LoadEntries[Einträge laden]
+        LoadEntries -->|Server lädt Einträge aus der Datenbank| LoadFromDB[Einträge aus DB laden]
+        LoadFromDB -->|Verschlüsselte Einträge werden an Client gesendet| SendToClient[Gesendete Einträge]
+        SendToClient -->|Client entschlüsselt Einträge| DecryptEntries[Einträge entschlüsseln]
+        DecryptEntries -->|Einträge werden dem Benutzer angezeigt| DisplayEntries[Einträge anzeigen]
+
+        DisplayEntries -->|Benutzer bearbeitet Eintrag| EditEntry[Eintrag bearbeiten]
+        EditEntry -->|Benutzer gibt neue Eintragsdaten ein| EditInput[Neue Eintragsdaten]
+        EditInput -->|Daten werden verschlüsselt| EditEncrypt[Daten verschlüsselt]
+        EditEncrypt -->|Verschlüsselte Daten werden an Server gesendet| EditSend[Gesendete Daten]
+        EditSend -->|Server validiert Änderungen| EditValidate[Server validiert Änderungen]
+        EditValidate -->|Änderungen werden in der Datenbank gespeichert| EditStore[Änderungen gespeichert]
+        EditStore -->|erfolgreich bearbeitet| EditSuccess[Eintrag erfolgreich bearbeitet]
+
+        DisplayEntries -->|Benutzer löscht Eintrag| DeleteEntry[Eintrag löschen]
+        DeleteEntry -->|Löschanfrage wird an Server gesendet| DeleteSend[Gesendete Löschanfrage]
+        DeleteSend -->|Server validiert Löschanfrage| DeleteValidate[Server validiert Löschanfrage]
+        DeleteValidate -->|Eintrag wird aus der Datenbank gelöscht| DeleteStore[Eintrag gelöscht]
+        DeleteStore -->| erfolgreich gelöscht| DeleteSuccess[Eintrag erfolgreich gelöscht]
+    end
+
+    RegSuccess -->|Benutzer navigiert zur Anmeldeseite| LoginNavigate
+    LoginSuccess --> EntryNavigate
+    EntrySuccess --> LoadEntries
+    EditSuccess --> LoadEntries
+    DeleteSuccess --> LoadEntries
+    End[Ende]
+
+``` 
 
 
 ### Wichtige Methoden
@@ -746,5 +911,4 @@ Eine weitere Möglichkeit zur Stärkung der Sicherheit des Passwortmanagers best
 
 #### Autofill
 Eine nützliche Erweiterung wäre die Implementierung einer Autofill-Funktion, die es ermöglicht, gespeicherte Zugangsdaten automatisch in Anmeldeformulare einzutragen. 
-
 

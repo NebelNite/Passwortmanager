@@ -83,6 +83,7 @@ public class UserService {
     public UserModel createUser(UserModel user) {
 
         Optional<UserModel> existingUser = userRepository.findByUsername(user.getUsername());
+
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Benutzername bereits vergeben");
         }

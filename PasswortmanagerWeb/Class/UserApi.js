@@ -1,8 +1,4 @@
-import { EntryApi } from "../Class/EntryApi.js";
-import { EntryDTO } from "../Class/EntryDTO.js";
-import { EntryModel } from "../Class/EntryModel.js";
 import { LoginApi } from "../Class/LoginApi.js";
-import { UserDTO } from "../Class/UserDTO.js";
 import { UserModel } from "../Class/UserModel.js";
 
 
@@ -54,13 +50,16 @@ export class UserApi extends LoginApi {
     
     encodeMasterKey(secret) {
       
-      var hash = CryptoJS.SHA512(secret).toString();
+      var hash = CryptoJS.SHA512(secret).toString(CryptoJS.enc.Hex);
+      //var hash = CryptoJS.SHA512(secret).toString();
       return hash.toLowerCase();
     }
 
     
     async authenticateUser(userDto) {
+
       userDto.masterKey = this.encodeMasterKey(userDto.masterKey);
+      
       const user = await LoginApi.postRequest(this.connectionString + "/users/authenticate", userDto);
       return user;
 
