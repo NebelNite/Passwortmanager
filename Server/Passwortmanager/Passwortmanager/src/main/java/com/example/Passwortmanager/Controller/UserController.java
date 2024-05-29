@@ -56,7 +56,7 @@ public class UserController {
         UserModel user = userOptional.get();
         UserDTO userDto = new UserDTO(user);
 
-        
+
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
     

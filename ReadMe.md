@@ -2,62 +2,67 @@
 
 
 ## Inhaltsverzeichnis
-- [Passwortmanager](#passwortmanager)
-  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
-  - [Einführung](#einführung)
-    - [Zweck des Passwortmanagers](#zweck-des-passwortmanagers)
-    - [Motivation](#motivation)
-    - [Bestandteile](#bestandteile)
-  - [Softwarestruktur](#softwarestruktur)
-    - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
-    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung)
-    - [Technologien](#technologien)
-  - [Installation](#installation)
-  - [Server](#server)
-    - [Spring-Boot](#spring-boot)
-    - [API](#api)
-      - [Routen](#routen)
-        - [**UserController** (`/users`):](#usercontroller-users)
+
+- [Einführung](#einführung)
+  - [Zweck des Passwortmanagers](#zweck-des-passwortmanagers)
+  - [Motivation](#motivation)
+  - [Bestandteile](#bestandteile)
+- [Softwarestruktur](#softwarestruktur)
+  - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
+  - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung)
+  - [Technologien](#technologien)
+    - [Backend](#backend)
+    - [Web Client](#web-client)
+    - [Desktop Client](#desktop-client)
+    - [Dokumentation](#dokumentation)
+- [Installation](#installation)
+- [Server](#server)
+  - [Spring-Boot](#spring-boot)
+  - [API](#api)
+    - [Routen](#routen)
+      - [UserController](#usercontroller-users)
         - [Create](#create)
         - [Authenticate](#authenticate)
-        - [Id](#id)
-        - [getUserByUsernameAndMasterKey](#getuserbyusernameandmasterkey)
-        - [**EntryController** (`/entries`):](#entrycontroller-entries)
-        - [addEntry](#addentry)
-        - [deleteEntry](#deleteentry)
-        - [editEntry](#editentry)
-      - [Actuator](#actuator)
-    - [Datenbank](#datenbank)
-      - [Benutzer (UserModel)](#benutzer-usermodel)
-      - [Eintrag (EntryModel)](#eintrag-entrymodel)
+        - [GetUserById](#getuserbyid)
+      - [EntryController](#entrycontroller-entries)
+        - [AddEntry](#addentry)
+        - [DeleteEntry](#deleteentry)
+        - [EditEntry](#editentry)
+    - [Actuator](#actuator)
+  - [Datenbank](#datenbank)
+    - [Benutzer (UserModel)](#benutzer-usermodel)
+    - [Eintrag (EntryModel)](#eintrag-entrymodel)
+    - [ER-Diagramm](#er-diagramm)
 - [Clients](#clients)
   - [Wichtige Klassen](#wichtige-klassen)
     - [API](#api-1)
-    - [Models \& DTOs](#models--dtos)
+    - [Models & DTOs](#models--dtos)
     - [Encryption](#encryption)
-    - [Diagramm](#diagramm)
-  - [WPF-Application](#wpf-application)
-    - [Wichtige Methoden](#wichtige-methoden)
-      - [UserApi](#userapi)
-        - [CreateUserAsync:](#createuserasync)
-        - [AuthenticateUserAsync](#authenticateuserasync)
-        - [GetUserById](#getuserbyid)
-      - [EntryApi](#entryapi)
-        - [CreateEntry](#createentry)
-        - [EditEntry](#editentry-1)
-        - [DeleteEntry](#deleteentry-1)
-  - [Web-Application](#web-application)
-    - [Einführung](#einführung-1)
-    - [Technologien](#technologien-1)
-    - [Probleme](#probleme)
-    - [NodeJS Config](#nodejs-config)
-    - [SpringBoot Config](#springboot-config)
-  - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
-    - [Zusammenfassung](#zusammenfassung)
-    - [Ausblick](#ausblick)
-      - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
-      - [Passwortrichtlinien](#passwortrichtlinien)
-      - [Autofill](#autofill)
+- [WPF-Application](#wpf-application)
+  - [Klassendiagram](#klassendiagram)
+    - [weitere Kategorien](#weitere-kategorien)
+  - [Aktivitätsdiagramm](#aktivitätsdiagramm)
+  - [Wichtige Methoden](#wichtige-methoden)
+    - [UserApi](#userapi)
+      - [CreateUserAsync](#createuserasync)
+      - [AuthenticateUserAsync](#authenticateuserasync)
+      - [GetUserById](#getuserbyid)
+    - [EntryApi](#entryapi)
+      - [CreateEntry](#createentry)
+      - [EditEntry](#editentry)
+      - [DeleteEntry](#deleteentry)
+- [Web-Application](#web-application)
+  - [Einführung](#einführung-1)
+  - [NodeJS](#nodejs)
+  - [Probleme](#probleme)
+  - [NodeJS Config](#nodejs-config)
+  - [SpringBoot Config](#springboot-config)
+- [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
+  - [Zusammenfassung](#zusammenfassung)
+  - [Ausblick](#ausblick)
+    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
+    - [Passwortrichtlinien](#passwortrichtlinien)
+    - [Autofill](#autofill)
 
 
 
@@ -254,7 +259,7 @@ graph TD;
     F --> G[Fehlermeldung anzeigen]
 ```
 
-##### Id
+##### GetUserById
 - `/{id}`: Ein GET-Endpunkt, der verwendet wird, um Benutzerdetails anhand der Benutzer-ID abzurufen. Der Client kann die Benutzer-ID als Teil der URL bereitstellen, und der Server gibt dann die Details des entsprechenden Benutzers zurück.
 
 ```mermaid
@@ -267,7 +272,7 @@ graph TD;
 
 ##### **EntryController** (`/entries`):
 
-##### addEntry
+##### AddEntry
 - `/addEntry/{userId}`: Ein POST-Endpunkt, der verwendet wird, um einen neuen Eintrag für einen bestimmten Benutzer hinzuzufügen. Der Client sendet Eintragsdaten an diesen Endpunkt, und der Server fügt dann den Eintrag zur Liste der Einträge des Benutzers hinzu.
   
 ```mermaid
@@ -280,7 +285,7 @@ graph TD;
     
 ```
 
-##### deleteEntry
+##### DeleteEntry
 - `/delete/{id}`: Ein POST-Endpunkt, der verwendet wird, um einen Eintrag anhand seiner ID zu löschen. Der Client sendet die ID des zu löschenden Eintrags an diesen Endpunkt, und der Server löscht dann den Eintrag aus der DB.
 
 ```mermaid
@@ -291,7 +296,7 @@ graph TD;
     C -- Nein --> E[Fehlermeldung anzeigen]
 ```
 
-##### editEntry
+##### EditEntry
 - `/editEntry/{id}`: Ein POST-Endpunkt, der verwendet wird, um einen Eintrag anhand seiner ID zu bearbeiten. Der Client sendet aktualisierte Eintragsdaten an diesen Endpunkt, und der Server aktualisiert dann die entsprechenden Eintragsdetails in der DB.
 
 ```mermaid
@@ -340,7 +345,7 @@ Dieses ER-Diagramm zeigt die Datenbankstruktur des Passwortmanagers. Es gibt zwe
 
 erDiagram
     USER {
-        String id
+        ObjectId id
         String username
         String masterKey
     }
@@ -568,7 +573,7 @@ classDiagram
 
 ```
 
-#### weitere Kategorien
+#### weitere Kategorie
 
 **Windows**: Diese Kategorie umfasst die Fensterklassen, die die Benutzeroberfläche der Anwendung darstellen und Benutzerinteraktionen verwalten.
 - `MainWindow` ist das Hauptfenster der Anwendung und verwaltet Benutzerinteraktionen und Anwendungslogik, wie z.B. das Laden von Benutzerdaten, Exportieren und Importieren von Einträgen, sowie die Handhabung von Benutzerinteraktionen.
@@ -584,6 +589,7 @@ Dieses Aktivitätsdiagramm beschreibt den Ablauf des Passwortmanagers. Ein Benut
 
 
 ``` mermaid
+
 graph TD;
     Start -->|Benutzer öffnet Anwendung| Open[Anwendung geöffnet]
 
@@ -642,7 +648,8 @@ graph TD;
     EntrySuccess --> LoadEntries
     EditSuccess --> LoadEntries
     DeleteSuccess --> LoadEntries
-    End[Ende]
+    LoadEntries --> Close[Anwendung schließen]
+    Close[Anwendung schließen] --> End[Ende]
 
 ``` 
 
@@ -658,7 +665,7 @@ Wenn der Server einen Erfolgstatus zurückgibt, wird der User über die erfolgre
 ``` csharp
         public async Task<UserModel> CreateUserAsync(UserDTO userDto)
         {
-            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
+            userDto.masterKey = await instance.EncodeMasterKey(userDto.masterKey);
 
             HttpResponseMessage response = null;
 
@@ -666,9 +673,10 @@ Wenn der Server einen Erfolgstatus zurückgibt, wird der User über die erfolgre
             {
                 response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/create", userDto);
                 response.EnsureSuccessStatusCode();
-                
+
 
                 MessageBox.Show("Benutzer erfolgreich erstellt! " + Char.ConvertFromUtf32(0x1F480));
+
             }
             catch (Exception ex)
             {
@@ -690,9 +698,8 @@ Nachdem die Antwort des Servers empfangen wurde und ein erfolgreicher Statuscode
 ```csharp
         public async Task<UserModel> AuthenticateUserAsync(UserDTO userDto)
         {
-
-            userDto.masterKey = EncodeMasterKey(userDto.masterKey);
-
+            
+            userDto.masterKey = await instance.EncodeMasterKey(userDto.masterKey);
             var response = await GetHttpClient().PostAsJsonAsync(GetConnectionString() + "/users/authenticate", userDto);
             response.EnsureSuccessStatusCode();
 
@@ -707,12 +714,22 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 ```csharp
         public async Task<UserModel> GetUserById(string id)
         {
+            try
+            {
+                var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
 
-            var response = await GetHttpClient().GetAsync(GetConnectionString() + ("/users/" + id));
-            response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
 
-
-            return await response.Content.ReadAsAsync<UserModel>();
+                return await response.Content.ReadAsAsync<UserModel>();
+            }
+            catch (HttpRequestException httpEx)
+            {
+                throw new ApplicationException("Network error while fetching user", httpEx);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("User not found", ex);
+            }
         }
 ```
 
@@ -723,7 +740,7 @@ Diese Methode ruft einen Benutzer anhand seiner ID vom Server ab. Dazu wird eine
 Die Methode CreateEntry dient dazu, einen neuen Eintrag für einen Benutzer zu erstellen. Sie verschlüsselt die Eintragsdaten und sendet sie an den Server, um sie in der Datenbank zu speichern. Wenn die Erstellung nicht erfolgreich war, wird dies dem User mitgeteilt.
 
 ```csharp
-        public async void CreateEntry(EntryDTO entryDto)
+        public async Task CreateEntry(EntryDTO entryDto)
         {
             try
             {
@@ -760,7 +777,7 @@ Die Methode CreateEntry dient dazu, einen neuen Eintrag für einen Benutzer zu e
 Diese Methode folgt der seblen funktionsweise wie die Funktion CreateEntry. Der Hauptunterschied liegt darin, dass der Server mit den entgegengenommenen Daten keinen neuen Entry erstellt, sondern nach dem Entry mit jener ID sucht, und diesen aktualisiert.
 
 ```csharp
-        public async void EditEntry(EntryDTO entryDto)
+        public async Task EditEntry(EntryDTO entryDto)
         {
 
             try
@@ -781,7 +798,7 @@ Diese Methode folgt der seblen funktionsweise wie die Funktion CreateEntry. Der 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Creating/Editing Entry failed!");
+                MessageBox.Show("Editing Entry failed!");
             }
 
         }
@@ -793,7 +810,7 @@ Die Methode DeleteEntry dient dazu, einen ausgewählten Eintrag eines Benutzers 
 
 
 ```csharp
-        public async void DeleteEntry(EntryModel selectedEntry)
+        public async Task DeleteEntry(EntryModel selectedEntry)
         {
             try
             {
@@ -835,7 +852,7 @@ Die Methode DeleteEntry dient dazu, einen ausgewählten Eintrag eines Benutzers 
 ### Einführung
 Die Web-Anwendung des Passwortmanagers bietet Benutzern die Möglichkeit, von verschiedenen Plattformen aus auf ihre gespeicherten Passwörter zuzugreifen und sie zu verwalten.
 
-### Technologien
+### NodeJS
 Die Web-Anwendung wird mithilfe von `Node.js` entwickelt, was die  die Ausführung von JavaScript-Code auf dem Server ermöglicht und eine Vielzahl von Modulen und Tools anbietet, um die Entwicklung zu erleichtern. 
 
 
@@ -902,4 +919,5 @@ Eine weitere Möglichkeit zur Stärkung der Sicherheit des Passwortmanagers best
 
 #### Autofill
 Eine nützliche Erweiterung wäre die Implementierung einer Autofill-Funktion, die es ermöglicht, gespeicherte Zugangsdaten automatisch in Anmeldeformulare einzutragen. 
+
 
