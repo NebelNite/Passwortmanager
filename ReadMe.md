@@ -309,7 +309,7 @@ Diese Klassen definieren die Struktur der Benutzerdaten. Die Models dienen der i
 ```
 
 ### Encryption
-Diese abstrakte Klasse enthält statische Methoden deren einzige Aufgabe darin besteht, sensible Daten zu verschlüsseln und entschlüsseln.
+Diese abstrakte Klasse enthält statische Methoden deren einzige Aufgabe darin besteht, sensible Daten mittels AES zu verschlüsseln und entschlüsseln.
 
 ```
 - Encryption.js
@@ -321,7 +321,6 @@ Diese abstrakte Klasse enthält statische Methoden deren einzige Aufgabe darin b
 ### Klassendiagram
 In diesem Abschnitt ist das Klassendiagramm für die WPF-Anwendung des Passwortmanagers zu sehen. Das Diagramm visualisiert die Struktur der Anwendung, sowie deren Beziehungen untereinander.
 Die Anwendung ist in fünf Hauptkategorien unterteilt: Model, DTO, API, Window und Encryption.
-
 
 
 ```mermaid
