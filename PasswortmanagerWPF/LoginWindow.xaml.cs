@@ -22,9 +22,7 @@ using CredentialManagement;
 
 namespace PasswortmanagerWPF
 {
-    /// <summary>
-    /// Interaktionslogik für LoginWindow.xaml
-    /// </summary>
+
     public partial class LoginWindow : Window
     {
         public LoginWindow()
@@ -84,13 +82,11 @@ namespace PasswortmanagerWPF
 
         private void SetAesKeyForUser(string username)
         {
-            // Generate a new AES key
             Aes aes = Aes.Create();
             aes.GenerateKey();
 
             byte[] aesKey = aes.Key;
 
-            // Convert the AES key to a base64 string
             string aesKeyBase64 = Convert.ToBase64String(aesKey);
 
 
@@ -121,8 +117,6 @@ namespace PasswortmanagerWPF
                 string aesKeyBase64 = credential.Password;
                 byte[] aesKey = Convert.FromBase64String(aesKeyBase64);
 
-                // Verwende den AES-Schlüssel für weitere Operationen
-                // In diesem Beispiel geben wir den Schlüssel einfach aus
 
                 return aesKey;
             }
@@ -188,7 +182,7 @@ namespace PasswortmanagerWPF
             string nonSpecialCharacters = @"[^A-Za-z0-9]";
             Regex regex = new Regex(nonSpecialCharacters);
 
-            /*
+            
             if (masterkey.Length < 10)
             {
                 output += "At least: 10 characters" + Environment.NewLine;
@@ -198,7 +192,7 @@ namespace PasswortmanagerWPF
             {
                 output += "At least: 1 special character" + Environment.NewLine;
             }
-            */
+            
             return output;
 
         }

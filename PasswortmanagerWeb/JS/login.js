@@ -9,12 +9,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function isValidPassword(masterkey) {
     let output = "";
-    const nonSpecialCharacters = /[^A-Za-z0-9]/;
 
-    return output;
+    if (masterkey.length < 8) {
+      output += "Password must be at least 8 characters long.\n";
+    }
+    if (!/[A-Z]/.test(masterkey)) {
+        output += "Password must contain at least one uppercase letter.\n";
+    }
+    if (!/[a-z]/.test(masterkey)) {
+        output += "Password must contain at least one lowercase letter.\n";
+    }
+    if (!/[0-9]/.test(masterkey)) {
+        output += "Password must contain at least one digit.\n";
+    }
+    if (!/[^A-Za-z0-9]/.test(masterkey)) {
+        output += "Password must contain at least one special character.\n";
+    }
+
+   return output;
   }
-
-
+  
   
   async function signUpButtonClick(event) {
 
@@ -28,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!aesKeyExistsForUser(username)) {
         setAesKeyForUser(username);
         UserApi.aesKey = getAesKeyForUser(username);
+    }
+    else{
+      alert(msg);
     }
 
     const userDTO = new UserDTO();

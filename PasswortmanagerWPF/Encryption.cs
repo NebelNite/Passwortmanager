@@ -83,7 +83,6 @@ namespace PasswortmanagerWPF
                 }
                 else
                 {
-                    //aes.Key = aesKey;
                     aes.Key = UserApi.aesKey;
                 }
 
@@ -119,7 +118,8 @@ namespace PasswortmanagerWPF
 
                 aes.Mode = CipherMode.ECB;
 
-                // Decrypt the message
+
+                // Entschlüssele die Nachricht
                 ICryptoTransform decryptor = aes.CreateDecryptor();
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
 
@@ -138,7 +138,6 @@ namespace PasswortmanagerWPF
             {
                 UserModel userModel = (UserModel)user;
 
-                //userModel.masterKey = EncryptMessage(userModel.masterKey);
                 userModel.username = EncryptMessage(userModel.username);
 
                 foreach (EntryModel entry in userModel.entries)
@@ -185,7 +184,6 @@ namespace PasswortmanagerWPF
             {
                 UserModel userModel = (UserModel)user;
 
-                //userModel.masterKey = DecryptMessage(userModel.masterKey);
                 userModel.username = DecryptMessage(userModel.username);
 
                 foreach (EntryModel entry in userModel.entries)
@@ -203,7 +201,6 @@ namespace PasswortmanagerWPF
             {
                 UserDTO userDTO = (UserDTO)user;
 
-                //userDTO.masterKey = DecryptMessage(userDTO.masterKey);
                 userDTO.username = DecryptMessage(userDTO.username);
 
                 foreach (EntryModel entry in userDTO.entries)
