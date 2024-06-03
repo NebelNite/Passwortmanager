@@ -10,7 +10,6 @@ namespace PasswortmanagerWPF
     internal abstract class Encryption
     {
 
-
         public static EntryDTO EncryptEntry(EntryDTO entry)
         {
             entry.notes = EncryptMessage(entry.notes);

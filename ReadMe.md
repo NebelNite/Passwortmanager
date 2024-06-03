@@ -3,66 +3,68 @@
 
 ## Inhaltsverzeichnis
 
-- [Einführung](#einführung)
-  - [Zweck des Passwortmanagers](#zweck-des-passwortmanagers)
-  - [Motivation](#motivation)
-  - [Bestandteile](#bestandteile)
-- [Softwarestruktur](#softwarestruktur)
-  - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
-  - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung)
-  - [Technologien](#technologien)
-    - [Backend](#backend)
-    - [Web Client](#web-client)
-    - [Desktop Client](#desktop-client)
-    - [Dokumentation](#dokumentation)
-- [Installation](#installation)
-- [Server](#server)
-  - [Spring-Boot](#spring-boot)
-  - [API](#api)
-    - [Routen](#routen)
-      - [UserController](#usercontroller-users)
+- [Passwortmanager](#passwortmanager)
+  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Einführung](#einführung)
+    - [Zweck des Passwortmanagers](#zweck-des-passwortmanagers)
+    - [Motivation](#motivation)
+    - [Bestandteile](#bestandteile)
+  - [Softwarestruktur](#softwarestruktur)
+    - [Funktionalitäten des Passwortmanagers](#funktionalitäten-des-passwortmanagers)
+    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung)
+    - [Technologien](#technologien)
+      - [Backend](#backend)
+      - [Web Client](#web-client)
+      - [Desktop Client](#desktop-client)
+      - [Dokumentation](#dokumentation)
+  - [Installation](#installation)
+  - [Server](#server)
+    - [Spring-Boot](#spring-boot)
+    - [API](#api)
+      - [Routen](#routen)
+        - [**UserController** (`/users`):](#usercontroller-users)
         - [Create](#create)
         - [Authenticate](#authenticate)
         - [GetUserById](#getuserbyid)
-      - [EntryController](#entrycontroller-entries)
+        - [**EntryController** (`/entries`):](#entrycontroller-entries)
         - [AddEntry](#addentry)
         - [DeleteEntry](#deleteentry)
         - [EditEntry](#editentry)
-    - [Actuator](#actuator)
-  - [Datenbank](#datenbank)
-    - [Benutzer (UserModel)](#benutzer-usermodel)
-    - [Eintrag (EntryModel)](#eintrag-entrymodel)
-    - [ER-Diagramm](#er-diagramm)
+      - [Actuator](#actuator)
+    - [Datenbank](#datenbank)
+      - [Benutzer (UserModel)](#benutzer-usermodel)
+      - [Eintrag (EntryModel)](#eintrag-entrymodel)
+      - [ER-Diagramm](#er-diagramm)
 - [Clients](#clients)
   - [Wichtige Klassen](#wichtige-klassen)
     - [API](#api-1)
-    - [Models & DTOs](#models--dtos)
+    - [Models \& DTOs](#models--dtos)
     - [Encryption](#encryption)
-- [WPF-Application](#wpf-application)
-  - [Klassendiagram](#klassendiagram)
-    - [weitere Kategorien](#weitere-kategorien)
-  - [Aktivitätsdiagramm](#aktivitätsdiagramm)
-  - [Wichtige Methoden](#wichtige-methoden)
-    - [UserApi](#userapi)
-      - [CreateUserAsync](#createuserasync)
-      - [AuthenticateUserAsync](#authenticateuserasync)
-      - [GetUserById](#getuserbyid)
-    - [EntryApi](#entryapi)
-      - [CreateEntry](#createentry)
-      - [EditEntry](#editentry)
-      - [DeleteEntry](#deleteentry)
-- [Web-Application](#web-application)
-  - [Einführung](#einführung-1)
-  - [NodeJS](#nodejs)
-  - [Probleme](#probleme)
-  - [CORS Config](#cors-config)
-  - [SpringBoot Config](#springboot-config)
-- [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
-  - [Zusammenfassung](#zusammenfassung)
-  - [Ausblick](#ausblick)
-    - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
-    - [Passwortrichtlinien](#passwortrichtlinien)
-    - [Autofill](#autofill)
+  - [WPF-Application](#wpf-application)
+    - [Klassendiagram](#klassendiagram)
+      - [weitere Kategorie](#weitere-kategorie)
+      - [Aktivitätsdiagramm](#aktivitätsdiagramm)
+    - [Wichtige Methoden](#wichtige-methoden)
+      - [UserApi](#userapi)
+        - [CreateUserAsync:](#createuserasync)
+        - [AuthenticateUserAsync](#authenticateuserasync)
+        - [GetUserById](#getuserbyid-1)
+      - [EntryApi](#entryapi)
+        - [CreateEntry](#createentry)
+        - [EditEntry](#editentry-1)
+        - [DeleteEntry](#deleteentry-1)
+  - [Web-Application](#web-application)
+    - [Einführung](#einführung-1)
+    - [NodeJS](#nodejs)
+    - [Probleme](#probleme)
+    - [CORS Config](#cors-config)
+    - [SpringBoot Config](#springboot-config)
+  - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
+    - [Zusammenfassung](#zusammenfassung)
+    - [Ausblick](#ausblick)
+      - [Sicherheit und Verschlüsselung](#sicherheit-und-verschlüsselung-1)
+      - [Passwortrichtlinien](#passwortrichtlinien)
+      - [Autofill](#autofill)
 
 
 
@@ -85,7 +87,7 @@ Das Projekt besteht aus folgenden Hauptkomponenten:
 
 
 - **Web-Client**: Ein webbasierte Client-Anwendung, die mithilfe von HTML, Java und CSS entwickelt ist. Der Web-Client bietet eine plattformübergreifende Benutzeroberfläche für den Zugriff auf den Passwortmanager über einen Webbrowser. Benutzer können sich über den Web-Client anmelden, ihre Passwortdaten anzeigen und verwalten sowie verschiedene Funktionen des Passwortmanagers nutzen.
-  
+
 
 
 ## Softwarestruktur
@@ -147,6 +149,8 @@ Die Funktionalitäten des Passwortmanagers umfassen folgende Aspekte:
 - **Verschlüsselung**: Die Daten werden im Passwortmanager verschlüsselt, um sie vor unbefugtem Zugriff zu schützen. Dies gewährleistet die Sicherheit der gespeicherten Passwörter.
 
 - **Benutzerauthentifizierung**: Um auf die gespeicherten Passwörter zugreifen zu können, muss sich der Benutzer mit seinem Master-Passwort anmelden.
+
+- **Importieren und Exportieren von Einträgen**: Einträge können importiert und exportiert werden. Diese Dateien sind mittels Passwort verschlüsselt.
 
 ### Sicherheit und Verschlüsselung
 
@@ -586,7 +590,6 @@ Dieses Aktivitätsdiagramm beschreibt den Ablauf des Passwortmanagers. Ein Benut
 
 
 ``` mermaid
-
 graph TD;
     Start -->|Benutzer öffnet Anwendung| Open[Anwendung geöffnet]
 
@@ -632,12 +635,22 @@ graph TD;
         EditSend -->|Server validiert Änderungen| EditValidate[Server validiert Änderungen]
         EditValidate -->|Änderungen werden in der Datenbank gespeichert| EditStore[Änderungen gespeichert]
         EditStore -->|erfolgreich bearbeitet| EditSuccess[Eintrag erfolgreich bearbeitet]
-
+        
         DisplayEntries -->|Benutzer löscht Eintrag| DeleteEntry[Eintrag löschen]
         DeleteEntry -->|Löschanfrage wird an Server gesendet| DeleteSend[Gesendete Löschanfrage]
         DeleteSend -->|Server validiert Löschanfrage| DeleteValidate[Server validiert Löschanfrage]
         DeleteValidate -->|Eintrag wird aus der Datenbank gelöscht| DeleteStore[Eintrag gelöscht]
         DeleteStore -->| erfolgreich gelöscht| DeleteSuccess[Eintrag erfolgreich gelöscht]
+
+        DisplayEntries -->|Benutzer exportiert Einträge| ExportEntries[Einträge exportieren]
+        ExportEntries -->|Passworteingabe für Export| ExportPasswordInput[Passworteingabe für Export]
+        ExportPasswordInput -->|Einträge werden verschlüsselt und exportiert| ExportedEntries[Einträge exportiert]
+        
+
+        DisplayEntries -->|Benutzer importiert Einträge| ImportEntries[Einträge importieren]
+        ImportEntries -->|Passworteingabe für Import| ImportPasswordInput[Passworteingabe für Import]
+        ImportPasswordInput -->|Einträge werden entschlüsselt und importiert| ImportedEntries[Einträge importiert]
+        ImportedEntries --> LoadEntries
     end
 
     RegSuccess -->|Benutzer navigiert zur Anmeldeseite| LoginNavigate
@@ -648,7 +661,8 @@ graph TD;
     LoadEntries --> Close[Anwendung schließen]
     Close[Anwendung schließen] --> End[Ende]
 
-``` 
+
+```
 
 
 ### Wichtige Methoden

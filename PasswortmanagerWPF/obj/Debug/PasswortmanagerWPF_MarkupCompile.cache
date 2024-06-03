@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\obj\Debug\
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\obj\Debug\
 PasswortmanagerWPF
 none
 false
 DEBUG;TRACE
-D:\AHINF\4AHINF\Passwortmanager\PasswortmanagerWPF\App.xaml
+C:\AHINF\4_AHINF\POS\Passwortmanager-WPF-Client-Server\Repo\PasswortmanagerWPF\App.xaml
 5-1923736873
 
-171351511264
-1481212568249
+18-1021677911
+148110642849
 EntryWindow.xaml;LoginWindow.xaml;MainWindow.xaml;PasswordGeneratorWindow.xaml;PasswordInputWindow.xaml;
 
-False
+True
 
