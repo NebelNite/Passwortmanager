@@ -43,24 +43,6 @@ body {
     object-fit: cover;
 }
 
-@media (max-width: 768px) {
-  #left-content {
-      width: 100%;
-  }
-
-  #leftBackgroundImg {
-      width: 100%;
-      height: auto;
-  }
-}
-
-
-@media (max-height: 600px) {
-  #leftBackgroundImg {
-    top: 50%;
-  }
-}
-
 .sv-string-viewer {
   color: white;
 }
