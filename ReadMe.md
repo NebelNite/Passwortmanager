@@ -1,6 +1,5 @@
 # Passwortmanager
 
-
 ## Inhaltsverzeichnis
 
 - [Passwortmanager](#passwortmanager)
@@ -57,8 +56,9 @@
     - [Einführung](#einführung-1)
     - [NodeJS](#nodejs)
     - [Probleme](#probleme)
-    - [CORS Config](#cors-config)
-    - [SpringBoot Config](#springboot-config)
+      - [CORS Config](#cors-config)
+      - [SpringBoot Config](#springboot-config)
+      - [CryptoJS](#cryptojs)
   - [Diskussion der Ergebnisse](#diskussion-der-ergebnisse)
     - [Zusammenfassung](#zusammenfassung)
     - [Ausblick](#ausblick)
@@ -585,7 +585,7 @@ classDiagram
 
 #### Aktivitätsdiagramm
 
-Dieses Aktivitätsdiagramm beschreibt den Ablauf des Passwortmanagers. Ein Benutzer öffnet die Anwendung und kann sich entweder registrieren oder anmelden. Bei der Registrierung werden Benutzerdaten verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Nach erfolgreicher Registrierung erfolgt die Anmeldung durch Übermittlung und Validierung der Anmeldedaten. Nach der Anmeldung kann der Benutzer Passwörter verwalten, indem er Einträge erstellt, bearbeitet oder löscht. Die Daten werden verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Die Aktivität endet mit dem Schließen der Anwendung oder dem Ausloggen.
+Dieses Aktivitätsdiagramm beschreibt den Ablauf des Passwortmanagers. Ein Benutzer öffnet die Anwendung und kann sich entweder registrieren oder anmelden. Bei der Registrierung werden Benutzerdaten verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Nach erfolgreicher Registrierung erfolgt die Anmeldung durch Übermittlung und Validierung der Anmeldedaten. Nach der Anmeldung kann der Benutzer Passwörter verwalten, indem er Einträge erstellt, bearbeitet oder löscht. Die Daten werden verschlüsselt an den Server gesendet, validiert und in der Datenbank gespeichert. Die Aktivität endet mit dem Schließen der Anwendung.
 
 
 
@@ -868,10 +868,10 @@ Die Web-Anwendung wird mithilfe von `Node.js` entwickelt, was die  die Ausführu
 
 
 ### Probleme
-Die CORS-Einschränkung des Browsers kann dazu führen, dass Anfragen zwischen verschiedenen Ursprüngen blockiert werden. Ohne eine entsprechende Konfiguration funktioniert die Kommunikation zwischen dem Web-Client und dem Server nicht ordnungsgemäß.
+Die CORS-Einschränkung des Browsers führt dazu, dass Anfragen zwischen verschiedenen Ursprüngen blockiert werden. Ohne eine entsprechende Konfiguration funktioniert die Kommunikation zwischen dem Web-Client und dem Server nicht ordnungsgemäß. Dementsprechend wurde es wie gefolgt gelöst.
 
 
-### CORS Config
+#### CORS Config
 
 Um CORS-Probleme zu lösen, wird eine Middleware in der Node.js-Anwendung verwendet. Diese Middleware fügt den HTTP-Antworten die erforderlichen CORS-Header hinzu, um Anfragen von einem bestimmten Ursprung zu akzeptieren. In der Konfiguration wird festgelegt, von welchem Ursprung Anfragen akzeptiert werden sollen, welche Methoden erlaubt sind und welche Header verwendet werden dürfen.
 
@@ -884,7 +884,7 @@ app.use((req, res, next) => {
 });
 ```
 
-### SpringBoot Config
+#### SpringBoot Config
 Auf der Serverseite wird ebenefalls eine CORS-Konfiguration vorgenommen. 
 
 ``` java
@@ -910,6 +910,8 @@ Zudem muss folgende Annotation für die Controller verwendet werden, um die Konf
 @CrossOrigin(origins="http://localhost:3001")
 ```
 
+#### CryptoJS
+Ein weiteres Problem trat in der Verschüsselung mit CryptoJS auf. Bei der Entschüsselung einer Nachricht wurde nicht der erwartete Wert produziert. Grund für dieses Problem war die inkonsistente Zeichenkodierung (UTF-16 und UTF-8). Behoben wurde der Fehler, indem die Daten vor und nach der Ver- und Entschüsselung in das korrekte Zeichenformat (UTF-8) geparst wurden.
 
 
 ## Diskussion der Ergebnisse

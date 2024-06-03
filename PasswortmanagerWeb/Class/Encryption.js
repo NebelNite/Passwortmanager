@@ -12,7 +12,6 @@ export class Encryption{
     static encryptMessage(message, fileKey = null) {
 
         let encKey = null;
-    
         if(fileKey!=null)
         {
           encKey = fileKey;
@@ -23,13 +22,8 @@ export class Encryption{
         }
     
         message = CryptoJS.enc.Utf8.parse(message);
-    
-    
         
-    
-    
         const iv = CryptoJS.enc.Hex.parse("0");
-        
         
         let encryptedString = CryptoJS.AES.encrypt(message, encKey, {
           mode: CryptoJS.mode.ECB,
@@ -37,41 +31,32 @@ export class Encryption{
           padding: CryptoJS.pad.Pkcs7
         });
     
-    
-    
-    
         return encryptedString;
         
       }
     
       static decryptMessage(encryptedMessage, fileKey = null) {
-          
-    
-          let encKey = null;
-          
-          if(fileKey!=null)
-          {
-            encKey = fileKey;
-          }
-          else{
-            encKey = UserApi.aesKey;
-          }
-          
-    
-    
-        const iv = CryptoJS.enc.Hex.parse("0"); // IV of all zeros
-    
+
+        let encKey = null;
         
-         let decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
+        if(fileKey!=null)
+        {
+          encKey = fileKey;
+        }
+        else{
+          encKey = UserApi.aesKey;
+        }
+    
+        const iv = CryptoJS.enc.Hex.parse("0");
+    
+        let decryptedString = CryptoJS.AES.decrypt(encryptedMessage, encKey, {
           mode: CryptoJS.mode.ECB,
           iv: iv,
           padding: CryptoJS.pad.Pkcs7
         });
-    
-          
+
         decryptedString = decryptedString.toString(CryptoJS.enc.Latin1);
-          
-          
+        
         return decryptedString;
           
       }
